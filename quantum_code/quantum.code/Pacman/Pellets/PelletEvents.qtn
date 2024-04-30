@@ -1,0 +1,21 @@
+synced event PelletRespawn {
+	int Configuration;
+}
+
+synced event PelletEat {
+	entity_ref Entity;
+	FPVector2 Tile;
+}
+
+synced event PowerPelletEat {
+	entity_ref Entity;
+}
+
+synced event PowerPelletEnd {
+}
+
+signal OnPelletEat();
+
+signal OnPowerPelletEnd();
+
+signal OnPowerPelletStart();

@@ -1,0 +1,19 @@
+import enum GhostTargetMode(byte);
+import enum GhostState(byte);
+import enum GhostHouseState(byte);
+
+component Ghost {
+	FPVector2 TargetPosition;
+	GhostTargetMode Mode;
+	GhostState State;
+	GhostHouseState GhostHouseState;
+}
+
+synced event GhostStateChanged {
+	entity_ref Entity;
+	GhostState State;
+}
+
+global {
+	bool CanLeaveGhostHouse;
+}

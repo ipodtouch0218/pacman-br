@@ -1,0 +1,10 @@
+component GridMover {
+	FP Speed;
+	FP SpeedMultiplier;
+	int Direction;
+	bool IsLocked;
+
+	FP DistanceMoved;
+}
+
+signal OnGridMoverChangeTile(entity_ref entity, FPVector2 tile);

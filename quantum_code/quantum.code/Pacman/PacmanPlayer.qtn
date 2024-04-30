@@ -1,0 +1,46 @@
+component PacmanPlayer {
+	int PelletsEaten;
+	int Score;
+
+	bool HasPowerPellet;
+	int GhostCombo;
+
+	bool IsDead;
+	FP RespawnTimer;
+
+	FP Invincibility;
+}
+
+signal OnCharacterEaten(entity_ref entity, entity_ref other);
+
+synced event CharacterEaten {
+	Frame Frame;
+	entity_ref Pacman;
+	entity_ref Other;
+	int Combo;
+	int GainedPoints;
+}
+
+signal OnPacmanScored(entity_ref entity, int points);
+
+signal OnPacmanKilled(entity_ref entity);
+
+signal OnPacmanRespawned(entity_ref entity);
+
+synced event PacmanKilled {
+	entity_ref Entity;
+}
+
+synced event PacmanScored {
+	entity_ref Entity;
+	int GainedPoints;
+	int TotalPoints;
+}
+
+event PacmanRespawned {
+	entity_ref Entity;
+}
+
+event PacmanVulnerable {
+	entity_ref Entity;
+}

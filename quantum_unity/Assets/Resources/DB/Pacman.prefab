@@ -1,0 +1,438 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3419014097283637981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5940647605141765228}
+  - component: {fileID: 1859357969472716758}
+  m_Layer: 0
+  m_Name: Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5940647605141765228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419014097283637981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1685569553422862501}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &1859357969472716758
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419014097283637981}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1576228427, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &7592819552428075133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1685569553422862501}
+  - component: {fileID: 7343617014342494048}
+  - component: {fileID: 8853287567265128611}
+  - component: {fileID: 1611264076732834984}
+  - component: {fileID: 3134689761979853833}
+  - component: {fileID: 5619158901811115877}
+  m_Layer: 0
+  m_Name: Pacman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1685569553422862501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5940647605141765228}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7343617014342494048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836dcb7e0f6259748b850a10912ce727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransformMode: 0
+  Transform2DVertical:
+    IsEnabled: 0
+    Height:
+      RawValue: 655360
+    PositionOffset:
+      RawValue: 0
+  PhysicsCollider:
+    IsTrigger: 0
+    Material:
+      Id:
+        Value: 0
+    SourceCollider: {fileID: 0}
+    IsEnabled: 1
+    Shape2D:
+      ShapeType: 4
+      PolygonCollider:
+        Id:
+          Value: 0
+      CircleRadius:
+        RawValue: 32768
+      EdgeExtent:
+        RawValue: 0
+      BoxExtents:
+        X:
+          RawValue: 16384
+        Y:
+          RawValue: 16384
+      PositionOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+      RotationOffset:
+        RawValue: 0
+      UserTag: 0
+      IsPersistent: 1
+      CompoundShapes: []
+      IsSetFromSourceCollider: 0
+    Shape3D:
+      ShapeType: 0
+      SphereRadius:
+        RawValue: 0
+      PositionOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      BoxExtents:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      RotationOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      UserTag: 0
+      IsPersistent: 1
+      CompoundShapes: []
+      IsSetFromSourceCollider: 0
+    Layer: 0
+    CallbackFlags:
+      Value: 4095
+  PhysicsBody:
+    IsEnabled: 0
+    Version2D: 0
+    Version3D: 0
+    Config2D: 116
+    Config3D: 58
+    RotationFreeze: 0
+    Mass:
+      RawValue: 65536
+    Drag:
+      RawValue: 32768
+    AngularDrag:
+      RawValue: 32768
+    CenterOfMass2D:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+    CenterOfMass3D:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+      Z:
+        RawValue: 0
+    GravityScale:
+      _hasValue: 0
+      _value:
+        RawValue: 65536
+  NavMeshPathfinder:
+    IsEnabled: 0
+    NavMeshAgentConfig:
+      Id:
+        Value: 0
+    InitialTarget:
+      IsEnabled: 0
+      Target: {fileID: 0}
+      Position:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      NavMesh:
+        Reference: {fileID: 0}
+        Asset:
+          Id:
+            Value: 0
+        Name: 
+  NavMeshSteeringAgent:
+    IsEnabled: 0
+    MaxSpeed:
+      IsEnabled: 0
+      Value:
+        RawValue: 0
+    Acceleration:
+      IsEnabled: 0
+      Value:
+        RawValue: 0
+  NavMeshAvoidanceAgent:
+    IsEnabled: 0
+  View:
+    Id:
+      Value: 0
+--- !u!114 &8853287567265128611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0008c51fe3af00b4da5d44f02d9b3dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BindBehaviour: 0
+  ManualDisposal: 0
+  GameObjectNameIsEntityRef: 1
+  ErrorCorrectionRateMin: 3.3
+  ErrorCorrectionRateMax: 10
+  ErrorPositionBlendStart: 0.25
+  ErrorPositionBlendEnd: 1
+  ErrorRotationBlendStart: 0.1
+  ErrorRotationBlendEnd: 0.5
+  ErrorPositionMinCorrection: 0.025
+  ErrorPositionTeleportDistance: 2
+  ErrorRotationTeleportDistance: 0.5
+  OnEntityInstantiated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEntityDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1611264076732834984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8682149557c99644b01ee2a98cf6e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prototype:
+    Speed:
+      RawValue: 983040
+    SpeedMultiplier:
+      RawValue: 65536
+    Direction: 0
+    IsLocked:
+      Value: 0
+    DistanceMoved:
+      RawValue: 0
+--- !u!114 &3134689761979853833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1f3968e5f52684ba808cded724e4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prototype:
+    PelletsEaten: 0
+    Score: 0
+    HasPowerPellet:
+      Value: 0
+    GhostCombo: 0
+    IsDead:
+      Value: 0
+    RespawnTimer:
+      RawValue: 0
+    Invincibility:
+      RawValue: 0
+--- !u!114 &5619158901811115877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d04a3f23d6d54d4b95533aba20f8406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 8853287567265128611}
+  blinkSpeedPerSecond: 30
+  moveAnimationSpeed: 4
+  deathAnimationSpeed: 6
+  deathDelay: 1
+  spriteRenderer: {fileID: 1859357969472716758}
+  movementSprites:
+  - {fileID: -1576228427, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -1206562690, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 669023364, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -1576228427, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 1874694473, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 918070472, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -1576228427, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -2145973834, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 1685495348, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -1576228427, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 954627462, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 775307549, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  scaredMovementSprites:
+  - {fileID: -135742800, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 717331302, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -93637156, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -135742800, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 375758134, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 1946761572, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -135742800, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -2137554254, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 154727785, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -135742800, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -1515742208, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 745146931, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  deathSprites:
+  - {fileID: 1874694473, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 918070472, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 1818083444, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -715130449, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 611754712, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 714617044, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: -99323932, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 1392940362, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 2100868419, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+  - {fileID: 805172984, guid: 331808eef2176c04680e6b9d7c18d2f2, type: 3}
+--- !u!114 &1342755181478882496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5baec4de8d2754a864a680181831e8, type: 3}
+  m_Name: PacmanEntityView
+  m_EditorClassIdentifier: 
+  Settings:
+    Identifier:
+      Path: Resources/DB/Pacman|EntityView
+      Guid:
+        Value: 3286830596560734521
+  Parent: {fileID: 8853287567265128611}
+--- !u!114 &2747656340049747084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0120b722c3ca5454da1240b65656905f, type: 3}
+  m_Name: PacmanEntityPrototype
+  m_EditorClassIdentifier: 
+  Settings:
+    Identifier:
+      Path: Resources/DB/Pacman|EntityPrototype
+      Guid:
+        Value: 159194854215405264
+  Parent: {fileID: 7343617014342494048}

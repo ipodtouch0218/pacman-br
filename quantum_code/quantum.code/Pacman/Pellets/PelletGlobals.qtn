@@ -1,0 +1,5 @@
+global {
+	dictionary<FPVector2, byte> PelletData;
+	FP PowerPelletDuration;
+	FP PowerPelletTotalDuration;
+}
