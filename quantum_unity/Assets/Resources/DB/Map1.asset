@@ -55,7 +55,7 @@ MonoBehaviour:
       GhostHouseState: 2
     GridMover:
     - Speed:
-        RawValue: 327680
+        RawValue: 524288
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
       GhostHouseState: 2
     GridMover:
     - Speed:
-        RawValue: 327680
+        RawValue: 524288
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
       GhostHouseState: 2
     GridMover:
     - Speed:
-        RawValue: 327680
+        RawValue: 524288
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
       GhostHouseState: 2
     GridMover:
     - Speed:
-        RawValue: 327680
+        RawValue: 524288
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0

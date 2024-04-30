@@ -2614,6 +2614,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8383480625652344647, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
+      propertyPath: Prototype.Speed.RawValue
+      value: 524288
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11929,6 +11934,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8383480625652344647, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
+      propertyPath: Prototype.Speed.RawValue
+      value: 524288
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12050,6 +12060,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383480625652344647, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
+      propertyPath: Prototype.Speed.RawValue
+      value: 524288
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12550,6 +12565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383480625652344647, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
+      propertyPath: Prototype.Speed.RawValue
+      value: 524288
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

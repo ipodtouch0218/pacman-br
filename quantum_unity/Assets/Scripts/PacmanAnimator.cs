@@ -60,10 +60,10 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
 
         if (!dead) {
-            var sprites = game.Frames.Predicted.Global->PowerPelletTotalDuration > 0 ? (pac.HasPowerPellet ? movementSprites : scaredMovementSprites) : movementSprites;
-            int spritesPerCycle = movementSprites.Length / 4;
+            var sprites = game.Frames.Predicted.Global->PowerPelletDuration > 0 ? (pac.HasPowerPellet ? movementSprites : scaredMovementSprites) : movementSprites;
+            int spritesPerCycle = sprites.Length / 4;
             int index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle) + (spritesPerCycle * mover.Direction));
-            spriteRenderer.sprite = movementSprites[index];
+            spriteRenderer.sprite = sprites[index];
         }
     }
 

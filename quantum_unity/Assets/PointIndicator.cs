@@ -8,7 +8,7 @@ public class PointIndicator : MonoBehaviour {
     [SerializeField] private float destroyAfter = 2;
 
     public void Initialize(int index) {
-        spriteRenderer.sprite = sprites[Mathf.Clamp(index, 0, sprites.Length)];
+        spriteRenderer.sprite = sprites[Mathf.Clamp(index - 1, 0, sprites.Length)];
         Destroy(gameObject, destroyAfter);
     }
 
