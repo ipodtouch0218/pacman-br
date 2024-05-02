@@ -1,5 +1,6 @@
 ﻿using Photon.Deterministic;
 using Quantum.Collections;
+using Quantum.Util;
 
 namespace Quantum.Pacman.Pellets {
     public unsafe class PelletSystem : SystemMainThread, ISignalOnGridMoverChangeTile {
@@ -39,9 +40,19 @@ namespace Quantum.Pacman.Pellets {
             }
 
             f.Events.PelletRespawn(pelletConfig);
+
+            var filter = f.Filter<PacmanPlayer, Transform2D>();
+            while (filter.Next(out EntityRef entity, out _, out Transform2D transform)) {
+                FPVector2 tile = FPVectorUtils.WorldToCell(transform.Position, f);
+                TryEatPellet(f, entity, tile, false);
+            }
         }
 
         public void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile) {
+            TryEatPellet(f, entity, tile, true);
+        }
+
+        private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
             if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)) {
                 return;
@@ -50,9 +61,13 @@ namespace Quantum.Pacman.Pellets {
             QDictionary<FPVector2, byte> pelletDict = f.ResolveDictionary(f.Global->PelletData);
 
             if (!pelletDict.TryGetValue(tile, out byte value)) {
+                if (breakChain) {
+                    player->PelletChain = 0;
+                }
                 return;
             }
 
+            player->PelletChain++;
             player->PelletsEaten++;
             if (value == 2) {
                 player->HasPowerPellet = true;
@@ -66,7 +81,8 @@ namespace Quantum.Pacman.Pellets {
 
             pelletDict.Remove(tile);
 
-            f.Events.PelletEat(entity, tile);
+            f.Signals.OnPacmanScored(entity, player->PelletChain);
+            f.Events.PelletEat(f, entity, tile, player->PelletChain);
 
             // TODO: follow a pattern? random?
             if (pelletDict.Count <= 0) {

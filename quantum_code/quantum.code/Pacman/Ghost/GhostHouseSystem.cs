@@ -28,7 +28,7 @@ namespace Quantum.Pacman.Ghost {
                     ghost->ChangeState(f, entity, GhostState.Chase);
                     ghost->GhostHouseState = GhostHouseState.MovingToSide;
 
-                    FPVector2 ghostHouseCenter = ghost->TargetPosition;
+                    FPVector2 ghostHouseCenter = FPVectorUtils.WorldToCell(mapdata.GhostHouse, f);
                     ghost->TargetPosition = ghost->Mode switch {
                         GhostTargetMode.Inky => ghostHouseCenter + FPVector2.Left * 2,
                         GhostTargetMode.Clyde => ghostHouseCenter + FPVector2.Right * 2,
@@ -70,14 +70,14 @@ namespace Quantum.Pacman.Ghost {
                         ghost->TargetPosition.X = mapdata.GhostHouse.X;
                         ghost->GhostHouseState = GhostHouseState.AlignHorizontal;
                     } else {
-                        ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 4;
+                        ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
                         mover->SpeedMultiplier = FP._0_50;
                         ghost->GhostHouseState = GhostHouseState.Leaving;
                     }
                     break;
                 case GhostHouseState.AlignHorizontal:
-                    ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 4;
-                    mover->SpeedMultiplier = FP._0_50;
+                    ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
+                    mover->SpeedMultiplier = FP._0_75;
                     ghost->GhostHouseState = GhostHouseState.Leaving;
                     break;
                 case GhostHouseState.Leaving:

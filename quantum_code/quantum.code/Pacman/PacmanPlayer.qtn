@@ -1,5 +1,6 @@
 component PacmanPlayer {
 	int PelletsEaten;
+	int PelletChain;
 	int Score;
 
 	bool HasPowerPellet;

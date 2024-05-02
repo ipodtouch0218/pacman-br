@@ -52,7 +52,7 @@ MonoBehaviour:
           RawValue: 786432
       Mode: 0
       State: 0
-      GhostHouseState: 2
+      GhostHouseState: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -112,9 +112,9 @@ MonoBehaviour:
     Transform2D:
     - Position:
         X:
-          RawValue: 1245184
+          RawValue: 983040
         Y:
-          RawValue: 917504
+          RawValue: 851968
       Rotation:
         RawValue: 0
     Transform2DVertical: []
@@ -125,9 +125,9 @@ MonoBehaviour:
   - Ghost:
     - TargetPosition:
         X:
-          RawValue: 1245184
+          RawValue: 983040
         Y:
-          RawValue: 917504
+          RawValue: 720896
       Mode: 1
       State: 0
       GhostHouseState: 2
@@ -190,9 +190,9 @@ MonoBehaviour:
     Transform2D:
     - Position:
         X:
-          RawValue: 1245184
+          RawValue: 983040
         Y:
-          RawValue: 786432
+          RawValue: 655360
       Rotation:
         RawValue: 0
     Transform2DVertical: []
@@ -203,9 +203,9 @@ MonoBehaviour:
   - Ghost:
     - TargetPosition:
         X:
-          RawValue: 1114112
+          RawValue: 851968
         Y:
-          RawValue: 917504
+          RawValue: 589824
       Mode: 2
       State: 0
       GhostHouseState: 2
@@ -268,9 +268,9 @@ MonoBehaviour:
     Transform2D:
     - Position:
         X:
-          RawValue: 1114112
-        Y:
           RawValue: 851968
+        Y:
+          RawValue: 655360
       Rotation:
         RawValue: 0
     Transform2DVertical: []
@@ -281,9 +281,9 @@ MonoBehaviour:
   - Ghost:
     - TargetPosition:
         X:
-          RawValue: 1376256
+          RawValue: 1114112
         Y:
-          RawValue: 917504
+          RawValue: 589824
       Mode: 3
       State: 0
       GhostHouseState: 2
@@ -346,9 +346,9 @@ MonoBehaviour:
     Transform2D:
     - Position:
         X:
-          RawValue: 1376256
+          RawValue: 1114112
         Y:
-          RawValue: 851968
+          RawValue: 655360
       Rotation:
         RawValue: 0
     Transform2DVertical: []

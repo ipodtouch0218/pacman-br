@@ -110,12 +110,15 @@ namespace Quantum.Pacman.Ghost {
             FPVector2 tilePosition = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
             tilePosition += GridMover.DirectionToVector(direction);
 
-            if (tilePosition.X < 0 || tilePosition.Y < 0 || tilePosition.X >= mapdata.MapSize.X || tilePosition.Y >= mapdata.MapSize.Y) {
-                return true;
+            if (tilePosition.X < 0 || tilePosition.X >= mapdata.MapSize.X) {
+                return direction == 0 || direction == 2;
+            }
+            if (tilePosition.Y < 0 || tilePosition.Y >= mapdata.MapSize.Y) {
+                return direction == 1 || direction == 3;
             }
 
-            int index = FPVectorUtils.CellToIndex(tilePosition, f);
-            if (index == FPVectorUtils.WorldToIndex(mapdata.GhostHouse + (FPVector2.Up * 3), f)) {
+                int index = FPVectorUtils.CellToIndex(tilePosition, f);
+            if (index == FPVectorUtils.WorldToIndex(mapdata.GhostHouse + (FPVector2.Up * 2), f)) {
                 // Ghost house enterance
                 bool isEaten = f.TryGet(filter.Entity, out Quantum.Ghost ghost) && ghost.State == GhostState.Eaten;
                 return direction != 3 || isEaten;
