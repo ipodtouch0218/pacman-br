@@ -7,6 +7,7 @@ component Ghost {
 	GhostTargetMode Mode;
 	GhostState State;
 	GhostHouseState GhostHouseState;
+	FP GhostHouseWaitTime;
 }
 
 synced event GhostStateChanged {
@@ -15,5 +16,5 @@ synced event GhostStateChanged {
 }
 
 global {
-	bool CanLeaveGhostHouse;
+	list<entity_ref> GhostHouseQueue;
 }

@@ -53,6 +53,8 @@ MonoBehaviour:
       Mode: 0
       State: 0
       GhostHouseState: 0
+      GhostHouseWaitTime:
+        RawValue: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -131,6 +133,8 @@ MonoBehaviour:
       Mode: 1
       State: 0
       GhostHouseState: 2
+      GhostHouseWaitTime:
+        RawValue: 655360
     GridMover:
     - Speed:
         RawValue: 524288
@@ -209,6 +213,8 @@ MonoBehaviour:
       Mode: 2
       State: 0
       GhostHouseState: 2
+      GhostHouseWaitTime:
+        RawValue: 983040
     GridMover:
     - Speed:
         RawValue: 524288
@@ -287,6 +293,8 @@ MonoBehaviour:
       Mode: 3
       State: 0
       GhostHouseState: 2
+      GhostHouseWaitTime:
+        RawValue: 1310720
     GridMover:
     - Speed:
         RawValue: 524288
