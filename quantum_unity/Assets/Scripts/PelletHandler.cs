@@ -12,9 +12,13 @@ public class PelletHandler : MonoBehaviour {
     //---Private Variables
     private readonly Dictionary<int, GameObject> pellets = new();
 
-    public void Start() {
+    public void Awake() {
         QuantumEvent.Subscribe<EventPelletRespawn>(this, OnEventPelletRespawn);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnEventPelletEat);
+
+        OnEventPelletRespawn(new EventPelletRespawn() {
+            Configuration = 0
+        });
     }
 
     public void OnEventPelletEat(EventPelletEat e) {

@@ -85,13 +85,13 @@ namespace Quantum.Pacman.Ghost {
                         ghost->GhostHouseState = GhostHouseState.AlignHorizontal;
                     } else {
                         ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
-                        mover->SpeedMultiplier = FP.FromString("0.4");
+                        mover->SpeedMultiplier = FP._0_33;
                         ghost->GhostHouseState = GhostHouseState.Leaving;
                     }
                     break;
                 case GhostHouseState.AlignHorizontal:
                     ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
-                    mover->SpeedMultiplier = FP.FromString("0.4");
+                    mover->SpeedMultiplier = FP._0_33;
                     ghost->GhostHouseState = GhostHouseState.Leaving;
                     break;
                 case GhostHouseState.Leaving:

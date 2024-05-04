@@ -3,7 +3,7 @@ using Quantum.Collections;
 using Quantum.Util;
 
 namespace Quantum.Pacman.Pellets {
-    public unsafe class PelletSystem : SystemMainThread, ISignalOnGridMoverChangeTile {
+    public unsafe class PelletSystem : SystemMainThread, ISignalOnPacmanRespawned, ISignalOnGridMoverChangeTile {
 
         public override void OnInit(Frame f) {
             f.Global->PelletData = f.AllocateDictionary<FPVector2, byte>();
@@ -42,7 +42,11 @@ namespace Quantum.Pacman.Pellets {
             f.Events.PelletRespawn(pelletConfig);
 
             var filter = f.Filter<PacmanPlayer, Transform2D>();
-            while (filter.Next(out EntityRef entity, out _, out Transform2D transform)) {
+            while (filter.Next(out EntityRef entity, out PacmanPlayer pac, out Transform2D transform)) {
+                if (pac.IsDead) {
+                    continue;
+                }
+
                 FPVector2 tile = FPVectorUtils.WorldToCell(transform.Position, f);
                 TryEatPellet(f, entity, tile, false);
             }
@@ -50,6 +54,19 @@ namespace Quantum.Pacman.Pellets {
 
         public void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile) {
             TryEatPellet(f, entity, tile, true);
+        }
+
+        public void OnPacmanRespawned(Frame f, EntityRef entity) {
+            if (!f.TryGet(entity, out Transform2D transform)) {
+                return;
+            }
+
+            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)) {
+                return;
+            }
+
+            player->PelletChain = 0;
+            TryEatPellet(f, entity, FPVectorUtils.WorldToCell(transform.Position, f), true);
         }
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {

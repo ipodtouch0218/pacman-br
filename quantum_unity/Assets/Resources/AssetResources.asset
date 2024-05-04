@@ -76,6 +76,11 @@ MonoBehaviour:
         Id:
           Value: 2754795773236525080
       ResourcePath: DB/NestedAssetType
+    - Path: Resources/DB/PhysicsMaterialAsset
+      AssetRef:
+        Id:
+          Value: 3256123452090092744
+      ResourcePath: DB/PhysicsMaterialAsset
     - Path: Resources/DB/Pacman|EntityView
       AssetRef:
         Id:

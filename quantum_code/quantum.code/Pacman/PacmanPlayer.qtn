@@ -12,6 +12,10 @@ component PacmanPlayer {
 	FP Invincibility;
 }
 
+component PacmanParent {
+	entity_ref Entity;
+}
+
 signal OnCharacterEaten(entity_ref entity, entity_ref other);
 
 synced event CharacterEaten {
@@ -30,6 +34,7 @@ signal OnPacmanRespawned(entity_ref entity);
 
 synced event PacmanKilled {
 	entity_ref Entity;
+	FP RespawnInSeconds;
 }
 
 synced event PacmanScored {

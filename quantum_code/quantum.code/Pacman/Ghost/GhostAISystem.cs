@@ -18,14 +18,18 @@ namespace Quantum.Pacman.Ghost {
             }
 
             // Find the closest player
-            var playerFilter = f.Filter<Transform2D, GridMover, PlayerLink>();
+            var playerFilter = f.Filter<Transform2D, GridMover, PacmanPlayer>();
 
             FPVector2 currentPosition = filter.Transform->Position;
             FP closestDistance = FP.UseableMax;
             GridMover? closestPlayerMover = null;
             Transform2D? closestPlayerTransform = null;
 
-            while (playerFilter.Next(out var _, out var playerTransform, out var playerMover, out var _)) {
+            while (playerFilter.Next(out var _, out var playerTransform, out var playerMover, out var pacman)) {
+                if (pacman.IsDead) {
+                    continue;
+                }
+
                 FP distance = FPVector2.DistanceSquared(currentPosition, playerTransform.Position);
                 if (distance < closestDistance) {
                     closestDistance = distance;
@@ -34,6 +38,7 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
+            filter.Ghost->ForceRandomMovement = (closestPlayerMover == null);
             if (closestPlayerMover == null) {
                 return;
             }
@@ -133,7 +138,7 @@ namespace Quantum.Pacman.Ghost {
                 }
                 ghost->ChangeState(f, info.Other, GhostState.Eaten);
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
-                f.Signals.OnGameFreeze(30);
+                f.Signals.OnGameFreeze(FP._0_50);
                 break;
 
             case GhostState.Chase:

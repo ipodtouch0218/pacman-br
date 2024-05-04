@@ -1,15 +1,16 @@
-﻿using Quantum.Pacman.Freeze;
+﻿using Photon.Deterministic;
+using Quantum.Pacman.Freeze;
 
 namespace Quantum.Pacman {
     public unsafe class FreezeSystem : SystemMainThread, ISignalOnGameFreeze {
 
         public override void OnInit(Frame f) {
-            f.Signals.OnGameFreeze(30 * 5);
+            f.Signals.OnGameFreeze(FP._5);
         }
 
         public override void Update(Frame f) {
             if (f.Global->FreezeDuration > 0) {
-                if (--f.Global->FreezeDuration == 0) {
+                if ((f.Global->FreezeDuration -= f.DeltaTime) <= 0) {
                     f.SystemEnable<FreezableSystemGroup>();
                     f.Events.GameUnfreeze();
                 } else {
@@ -20,7 +21,7 @@ namespace Quantum.Pacman {
             }
         }
 
-        public void OnGameFreeze(Frame f, int duration) {
+        public void OnGameFreeze(Frame f, FP duration) {
             f.Global->FreezeDuration = duration;
             f.Events.GameFreeze(duration);
         }

@@ -1,12 +1,12 @@
 global {
-	int FreezeDuration;
+	FP FreezeDuration;
 	FP TimeSinceGameStart;
 }
 
-signal OnGameFreeze(int duration);
+signal OnGameFreeze(FP duration);
 
 synced event GameFreeze {
-	int Duration;
+	FP Duration;
 }
 
 event GameUnfreeze {

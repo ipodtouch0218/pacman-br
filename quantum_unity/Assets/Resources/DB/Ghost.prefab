@@ -321,6 +321,8 @@ MonoBehaviour:
     Direction: 0
     IsLocked:
       Value: 0
+    DistanceMoved:
+      RawValue: 0
 --- !u!114 &4737741746904046315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,8 +351,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 4229172217665889779}
   spriteRenderer: {fileID: 3620954875696181874}
-  scaredSprite: {fileID: 5094964, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  eatenSprite: {fileID: 1807163367, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  movementSprites:
+  - {fileID: 151341638, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1995739495, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1078203611, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1388682867, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 178029613, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 525440650, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 568202626, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1289291046, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  scaredSprites:
+  - {fileID: 1879285983, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 2039039681, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: -200781684, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1887253061, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  eatenSprites:
+  - {fileID: 1621473339, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1797236686, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 1374974545, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 657680355, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  animationSpeed: 4
+  flashTimeRemaining: 5
+  flashesPerSecond: 2
+  sparkles: {fileID: 0}
 --- !u!114 &2764139848288584657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,15 +387,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prototype:
-    Position:
+    TargetPosition:
       X:
         RawValue: 0
       Y:
         RawValue: 0
+    ForceRandomMovement:
+      Value: 0
     Mode: 0
     State: 0
-    IsInGhostHouse:
-      Value: 0
+    GhostHouseState: 0
+    GhostHouseWaitTime:
+      RawValue: 0
 --- !u!1 &5379269804343447100
 GameObject:
   m_ObjectHideFlags: 0

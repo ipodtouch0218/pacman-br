@@ -1,5 +1,7 @@
-﻿namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd, ISignalOnCollision2D {
+﻿using Photon.Deterministic;
+
+namespace Quantum.Pacman.Ghost {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd, ISignalOnTrigger2D {
 
         public struct Filter {
             public EntityRef Entity;
@@ -63,28 +65,35 @@
             }
 
             pac->RespawnTimer = 5;
-            f.Events.PacmanKilled(entity);
+            f.Events.PacmanKilled(entity, pac->RespawnTimer);
         }
 
-        public void OnCollision2D(Frame f, CollisionInfo2D info) {
-            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac1)) {
+        public void OnTrigger2D(Frame f, TriggerInfo2D info) {
+            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac1) || pac1->IsDead) {
                 return;
             }
 
-            if (!f.Unsafe.TryGetPointer(info.Other, out PacmanPlayer* pac2)) {
+            if (!f.TryGet(info.Other, out PacmanParent parent) || !f.Unsafe.TryGetPointer(parent.Entity, out PacmanPlayer* pac2) || pac2->IsDead) {
+                return;
+            }
+
+            if (pac1 == pac2) {
                 return;
             }
 
             // Two PacmanPlayers collided
             if (pac1->HasPowerPellet && !pac2->HasPowerPellet && pac2->Invincibility <= 0) {
                 // Pac1 eaten Pac2
-                f.Signals.OnCharacterEaten(info.Entity, info.Other);
-                f.Signals.OnPacmanKilled(info.Other);
+                f.Signals.OnCharacterEaten(info.Entity, parent.Entity);
+                f.Signals.OnPacmanKilled(parent.Entity);
+                f.Signals.OnGameFreeze(FP._0_50);
             }
+
             if (pac2->HasPowerPellet && !pac1->HasPowerPellet && pac1->Invincibility <= 0) {
                 // Pac2 eaten Pac1
-                f.Signals.OnCharacterEaten(info.Other, info.Entity);
+                f.Signals.OnCharacterEaten(parent.Entity, info.Entity);
                 f.Signals.OnPacmanKilled(info.Entity);
+                f.Signals.OnGameFreeze(FP._0_50);
             }
         }
 

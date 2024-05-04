@@ -19,11 +19,5 @@ namespace Quantum {
 
         public FPVector2[] PillSpawnPoints;
 
-        public void MoveToSpawnpoint(Frame f, EntityRef entity, int index) {
-            if (!f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
-                return;
-            }
-            transform->Position = SpawnPoints[index].Position;
-        }
     }
 }

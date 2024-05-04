@@ -4,6 +4,7 @@ import enum GhostHouseState(byte);
 
 component Ghost {
 	FPVector2 TargetPosition;
+	bool ForceRandomMovement;
 	GhostTargetMode Mode;
 	GhostState State;
 	GhostHouseState GhostHouseState;
