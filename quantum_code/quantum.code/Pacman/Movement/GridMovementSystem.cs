@@ -60,7 +60,7 @@ namespace Quantum.Pacman.Ghost {
                     FP minDistanceToTarget = FP.UseableMax;
                     int bestDirection = reverseDirection;
                     for (int i = 0; i < 4; i++) {
-                        if (ghost->GhostHouseState == GhostHouseState.NotInGhostHouse && i == reverseDirection) {
+                        if (ghost->GhostHouseState <= GhostHouseState.ReturningToEntrance && i == reverseDirection) {
                             continue;
                         }
 

@@ -10,14 +10,18 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private ParticleSystem respawnParticles, sparkleParticles;
+    [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Sprite[] movementSprites, scaredMovementSprites, deathSprites;
+    [SerializeField] private AudioClip wa, ka, death;
+    [SerializeField] private AudioClip[] eatClips;
 
     private bool invulnerable;
     private float invulnerableTimer;
     private float blinkSpeedPeriod;
     private bool dead;
     private float deathAnimationTimer, deathParticlesTimer;
+    private bool waSound;
 
     public void OnValidate() {
         if (!entity) {
@@ -25,6 +29,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+        if (!audioSource) {
+            audioSource = GetComponent<AudioSource>();
         }
     }
 
@@ -35,6 +42,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
         QuantumEvent.Subscribe<EventGameFreeze>(this, OnGameFreeze);
         QuantumEvent.Subscribe<EventGameUnfreeze>(this, OnGameUnfreeze);
+        QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
         OnPacmanCreated?.Invoke(this);
@@ -48,7 +56,14 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         if (dead) {
             // Play animation...
+            bool playDeathSound = deathAnimationTimer < deathDelay;
             deathAnimationTimer += Time.deltaTime;
+            playDeathSound &= deathAnimationTimer >= deathDelay;
+
+            if (playDeathSound) {
+                audioSource.PlayOneShot(death);
+            }
+
             int index = (int) ((deathAnimationTimer - deathDelay) * deathAnimationSpeed);
             if (index >= deathSprites.Length) {
                 spriteRenderer.enabled = false;
@@ -114,6 +129,8 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         sparkleParticles.transform.rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0, 360f), Vector3.up) * sparkleParticles.transform.rotation;
         sparkleParticles.Play();
+
+        audioSource.PlayOneShot(eatClips[Mathf.Min(e.Combo - 1, eatClips.Length - 1)]);
     }
 
     public void OnGameFreeze(EventGameFreeze e) {
@@ -129,5 +146,14 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         if (respawnParticles.isPaused) {
             respawnParticles.Play();
         }
+    }
+
+    public void OnPelletEat(EventPelletEat e) {
+        if (e.Entity != entity.EntityRef) {
+            return;
+        }
+
+        audioSource.PlayOneShot(waSound ? wa : ka);
+        waSound = !waSound;
     }
 }

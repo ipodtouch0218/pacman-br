@@ -10597,6 +10597,7 @@ GameObject:
   - component: {fileID: 1611264076732834984}
   - component: {fileID: 3134689761979853833}
   - component: {fileID: 5619158901811115877}
+  - component: {fileID: -6283946192420885641}
   m_Layer: 0
   m_Name: Pacman
   m_TagString: Untagged
@@ -10868,6 +10869,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1859357969472716758}
   respawnParticles: {fileID: 6291019791391257012}
   sparkleParticles: {fileID: 6920791655707500856}
+  audioSource: {fileID: -6283946192420885641}
   movementSprites:
   - {fileID: -1576228427, guid: 303418efe92e8924bbfd4f5e6fbf0244, type: 3}
   - {fileID: -1206562690, guid: 303418efe92e8924bbfd4f5e6fbf0244, type: 3}
@@ -10905,6 +10907,114 @@ MonoBehaviour:
   - {fileID: 1392940362, guid: 303418efe92e8924bbfd4f5e6fbf0244, type: 3}
   - {fileID: 2100868419, guid: 303418efe92e8924bbfd4f5e6fbf0244, type: 3}
   - {fileID: 805172984, guid: 303418efe92e8924bbfd4f5e6fbf0244, type: 3}
+  wa: {fileID: 8300000, guid: b036184657bb2744ca711a4f390ac0e8, type: 3}
+  ka: {fileID: 8300000, guid: 86b7a0cb3ffc65b4490a7f77d02cd9e4, type: 3}
+  death: {fileID: 8300000, guid: 39ae41ffad7ce054692938606e7f581f, type: 3}
+  eatClips:
+  - {fileID: 8300000, guid: 32d350e4caa93b54092b9395134cb0c3, type: 3}
+  - {fileID: 8300000, guid: b3b8c27e3f5cff14aaa4c0c9bf3a8b12, type: 3}
+  - {fileID: 8300000, guid: 5ebcd7cc8f510fe4bb4b79166ecd23ed, type: 3}
+  - {fileID: 8300000, guid: 62f57578210f3524c97594dc093bfdb0, type: 3}
+  - {fileID: 8300000, guid: f63be21eb0c2dec4f81650ee9ce421d3, type: 3}
+  - {fileID: 8300000, guid: d93ffc35c2464094a94407430eb91204, type: 3}
+  - {fileID: 8300000, guid: f391c7136fc27b648a0a0404a87546a4, type: 3}
+  - {fileID: 8300000, guid: 949ac9c5535bed1438cb1420bdae8901, type: 3}
+--- !u!82 &-6283946192420885641
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592819552428075133}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1342755181478882496
 MonoBehaviour:
   m_ObjectHideFlags: 0

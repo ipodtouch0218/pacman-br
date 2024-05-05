@@ -352,25 +352,25 @@ MonoBehaviour:
   entity: {fileID: 4229172217665889779}
   spriteRenderer: {fileID: 3620954875696181874}
   movementSprites:
-  - {fileID: 151341638, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1995739495, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1078203611, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1388682867, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 178029613, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 525440650, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 568202626, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1289291046, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: -1909779863, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -2086041049, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: 978908214, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -1452069636, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: 943058729, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -1382221874, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -792191615, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: 573367708, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
   scaredSprites:
-  - {fileID: 1879285983, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 2039039681, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: -200781684, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1887253061, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
+  - {fileID: 103086737, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -205570405, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -590000363, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -2106584734, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
   eatenSprites:
-  - {fileID: 1621473339, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1797236686, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 1374974545, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  - {fileID: 657680355, guid: 6f98afa17d60ec946911c898f5db8b2d, type: 3}
-  animationSpeed: 4
+  - {fileID: -1628436542, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -404313140, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: -339356243, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  - {fileID: 1628883557, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
+  animationSpeed: 2
   flashTimeRemaining: 5
   flashesPerSecond: 2
   sparkles: {fileID: 0}

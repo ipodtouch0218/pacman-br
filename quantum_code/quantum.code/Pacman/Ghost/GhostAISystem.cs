@@ -46,51 +46,45 @@ namespace Quantum.Pacman.Ghost {
             var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
 
             FPVector2 target;
-            if (filter.Ghost->State == GhostState.Eaten) {
-                // Target the ghost house.
-                target = mapdata.GhostHouse;
-
-            } else {
-                // Target based on ghost rules.
-                FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform.Value.Position, FPMath.Round);
-                switch (filter.Ghost->Mode) {
-                default:
-                case GhostTargetMode.Blinky:
-                    // Direct player tile
-                    target = playerTile;
-                    break;
-                case GhostTargetMode.Pinky:
-                    // 4 tiles in front of player
-                    target = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 4;
-                    break;
-                case GhostTargetMode.Inky:
-                    // Blinky position + (vector between blinky and player position + 2 tiles in front) * 2
-                    var ghostFilter = f.Filter<Transform2D, Quantum.Ghost>();
-                    while (ghostFilter.Next(out var _, out var ghostTransform, out var ghost)) {
-                        if (ghost.Mode != GhostTargetMode.Blinky) {
-                            continue;
-                        }
-
-                        FPVector2 ourTile = FPVectorUtils.Apply(ghostTransform.Position, FPMath.Round);
-                        FPVector2 effectivePlayerTile = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 2;
-                        FPVector2 vecFromGhostToPlayer = effectivePlayerTile - ourTile;
-
-                        target = effectivePlayerTile + vecFromGhostToPlayer;
-                        goto EarlyBreak;
+            // Target based on ghost rules.
+            FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform.Value.Position, FPMath.Round);
+            switch (filter.Ghost->Mode) {
+            default:
+            case GhostTargetMode.Blinky:
+                // Direct player tile
+                target = playerTile;
+                break;
+            case GhostTargetMode.Pinky:
+                // 4 tiles in front of player
+                target = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 4;
+                break;
+            case GhostTargetMode.Inky:
+                // Blinky position + (vector between blinky and player position + 2 tiles in front) * 2
+                var ghostFilter = f.Filter<Transform2D, Quantum.Ghost>();
+                while (ghostFilter.Next(out var _, out var ghostTransform, out var ghost)) {
+                    if (ghost.Mode != GhostTargetMode.Blinky) {
+                        continue;
                     }
 
-                    // Fallback, just target the player.
-                    target = playerTile;
-                    break;
-                case GhostTargetMode.Clyde:
-                    // Bottom left if within 8 units (radius), direct player tile otherwise
-                    if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform.Value.Position) > (8 * 8)) {
-                        target = playerTile;
-                    } else {
-                        target = mapdata.MapOrigin;
-                    }
-                    break;
+                    FPVector2 ourTile = FPVectorUtils.Apply(ghostTransform.Position, FPMath.Round);
+                    FPVector2 effectivePlayerTile = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 2;
+                    FPVector2 vecFromGhostToPlayer = effectivePlayerTile - ourTile;
+
+                    target = effectivePlayerTile + vecFromGhostToPlayer;
+                    goto EarlyBreak;
                 }
+
+                // Fallback, just target the player.
+                target = playerTile;
+                break;
+            case GhostTargetMode.Clyde:
+                // Bottom left if within 8 units (radius), direct player tile otherwise
+                if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform.Value.Position) > (8 * 8)) {
+                    target = playerTile;
+                } else {
+                    target = mapdata.MapOrigin;
+                }
+                break;
             }
 
         EarlyBreak:
@@ -137,6 +131,8 @@ namespace Quantum.Pacman.Ghost {
                     break;
                 }
                 ghost->ChangeState(f, info.Other, GhostState.Eaten);
+                ghost->GhostHouseState = GhostHouseState.ReturningToEntrance;
+                ghost->TargetPosition = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id).GhostHouse + FPVector2.Up * 3;
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
                 f.Signals.OnGameFreeze(FP._0_50);
                 break;

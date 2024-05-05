@@ -4,8 +4,10 @@ using UnityEngine.Tilemaps;
 
 public class GridColorHandler : QuantumCallbacks {
 
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private TilemapRenderer tilemapRenderer;
     [SerializeField] private Gradient gradient;
+
+    private MaterialPropertyBlock mpb;
 
     public override unsafe void OnUpdateView(QuantumGame game) {
         var globals = game.Frames.Predicted.Global;
@@ -15,6 +17,11 @@ public class GridColorHandler : QuantumCallbacks {
             percentage = 1f - (globals->PowerPelletDuration / globals->PowerPelletTotalDuration).AsFloat;
         }
 
-        tilemap.color = gradient.Evaluate(percentage);
+        if (mpb == null) {
+            mpb = new();
+            tilemapRenderer.GetPropertyBlock(mpb);
+        }
+        mpb.SetColor("_Color", gradient.Evaluate(percentage));
+        tilemapRenderer.SetPropertyBlock(mpb);
     }
 }

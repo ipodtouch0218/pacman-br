@@ -12,6 +12,7 @@ component Ghost {
 }
 
 synced event GhostStateChanged {
+	Frame Frame;
 	entity_ref Entity;
 	GhostState State;
 }

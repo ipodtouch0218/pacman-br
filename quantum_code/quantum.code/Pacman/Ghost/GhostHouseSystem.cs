@@ -35,22 +35,6 @@ namespace Quantum.Pacman.Ghost {
             var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
             int ghostIndex = FPVectorUtils.CellToIndex(tile, f);
 
-            if (ghost->State == GhostState.Eaten) {
-                // Ghost entered the ghost house.
-                int centerIndex = FPVectorUtils.WorldToIndex(mapdata.GhostHouse, f);
-                if (ghostIndex == centerIndex) {
-                    ghost->ChangeState(f, entity, GhostState.Chase);
-                    ghost->GhostHouseState = GhostHouseState.MovingToSide;
-
-                    FPVector2 ghostHouseCenter = FPVectorUtils.WorldToCell(mapdata.GhostHouse, f);
-                    ghost->TargetPosition = ghost->Mode switch {
-                        GhostTargetMode.Inky => ghostHouseCenter + FPVector2.Left * 2,
-                        GhostTargetMode.Clyde => ghostHouseCenter + FPVector2.Right * 2,
-                        _ => ghostHouseCenter,
-                    };
-                }
-            }
-
             if (ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                 return;
             }
@@ -60,6 +44,21 @@ namespace Quantum.Pacman.Ghost {
             bool reachedTarget = FPVectorUtils.WorldToIndex(ghost->TargetPosition, f) == FPVectorUtils.CellToIndex(tile, f);
             if (reachedTarget) {
                 switch (ghost->GhostHouseState) {
+                case GhostHouseState.ReturningToEntrance:
+                    ghost->GhostHouseState = GhostHouseState.MovingToCenter;
+                    ghost->TargetPosition = mapdata.GhostHouse;
+                    break;
+                case GhostHouseState.MovingToCenter:
+                    ghost->ChangeState(f, entity, GhostState.Chase);
+                    ghost->GhostHouseState = GhostHouseState.MovingToSide;
+
+                    FPVector2 ghostHouseCenter = mapdata.GhostHouse;
+                    ghost->TargetPosition = ghostHouseCenter + ghost->Mode switch {
+                        GhostTargetMode.Inky => FPVector2.Left * 2,
+                        GhostTargetMode.Clyde => FPVector2.Right * 2,
+                        _ => FPVector2.Zero,
+                    };
+                    break;
                 case GhostHouseState.MovingToSide:
                     ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
                     ghost->GhostHouseState = GhostHouseState.Waiting;
