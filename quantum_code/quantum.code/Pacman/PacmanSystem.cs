@@ -1,44 +1,77 @@
 ﻿using Photon.Deterministic;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd, ISignalOnTrigger2D {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
 
         public struct Filter {
             public EntityRef Entity;
+            public Transform2D* Transform;
+            public PhysicsCollider2D* Collider;
+            public GridMover* Mover;
             public PacmanPlayer* Pacman;
         }
 
         public override void Update(Frame f, ref Filter filter) {
-            if (filter.Pacman->IsDead) {
-                if (filter.Pacman->RespawnTimer > 0) {
-                    if ((filter.Pacman->RespawnTimer -= f.DeltaTime) <= 0) {
-                        filter.Pacman->RespawnTimer = 0;
+            PacmanPlayer* pac = filter.Pacman;
+
+            if (pac->IsDead) {
+                if (pac->RespawnTimer > 0) {
+                    if ((pac->RespawnTimer -= f.DeltaTime) <= 0) {
+                        pac->RespawnTimer = 0;
                         f.Signals.OnPacmanRespawned(filter.Entity);
                     }
                 }
             }
 
-            if (filter.Pacman->Invincibility > 0) {
-                if ((filter.Pacman->Invincibility -= f.DeltaTime) <= 0) {
-                    filter.Pacman->Invincibility = 0;
+            if (pac->Invincibility > 0) {
+                if ((pac->Invincibility -= f.DeltaTime) <= 0) {
+                    pac->Invincibility = 0;
                     f.Events.PacmanVulnerable(filter.Entity);
+                }
+            }
+
+            if (pac->HasPowerPellet) {
+                var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
+                for (int i = 0; i < hits.Count; i++) {
+                    var hit = hits[i];
+
+                    if (!hit.Entity.IsValid || hit.Entity == filter.Entity) {
+                        continue;
+                    }
+
+                    if (!f.Unsafe.TryGetPointer(hit.Entity, out PacmanPlayer* otherPac) || otherPac->IsDead) {
+                        continue;
+                    }
+
+                    // We collided with a PacmanPlayer
+                    if (pac->HasPowerPellet && !otherPac->HasPowerPellet && otherPac->Invincibility <= 0) {
+                        // Pac1 eaten Pac2
+                        f.Signals.OnCharacterEaten(filter.Entity, hit.Entity);
+                        f.Signals.OnPacmanKilled(hit.Entity);
+                        //f.Signals.OnGameFreeze(FP._0_50);
+                        filter.Mover->FreezeTime = FP._0_50;
+                    }
                 }
             }
         }
 
         public void OnPowerPelletStart(Frame f) {
-            var filter = f.Filter<PacmanPlayer>();
+            var filter = f.Filter<PacmanPlayer, GridMover>();
 
-            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman)) {
+            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman, out GridMover* mover)) {
                 pacman->GhostCombo = 0;
+                if (!pacman->HasPowerPellet) {
+                    mover->SpeedMultiplier = FP.FromString("0.85");
+                }
             }
         }
 
         public void OnPowerPelletEnd(Frame f) {
-            var filter = f.Filter<PacmanPlayer>();
+            var filter = f.Filter<PacmanPlayer, GridMover>();
 
-            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman)) {
+            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman, out GridMover* mover)) {
                 pacman->HasPowerPellet = false;
+                mover->SpeedMultiplier = FP._1;
             }
         }
 
@@ -68,47 +101,20 @@ namespace Quantum.Pacman.Ghost {
             f.Events.PacmanKilled(entity, pac->RespawnTimer);
         }
 
-        public void OnTrigger2D(Frame f, TriggerInfo2D info) {
-            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac1) || pac1->IsDead) {
-                return;
-            }
-
-            if (!f.TryGet(info.Other, out PacmanParent parent) || !f.Unsafe.TryGetPointer(parent.Entity, out PacmanPlayer* pac2) || pac2->IsDead) {
-                return;
-            }
-
-            if (pac1 == pac2) {
-                return;
-            }
-
-            // Two PacmanPlayers collided
-            if (pac1->HasPowerPellet && !pac2->HasPowerPellet && pac2->Invincibility <= 0) {
-                // Pac1 eaten Pac2
-                f.Signals.OnCharacterEaten(info.Entity, parent.Entity);
-                f.Signals.OnPacmanKilled(parent.Entity);
-                f.Signals.OnGameFreeze(FP._0_50);
-            }
-
-            if (pac2->HasPowerPellet && !pac1->HasPowerPellet && pac1->Invincibility <= 0) {
-                // Pac2 eaten Pac1
-                f.Signals.OnCharacterEaten(parent.Entity, info.Entity);
-                f.Signals.OnPacmanKilled(info.Entity);
-                f.Signals.OnGameFreeze(FP._0_50);
-            }
-        }
-
         public void OnCharacterEaten(Frame f, EntityRef pacmanEntity, EntityRef other) {
             if (!f.Unsafe.TryGetPointer(pacmanEntity, out PacmanPlayer* pacman)) {
                 return;
             }
 
             int points = (++pacman->GhostCombo) switch {
-                1 => 200,
-                2 => 400,
-                3 => 800,
+                1 => 400,
+                2 => 800,
+                3 => 1200,
                 4 => 1600,
-                5 => 3200,
-                _ => 7650,
+                5 => 2000,
+                6 => 2400,
+                7 => 2800,
+                _ => 3200,
             };
 
             f.Signals.OnPacmanScored(pacmanEntity, points);

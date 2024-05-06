@@ -9,6 +9,8 @@ component Ghost {
 	GhostState State;
 	GhostHouseState GhostHouseState;
 	FP GhostHouseWaitTime;
+
+	FP TimeSinceEaten;
 }
 
 synced event GhostStateChanged {

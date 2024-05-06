@@ -1,5 +1,6 @@
 using Quantum;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public unsafe class GhostAnimator : QuantumCallbacks {
 
@@ -10,10 +11,12 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     [SerializeField] private Sprite[] movementSprites, scaredSprites, eatenSprites;
     [SerializeField] private float animationSpeed = 4, flashTimeRemaining = 5, flashesPerSecond = 1;
 
-    [SerializeField] private ParticleSystem sparkles;
+    [SerializeField] private Light2D ghostLight;
+    [SerializeField] private Color scaredLightColor = Color.blue;
 
     //---Private Variables
     private Sprite[] currentSprites;
+    private Color originalLightColor;
 
     public void OnValidate() {
         if (!entity) {
@@ -22,11 +25,16 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
+        if (!ghostLight) {
+            ghostLight = GetComponentInChildren<Light2D>();
+        }
     }
 
     public void Start() {
         currentSprites = movementSprites;
         QuantumEvent.Subscribe<EventGhostStateChanged>(this, OnGhostStateChanged);
+
+        originalLightColor = ghostLight.color;
     }
 
     public override void OnUpdateView(QuantumGame game) {
@@ -57,5 +65,11 @@ public unsafe class GhostAnimator : QuantumCallbacks {
             GhostState.Eaten => eatenSprites,
             GhostState.Chase or _ => movementSprites,
         };
+
+        if (e.State == GhostState.Scared) {
+            ghostLight.color = scaredLightColor;
+        } else {
+            ghostLight.color = originalLightColor;
+        }
     }
 }

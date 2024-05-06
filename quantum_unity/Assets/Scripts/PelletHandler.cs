@@ -5,16 +5,27 @@ using UnityEngine;
 public class PelletHandler : MonoBehaviour {
 
     //---Serialized Variables
+    [SerializeField] private AudioSource audioSource;
+
     [SerializeField] private MapCustomDataAsset mapData;
     [SerializeField] private GameObject smallPelletPrefab;
     [SerializeField] private GameObject powerPelletPrefab;
 
+    [SerializeField] private AudioClip powerPelletClip;
+
     //---Private Variables
     private readonly Dictionary<int, GameObject> pellets = new();
+
+    public void OnValidate() {
+        if (!audioSource) {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
 
     public void Awake() {
         QuantumEvent.Subscribe<EventPelletRespawn>(this, OnEventPelletRespawn);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnEventPelletEat);
+        QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnEventPowerPelletEat);
 
         OnEventPelletRespawn(new EventPelletRespawn() {
             Configuration = 0
@@ -53,10 +64,14 @@ public class PelletHandler : MonoBehaviour {
                 }
 
                 GameObject newPellet = Instantiate(prefab, transform, true);
-                newPellet.transform.position = new Vector3(x, 0, y);
+                newPellet.transform.position = new Vector3(x, 0, y) + mapData.Settings.MapOrigin.XOY.ToUnityVector3();
                 pellets.Add(index - offset, newPellet);
             }
         }
+    }
+
+    public void OnEventPowerPelletEat(EventPowerPelletEat e) {
+        audioSource.PlayOneShot(powerPelletClip);
     }
 
     private void DestroyPellets() {

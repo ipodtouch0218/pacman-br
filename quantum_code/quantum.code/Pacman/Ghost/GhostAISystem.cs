@@ -12,6 +12,8 @@ namespace Quantum.Pacman.Ghost {
 
         public override void Update(Frame f, ref Filter filter) {
 
+            filter.Ghost->TimeSinceEaten += f.DeltaTime;
+
             if (filter.Ghost->GhostHouseState != GhostHouseState.NotInGhostHouse) {
                 // Don't handle ghost house movement.
                 return;
@@ -126,15 +128,17 @@ namespace Quantum.Pacman.Ghost {
                 break;
 
             case GhostState.Scared:
-                if (!pac->HasPowerPellet) {
+                if (pac->IsDead || !pac->HasPowerPellet) {
                     // Do nothing if we don't have a power pellet.
                     break;
                 }
                 ghost->ChangeState(f, info.Other, GhostState.Eaten);
+                ghost->TimeSinceEaten = 0;
                 ghost->GhostHouseState = GhostHouseState.ReturningToEntrance;
                 ghost->TargetPosition = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id).GhostHouse + FPVector2.Up * 3;
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
-                f.Signals.OnGameFreeze(FP._0_50);
+                //f.Signals.OnGameFreeze(FP._0_50);
+                f.Unsafe.GetPointer<GridMover>(info.Entity)->FreezeTime = FP._0_50;
                 break;
 
             case GhostState.Chase:

@@ -17,6 +17,12 @@ namespace Quantum.Pacman.Ghost {
                 return;
             }
 
+            if (filter.Mover->FreezeTime > 0) {
+                if ((filter.Mover->FreezeTime -= f.DeltaTime) > 0) {
+                    return;
+                }
+            }
+
             //TODO this sucks.
             if (f.Unsafe.TryGetPointer(filter.Entity, out PlayerLink* link)) {
                 // Player movement
@@ -76,14 +82,15 @@ namespace Quantum.Pacman.Ghost {
             }
 
             FPVector2 previousTile = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
-
-            if (CanMoveInDirection(f, ref filter, filter.Mover->Direction)) {
+            filter.Mover->IsStationary = !CanMoveInDirection(f, ref filter, filter.Mover->Direction);
+            if (!filter.Mover->IsStationary) {
                 // Move smoothly
                 filter.Transform->Position = MoveInDirection(f, filter.Transform->Position, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
                 filter.Mover->DistanceMoved += filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime;
             } else {
                 // Snap to whole number position
                 filter.Transform->Position = FPVectorUtils.Apply(filter.Transform->Position, FPMath.Round);
+
             }
 
             FPVector2 newTile = FPVectorUtils.WorldToCell(filter.Transform->Position, f);

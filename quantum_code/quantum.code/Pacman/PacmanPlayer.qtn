@@ -12,10 +12,6 @@ component PacmanPlayer {
 	FP Invincibility;
 }
 
-component PacmanParent {
-	entity_ref Entity;
-}
-
 signal OnCharacterEaten(entity_ref entity, entity_ref other);
 
 synced event CharacterEaten {

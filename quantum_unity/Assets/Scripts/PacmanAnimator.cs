@@ -1,6 +1,7 @@
 using Quantum;
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public unsafe class PacmanAnimator : QuantumCallbacks {
 
@@ -12,9 +13,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     [SerializeField] private ParticleSystem respawnParticles, sparkleParticles;
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private Sprite[] movementSprites, scaredMovementSprites, deathSprites;
+    [SerializeField] private Sprite[] movementSprites, deathSprites;
     [SerializeField] private AudioClip wa, ka, death;
     [SerializeField] private AudioClip[] eatClips;
+
+    [SerializeField] private Color scaredColor;
+    [SerializeField] private Color[] playerColors;
+    [SerializeField] private Light2D light;
 
     private bool invulnerable;
     private float invulnerableTimer;
@@ -22,6 +27,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     private bool dead;
     private float deathAnimationTimer, deathParticlesTimer;
     private bool waSound;
+
+    private MaterialPropertyBlock mpb;
+
 
     public void OnValidate() {
         if (!entity) {
@@ -33,9 +41,12 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         if (!audioSource) {
             audioSource = GetComponent<AudioSource>();
         }
+        if (!light) {
+            light = GetComponent<Light2D>();
+        }
     }
 
-    public void Start() {
+    public void Awake() {
         QuantumEvent.Subscribe<EventPacmanKilled>(this, OnPacmanKilled);
         QuantumEvent.Subscribe<EventPacmanRespawned>(this, OnPacmanRespawned);
         QuantumEvent.Subscribe<EventPacmanVulnerable>(this, OnPacmanVulnerable);
@@ -46,6 +57,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
         OnPacmanCreated?.Invoke(this);
+
+        mpb = new();
+        spriteRenderer.GetPropertyBlock(mpb);
     }
 
     public void Update() {
@@ -84,11 +98,34 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             return;
         }
 
+        Color playerColor = Color.gray;
+        if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
+            playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
+        }
+
+        if (game.Frames.Predicted.Global->PowerPelletDuration > 0 && !pac.HasPowerPellet) {
+            // Scared
+            mpb.SetColor("_BaseColor", scaredColor);
+            mpb.SetColor("_OutlineColor", playerColor);
+            light.color = scaredColor;
+        } else {
+            // Other
+            mpb.SetColor("_BaseColor", playerColor);
+            mpb.SetColor("_OutlineColor", Color.white);
+            light.color = playerColor;
+        }
+        spriteRenderer.SetPropertyBlock(mpb);
+
         if (!dead) {
-            var sprites = game.Frames.Predicted.Global->PowerPelletDuration > 0 ? (pac.HasPowerPellet ? movementSprites : scaredMovementSprites) : movementSprites;
-            int spritesPerCycle = sprites.Length / 4;
-            int index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle) - 0.001f + (spritesPerCycle * mover.Direction));
-            spriteRenderer.sprite = sprites[index];
+            int spritesPerCycle = movementSprites.Length / 4;
+            int offset = spritesPerCycle * mover.Direction;
+            int index;
+            if (mover.IsStationary) {
+                index = Mathf.FloorToInt(spritesPerCycle / 2) + offset;
+            } else {
+                index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle) - 0.001f) + offset;
+            }
+            spriteRenderer.sprite = movementSprites[index];
         }
     }
 

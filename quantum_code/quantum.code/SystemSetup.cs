@@ -22,7 +22,6 @@ namespace Quantum {
                 new Core.PlayerConnectedSystem(),
 
                 // user systems go here
-                new PacmanParentSystem(),
                 new FreezableSystemGroup("Freezable Systems", new SystemMainThread[] {
                     new GhostAISystem(),
                     new GridMovementSystem(),

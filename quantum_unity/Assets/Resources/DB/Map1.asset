@@ -57,6 +57,8 @@ MonoBehaviour:
       GhostHouseState: 0
       GhostHouseWaitTime:
         RawValue: 0
+      TimeSinceEaten:
+        RawValue: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -65,9 +67,12 @@ MonoBehaviour:
       Direction: 0
       IsLocked:
         Value: 0
+      IsStationary:
+        Value: 0
       DistanceMoved:
         RawValue: 0
-    PacmanParent: []
+      FreezeTime:
+        RawValue: 0
     PacmanPlayer: []
     PlayerLink: []
     CharacterController2D: []
@@ -140,6 +145,8 @@ MonoBehaviour:
       GhostHouseState: 4
       GhostHouseWaitTime:
         RawValue: 655360
+      TimeSinceEaten:
+        RawValue: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -148,9 +155,12 @@ MonoBehaviour:
       Direction: 0
       IsLocked:
         Value: 0
+      IsStationary:
+        Value: 0
       DistanceMoved:
         RawValue: 0
-    PacmanParent: []
+      FreezeTime:
+        RawValue: 0
     PacmanPlayer: []
     PlayerLink: []
     CharacterController2D: []
@@ -223,6 +233,8 @@ MonoBehaviour:
       GhostHouseState: 4
       GhostHouseWaitTime:
         RawValue: 983040
+      TimeSinceEaten:
+        RawValue: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -231,9 +243,12 @@ MonoBehaviour:
       Direction: 0
       IsLocked:
         Value: 0
+      IsStationary:
+        Value: 0
       DistanceMoved:
         RawValue: 0
-    PacmanParent: []
+      FreezeTime:
+        RawValue: 0
     PacmanPlayer: []
     PlayerLink: []
     CharacterController2D: []
@@ -306,6 +321,8 @@ MonoBehaviour:
       GhostHouseState: 4
       GhostHouseWaitTime:
         RawValue: 1310720
+      TimeSinceEaten:
+        RawValue: 0
     GridMover:
     - Speed:
         RawValue: 524288
@@ -314,9 +331,12 @@ MonoBehaviour:
       Direction: 0
       IsLocked:
         Value: 0
+      IsStationary:
+        Value: 0
       DistanceMoved:
         RawValue: 0
-    PacmanParent: []
+      FreezeTime:
+        RawValue: 0
     PacmanPlayer: []
     PlayerLink: []
     CharacterController2D: []

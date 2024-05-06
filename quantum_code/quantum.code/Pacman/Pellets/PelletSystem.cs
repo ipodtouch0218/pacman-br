@@ -71,7 +71,7 @@ namespace Quantum.Pacman.Pellets {
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
-            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)) {
+            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player) || !f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 return;
             }
 
@@ -87,8 +87,9 @@ namespace Quantum.Pacman.Pellets {
             player->PelletChain++;
             player->PelletsEaten++;
             if (value == 2) {
-                player->HasPowerPellet = true;
                 f.Signals.OnPowerPelletStart();
+                player->HasPowerPellet = true;
+                mover->SpeedMultiplier = FP._1;
 
                 f.Global->PowerPelletDuration = 10;
                 f.Global->PowerPelletTotalDuration = 10;

@@ -49,20 +49,29 @@ namespace Quantum.Pacman.Ghost {
                     ghost->TargetPosition = mapdata.GhostHouse;
                     break;
                 case GhostHouseState.MovingToCenter:
-                    ghost->ChangeState(f, entity, GhostState.Chase);
-                    ghost->GhostHouseState = GhostHouseState.MovingToSide;
-
                     FPVector2 ghostHouseCenter = mapdata.GhostHouse;
-                    ghost->TargetPosition = ghostHouseCenter + ghost->Mode switch {
-                        GhostTargetMode.Inky => FPVector2.Left * 2,
-                        GhostTargetMode.Clyde => FPVector2.Right * 2,
-                        _ => FPVector2.Zero,
-                    };
+                    switch (ghost->Mode) {
+                    case GhostTargetMode.Inky:
+                        ghost->TargetPosition = ghostHouseCenter + FPVector2.Left * 2;
+                        ghost->GhostHouseState = GhostHouseState.MovingToSide;
+                        break;
+                    case GhostTargetMode.Clyde:
+                        ghost->TargetPosition = ghostHouseCenter + FPVector2.Right * 2;
+                        ghost->GhostHouseState = GhostHouseState.MovingToSide;
+                        break;
+                    default:
+                        ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
+                        ghost->GhostHouseWaitTime = 1;
+                        ghost->ChangeState(f, entity, GhostState.Chase);
+                        ghost->GhostHouseState = GhostHouseState.Waiting;
+                        break;
+                    }
                     break;
                 case GhostHouseState.MovingToSide:
                     ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
                     ghost->GhostHouseState = GhostHouseState.Waiting;
                     ghost->GhostHouseWaitTime = 1;
+                    ghost->ChangeState(f, entity, GhostState.Chase);
                     break;
                 case GhostHouseState.Waiting:
                     bool readyToLeave = ghost->GhostHouseWaitTime <= 0;
