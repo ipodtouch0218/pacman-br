@@ -1,7 +1,7 @@
 ﻿using Photon.Deterministic;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart {
 
         public struct Filter {
             public EntityRef Entity;
@@ -30,7 +30,7 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
-            if (pac->HasPowerPellet) {
+            if (pac->PowerPelletTimer > 0 && filter.Mover->FreezeTime <= 0) {
                 var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
                 for (int i = 0; i < hits.Count; i++) {
                     var hit = hits[i];
@@ -55,23 +55,19 @@ namespace Quantum.Pacman.Ghost {
             }
         }
 
-        public void OnPowerPelletStart(Frame f) {
-            var filter = f.Filter<PacmanPlayer, GridMover>();
-
-            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman, out GridMover* mover)) {
+        public void OnPowerPelletStart(Frame f, EntityRef entity) {
+            if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)) {
                 pacman->GhostCombo = 0;
-                if (!pacman->HasPowerPellet) {
-                    mover->SpeedMultiplier = FP.FromString("0.85");
-                }
             }
-        }
-
-        public void OnPowerPelletEnd(Frame f) {
-            var filter = f.Filter<PacmanPlayer, GridMover>();
-
-            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman, out GridMover* mover)) {
-                pacman->HasPowerPellet = false;
+            if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 mover->SpeedMultiplier = FP._1;
+            }
+
+            var filter = f.Filter<PacmanPlayer, GridMover>();
+            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman2, out GridMover* mover2)) {
+                if (!pacman2->HasPowerPellet) {
+                    mover2->SpeedMultiplier = FP.FromString("0.85");
+                }
             }
         }
 
@@ -91,13 +87,19 @@ namespace Quantum.Pacman.Ghost {
         public void OnPacmanKilled(Frame f, EntityRef entity) {
             if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pac)) {
                 pac->IsDead = true;
+                pac->RespawnTimer = 5;
+
+                if (pac->HasPowerPellet) {
+                    pac->PowerPelletTimer = 0;
+                    f.Signals.OnPowerPelletEnd(entity);
+                    f.Events.PowerPelletEnd(entity);
+                }
             }
 
             if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 mover->IsLocked = true;
             }
 
-            pac->RespawnTimer = 5;
             f.Events.PacmanKilled(entity, pac->RespawnTimer);
         }
 

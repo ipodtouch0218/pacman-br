@@ -3,7 +3,7 @@ using Quantum.Collections;
 using Quantum.Util;
 
 namespace Quantum.Pacman.Pellets {
-    public unsafe class PelletSystem : SystemMainThread, ISignalOnPacmanRespawned, ISignalOnGridMoverChangeTile {
+    public unsafe class PelletSystem : SystemMainThread, ISignalOnPowerPelletEnd, ISignalOnPacmanRespawned, ISignalOnGridMoverChangeTile {
 
         public override void OnInit(Frame f) {
             f.Global->PelletData = f.AllocateDictionary<FPVector2, byte>();
@@ -12,13 +12,22 @@ namespace Quantum.Pacman.Pellets {
         }
 
         public override void Update(Frame f) {
-            if (f.Global->PowerPelletDuration > 0) {
-                if ((f.Global->PowerPelletDuration -= f.DeltaTime) <= 0) {
-                    f.Global->PowerPelletDuration = 0;
-                    f.Signals.OnPowerPelletEnd();
-                    f.Events.PowerPelletEnd();
+            FP remainingPowerPelletTime = 0;
+
+            var filtered = f.Filter<PacmanPlayer>();
+            while (filtered.NextUnsafe(out EntityRef entity, out PacmanPlayer* player)) {
+                if (player->PowerPelletTimer > 0) {
+                    if ((player->PowerPelletTimer -= f.DeltaTime) <= 0) {
+                        player->PowerPelletTimer = 0;
+                        f.Signals.OnPowerPelletEnd(entity);
+                        f.Events.PowerPelletEnd(entity);
+                    }
                 }
+
+                remainingPowerPelletTime = FPMath.Max(remainingPowerPelletTime, player->PowerPelletTimer);
             }
+
+            f.Global->PowerPelletRemainingTime = remainingPowerPelletTime;
         }
 
         public static void SpawnNewPellets(Frame f, int pelletConfig) {
@@ -87,12 +96,9 @@ namespace Quantum.Pacman.Pellets {
             player->PelletChain++;
             player->PelletsEaten++;
             if (value == 2) {
-                f.Signals.OnPowerPelletStart();
-                player->HasPowerPellet = true;
+                f.Signals.OnPowerPelletStart(entity);
+                player->PowerPelletTimer = FP._10;
                 mover->SpeedMultiplier = FP._1;
-
-                f.Global->PowerPelletDuration = 10;
-                f.Global->PowerPelletTotalDuration = 10;
 
                 f.Events.PowerPelletEat(entity);
             }
@@ -108,6 +114,30 @@ namespace Quantum.Pacman.Pellets {
                 int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
 
                 SpawnNewPellets(f, f.Global->RngSession.Next(0, designs));
+            }
+        }
+
+        public void OnPowerPelletEnd(Frame f, EntityRef pacman) {
+
+            bool playerHasPowerPellet = false;
+            var filtererdPacman = f.Filter<PacmanPlayer>();
+            while (filtererdPacman.Next(out _, out PacmanPlayer otherPacman)) {
+                playerHasPowerPellet |= otherPacman.HasPowerPellet;
+            }
+
+            if (!playerHasPowerPellet) {
+                // No longer power pellet
+                var filteredGhosts = f.Filter<GridMover, Quantum.Ghost>();
+                while (filteredGhosts.NextUnsafe(out EntityRef entity, out GridMover* mover, out Quantum.Ghost* ghost)) {
+                    if (ghost->State == GhostState.Scared) {
+                        ghost->ChangeState(f, entity, GhostState.Chase);
+                    }
+                }
+
+                var filteredPacman2 = f.Filter<PacmanPlayer, GridMover>();
+                while (filteredPacman2.NextUnsafe(out _, out _, out GridMover* mover)) {
+                    mover->SpeedMultiplier = FP._1;
+                }
             }
         }
     }

@@ -7,14 +7,23 @@ public class GridColorHandler : QuantumCallbacks {
     [SerializeField] private TilemapRenderer tilemapRenderer;
     [SerializeField] private Gradient gradient;
 
+    [SerializeField] private float gradientStartSeconds = 5f;
+
     private MaterialPropertyBlock mpb;
 
     public override unsafe void OnUpdateView(QuantumGame game) {
         var globals = game.Frames.Predicted.Global;
-        float percentage = 1;
 
-        if (globals->PowerPelletTotalDuration != 0) {
-            percentage = 1f - (globals->PowerPelletDuration / globals->PowerPelletTotalDuration).AsFloat;
+        float remainingTime = globals->PowerPelletRemainingTime.AsFloat;
+        float percentage;
+        if (remainingTime > 0) {
+            if (remainingTime < gradientStartSeconds) {
+                percentage = 1f - (remainingTime / gradientStartSeconds);
+            } else {
+                percentage = 0;
+            }
+        } else {
+            percentage = 1;
         }
 
         if (mpb == null) {

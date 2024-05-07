@@ -1,4 +1,5 @@
 using Quantum;
+using Quantum.Util;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -11,12 +12,17 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     [SerializeField] private Sprite[] movementSprites, scaredSprites, eatenSprites;
     [SerializeField] private float animationSpeed = 4, flashTimeRemaining = 5, flashesPerSecond = 1;
 
+    [SerializeField] private ParticleSystem trailParticle;
+
     [SerializeField] private Light2D ghostLight;
     [SerializeField] private Color scaredLightColor = Color.blue;
 
     //---Private Variables
     private Sprite[] currentSprites;
     private Color originalLightColor;
+
+    private ParticleSystemRenderer trailRenderer;
+    private MaterialPropertyBlock trailMpb;
 
     public void OnValidate() {
         if (!entity) {
@@ -33,8 +39,22 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     public void Start() {
         currentSprites = movementSprites;
         QuantumEvent.Subscribe<EventGhostStateChanged>(this, OnGhostStateChanged);
+        QuantumEvent.Subscribe<EventGridMoverReachedCenterOfTile>(this, OnGridMoverReachedCenterOfTile);
 
         originalLightColor = ghostLight.color;
+        trailRenderer = trailParticle.GetComponent<ParticleSystemRenderer>();
+        trailRenderer.GetPropertyBlock(trailMpb = new());
+    }
+
+    public void Initialized(QuantumGame game) {
+        Ghost ghost = game.Frames.Predicted.Get<Ghost>(entity.EntityRef);
+        OnGhostStateChanged(new EventGhostStateChanged() {
+            Frame = game.Frames.Predicted,
+            Entity = entity.EntityRef,
+            Game = game,
+            State = ghost.State,
+            Tick = game.Frames.Predicted.Number
+        });
     }
 
     public override void OnUpdateView(QuantumGame game) {
@@ -43,8 +63,8 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         }
 
         if (currentSprites == scaredSprites) {
-            float flashPeriod = 1f / flashesPerSecond;
-            float scaredTimeRemaining = game.Frames.Predicted.Global->PowerPelletDuration.AsFloat;
+            float scaredTimeRemaining = game.Frames.Predicted.Global->PowerPelletRemainingTime.AsFloat;
+            float flashPeriod = 1f / (flashesPerSecond * (scaredTimeRemaining < 1 ? 2 : 1));
             int offset = ((scaredTimeRemaining < flashTimeRemaining) && (scaredTimeRemaining % flashPeriod) < (flashPeriod / 2)) ? 2 : 0;
             int index = (int) ((mover.DistanceMoved.AsFloat * animationSpeed) % (currentSprites.Length / 2)) + offset;
             spriteRenderer.sprite = currentSprites[index];
@@ -60,16 +80,39 @@ public unsafe class GhostAnimator : QuantumCallbacks {
             return;
         }
 
-        currentSprites = e.State switch {
-            GhostState.Scared => scaredSprites,
-            GhostState.Eaten => eatenSprites,
-            GhostState.Chase or _ => movementSprites,
-        };
-
-        if (e.State == GhostState.Scared) {
-            ghostLight.color = scaredLightColor;
-        } else {
+        var emission = trailParticle.emission;
+        switch (e.State) {
+        case GhostState.Chase:
+            currentSprites = movementSprites;
             ghostLight.color = originalLightColor;
+            trailMpb.SetColor("_AdditiveColor", originalLightColor);
+            break;
+        case GhostState.Scared:
+            currentSprites = scaredSprites;
+            ghostLight.color = scaredLightColor;
+            trailMpb.SetColor("_AdditiveColor", scaredLightColor);
+            break;
+        case GhostState.Eaten:
+            currentSprites = eatenSprites;
+            ghostLight.color = originalLightColor;
+            emission.enabled = false;
+            break;
         }
+        trailRenderer.SetPropertyBlock(trailMpb);
+    }
+
+    public void OnGridMoverReachedCenterOfTile(EventGridMoverReachedCenterOfTile e) {
+        if (e.Entity != entity.EntityRef) {
+            return;
+        }
+
+        Ghost ghost = e.Game.Frames.Predicted.Get<Ghost>(e.Entity);
+        if (ghost.GhostHouseState != GhostHouseState.NotInGhostHouse) {
+            return;
+        }
+
+        Vector3 worldPosition = FPVectorUtils.CellToWorld(e.Tile, e.Game.Frames.Predicted).XOY.ToUnityVector3();
+        trailParticle.transform.position = worldPosition;
+        trailParticle.Emit(1);
     }
 }

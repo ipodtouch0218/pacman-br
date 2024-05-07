@@ -1,12 +1,18 @@
+using Photon.Deterministic;
 using Quantum;
 using Quantum.Util;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PointHandler : MonoBehaviour {
 
+    //---Serialized Variables
     [SerializeField] private PointIndicator prefab;
     [SerializeField] private PelletPointIndicator pelletPrefab;
     [SerializeField] private Vector3 offset;
+
+    //---Private Variables
+    private readonly Dictionary<FPVector2, GameObject> pelletIndicators = new();
 
     public void Start() {
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
@@ -23,7 +29,12 @@ public class PointHandler : MonoBehaviour {
     }
 
     public void OnPelletEat(EventPelletEat e) {
+        if (pelletIndicators.TryGetValue(e.Tile, out GameObject obj) && obj) {
+            Destroy(obj);
+        }
+
         PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, e.Frame).ToUnityVector3(), prefab.transform.rotation);
         indicator.Initialize(e.Chain);
+        pelletIndicators[e.Tile] = indicator.gameObject;
     }
 }

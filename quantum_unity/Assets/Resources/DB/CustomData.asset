@@ -34,13 +34,13 @@ MonoBehaviour:
         X:
           RawValue: 1376256
         Y:
-          RawValue: 245761
+          RawValue: 262144
       Direction: 0
     - Position:
         X:
           RawValue: 1376256
         Y:
-          RawValue: 1032191
+          RawValue: 1048576
       Direction: 0
     MapOrigin:
       X:

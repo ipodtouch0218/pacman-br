@@ -88,6 +88,7 @@
     <Compile Include="Pacman\Movement\GridMovementSystem.cs" />
     <Compile Include="Pacman\Movement\GridMover.cs" />
     <Compile Include="MapCustomData.cs" />
+    <Compile Include="Pacman\PacmanPlayer.cs" />
     <Compile Include="Pacman\PacmanSystem.cs" />
     <Compile Include="Pacman\Pellets\PelletSystem.cs" />
     <Compile Include="Platformer\PlayerSpawnSystem.cs" />

@@ -45,7 +45,7 @@ namespace Quantum.Pacman.Ghost {
             if (reachedTarget) {
                 switch (ghost->GhostHouseState) {
                 case GhostHouseState.ReturningToEntrance:
-                    ghost->GhostHouseState = GhostHouseState.MovingToCenter;
+                    ChangeGhostHouseState(f, entity, ghost, GhostHouseState.MovingToCenter);
                     ghost->TargetPosition = mapdata.GhostHouse;
                     break;
                 case GhostHouseState.MovingToCenter:
@@ -53,23 +53,23 @@ namespace Quantum.Pacman.Ghost {
                     switch (ghost->Mode) {
                     case GhostTargetMode.Inky:
                         ghost->TargetPosition = ghostHouseCenter + FPVector2.Left * 2;
-                        ghost->GhostHouseState = GhostHouseState.MovingToSide;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.MovingToSide);
                         break;
                     case GhostTargetMode.Clyde:
                         ghost->TargetPosition = ghostHouseCenter + FPVector2.Right * 2;
-                        ghost->GhostHouseState = GhostHouseState.MovingToSide;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.MovingToSide);
                         break;
                     default:
                         ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
                         ghost->GhostHouseWaitTime = 1;
                         ghost->ChangeState(f, entity, GhostState.Chase);
-                        ghost->GhostHouseState = GhostHouseState.Waiting;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Waiting);
                         break;
                     }
                     break;
                 case GhostHouseState.MovingToSide:
                     ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
-                    ghost->GhostHouseState = GhostHouseState.Waiting;
+                    ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Waiting);
                     ghost->GhostHouseWaitTime = 1;
                     ghost->ChangeState(f, entity, GhostState.Chase);
                     break;
@@ -81,7 +81,7 @@ namespace Quantum.Pacman.Ghost {
 
                     if (queue.IndexOf(entity) == 0) {
                         ghost->TargetPosition.Y = mapdata.GhostHouse.Y;
-                        ghost->GhostHouseState = GhostHouseState.AlignVertical;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.AlignVertical);
                     } else {
                         ghost->TargetPosition.Y = mapdata.GhostHouse.Y + (ghost->TargetPosition.Y > mapdata.GhostHouse.Y ? -1 : 1);
                     }
@@ -90,25 +90,30 @@ namespace Quantum.Pacman.Ghost {
                 case GhostHouseState.AlignVertical:
                     if (ghost->TargetPosition.X != mapdata.GhostHouse.X) {
                         ghost->TargetPosition.X = mapdata.GhostHouse.X;
-                        ghost->GhostHouseState = GhostHouseState.AlignHorizontal;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.AlignHorizontal);
                     } else {
                         ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
                         mover->SpeedMultiplier = FP._0_33;
-                        ghost->GhostHouseState = GhostHouseState.Leaving;
+                        ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Leaving);
                     }
                     break;
                 case GhostHouseState.AlignHorizontal:
                     ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
                     mover->SpeedMultiplier = FP._0_33;
-                    ghost->GhostHouseState = GhostHouseState.Leaving;
+                    ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Leaving);
                     break;
                 case GhostHouseState.Leaving:
                     ghost->SetSpeedMultiplier(mover);
-                    ghost->GhostHouseState = GhostHouseState.NotInGhostHouse;
+                    ChangeGhostHouseState(f, entity, ghost, GhostHouseState.NotInGhostHouse);
                     queue.Remove(entity);
                     break;
                 }
             }
+        }
+
+        public static void ChangeGhostHouseState(Frame f, EntityRef entity, Quantum.Ghost* ghost, GhostHouseState state) {
+            ghost->GhostHouseState = state;
+            f.Events.GhostHouseStateChanged(f, entity, state);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Quantum.Util;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class GhostAISystem : SystemMainThreadFilter<GhostAISystem.Filter>, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd, ISignalOnTrigger2D {
+    public unsafe class GhostAISystem : SystemMainThreadFilter<GhostAISystem.Filter>, ISignalOnPowerPelletStart, ISignalOnTrigger2D {
         public struct Filter {
             public EntityRef Entity;
             public Transform2D* Transform;
@@ -94,7 +94,7 @@ namespace Quantum.Pacman.Ghost {
             filter.Ghost->TargetPosition = target;
         }
 
-        public void OnPowerPelletStart(Frame f) {
+        public void OnPowerPelletStart(Frame f, EntityRef pacman) {
             var filtered = f.Filter<GridMover, Quantum.Ghost>();
             while (filtered.NextUnsafe(out EntityRef entity, out GridMover* mover, out Quantum.Ghost* ghost)) {
                 if (ghost->State == GhostState.Chase) {
@@ -104,17 +104,12 @@ namespace Quantum.Pacman.Ghost {
             }
         }
 
-        public void OnPowerPelletEnd(Frame f) {
-            var filtered = f.Filter<GridMover, Quantum.Ghost>();
-            while (filtered.NextUnsafe(out EntityRef entity, out GridMover* mover, out Quantum.Ghost* ghost)) {
-                if (ghost->State == GhostState.Scared) {
-                    ghost->ChangeState(f, entity, GhostState.Chase);
-                }
-            }
-        }
-
         public void OnTrigger2D(Frame f, TriggerInfo2D info) {
             if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac) || pac->IsDead) {
+                return;
+            }
+
+            if (!f.Unsafe.TryGetPointer(info.Entity, out GridMover* pacMover) || pacMover->FreezeTime > 0) {
                 return;
             }
 
@@ -134,11 +129,12 @@ namespace Quantum.Pacman.Ghost {
                 }
                 ghost->ChangeState(f, info.Other, GhostState.Eaten);
                 ghost->TimeSinceEaten = 0;
-                ghost->GhostHouseState = GhostHouseState.ReturningToEntrance;
+                GhostHouseSystem.ChangeGhostHouseState(f, info.Other, ghost, GhostHouseState.ReturningToEntrance);
                 ghost->TargetPosition = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id).GhostHouse + FPVector2.Up * 3;
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
                 //f.Signals.OnGameFreeze(FP._0_50);
-                f.Unsafe.GetPointer<GridMover>(info.Entity)->FreezeTime = FP._0_50;
+                pacMover->FreezeTime = FP._0_50;
+                f.Unsafe.GetPointer<GridMover>(info.Other)->FreezeTime = FP._0_50;
                 break;
 
             case GhostState.Chase:

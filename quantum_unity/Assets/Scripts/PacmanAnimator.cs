@@ -8,7 +8,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     public static event Action<PacmanAnimator> OnPacmanCreated;
 
     [SerializeField] public EntityView entity;
-    [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f;
+    [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private ParticleSystem respawnParticles, sparkleParticles;
     [SerializeField] private AudioSource audioSource;
@@ -103,7 +103,25 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
         }
 
-        if (game.Frames.Predicted.Global->PowerPelletDuration > 0 && !pac.HasPowerPellet) {
+        float timeSinceStart = game.Frames.Predicted.Global->TimeSinceGameStart.AsFloat;
+        float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
+        float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
+        bool scaredFlash = (pelletTimeRemaining < scaredBlinkStart) && (timeSinceStart % scaredBlinkPeriod < (scaredBlinkPeriod / 2));
+
+        bool otherPlayerHasPellet = false;
+        var filter = game.Frames.Predicted.Filter<PacmanPlayer>();
+        while (filter.Next(out EntityRef otherEntity, out PacmanPlayer otherPac)) {
+            if (otherEntity == entity.EntityRef) {
+                continue;
+            }
+
+            if (otherPac.HasPowerPellet) {
+                otherPlayerHasPellet = true;
+                break;
+            }
+        }
+
+        if (otherPlayerHasPellet && (!pac.HasPowerPellet || scaredFlash)) {
             // Scared
             mpb.SetColor("_BaseColor", scaredColor);
             mpb.SetColor("_OutlineColor", playerColor);

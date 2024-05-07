@@ -81,21 +81,28 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
-            FPVector2 previousTile = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
+            FPVector2 previousPosition = filter.Transform->Position;
+            FPVector2 previousTile = FPVectorUtils.WorldToCell(previousPosition, f);
             filter.Mover->IsStationary = !CanMoveInDirection(f, ref filter, filter.Mover->Direction);
             if (!filter.Mover->IsStationary) {
                 // Move smoothly
-                filter.Transform->Position = MoveInDirection(f, filter.Transform->Position, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
+                filter.Transform->Position = MoveInDirection(f, previousPosition, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
                 filter.Mover->DistanceMoved += filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime;
             } else {
                 // Snap to whole number position
-                filter.Transform->Position = FPVectorUtils.Apply(filter.Transform->Position, FPMath.Round);
-
+                filter.Transform->Position = FPVectorUtils.Apply(previousPosition, FPMath.Round);
             }
 
+            // Changed tile
             FPVector2 newTile = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
             if (previousTile != newTile) {
                 f.Signals.OnGridMoverChangeTile(filter.Entity, newTile);
+                f.Events.GridMoverChangeTile(filter.Entity, newTile);
+            }
+
+            // Crossed center of tile
+            if (FPVectorUtils.Apply(previousPosition * 2, FPMath.Round) != FPVectorUtils.Apply(filter.Transform->Position * 2, FPMath.Round)) {
+                f.Events.GridMoverReachedCenterOfTile(filter.Entity, newTile);
             }
         }
 

@@ -3,7 +3,7 @@ component PacmanPlayer {
 	int PelletChain;
 	int Score;
 
-	bool HasPowerPellet;
+	FP PowerPelletTimer;
 	int GhostCombo;
 
 	bool IsDead;

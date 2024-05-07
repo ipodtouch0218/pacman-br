@@ -14,10 +14,11 @@ synced event PowerPelletEat {
 }
 
 synced event PowerPelletEnd {
+	entity_ref Entity;
 }
 
 signal OnPelletEat();
 
-signal OnPowerPelletEnd();
+signal OnPowerPelletStart(entity_ref entity);
 
-signal OnPowerPelletStart();
+signal OnPowerPelletEnd(entity_ref entity);
