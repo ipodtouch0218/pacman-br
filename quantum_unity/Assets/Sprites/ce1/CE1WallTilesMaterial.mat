@@ -81,6 +81,10 @@ Material:
     m_Floats:
     - _Afterimage_Alpha: 0.6
     - _EnableExternalAlpha: 0
+    - _WaveAlpha: 0.25
+    - _WaveHeight: 3.2
+    - _WaveIntensity: 0
+    - _WaveSpeed: 15
     m_Colors:
     - _Afterimage_Color: {r: 0.312, g: 0, b: 1, a: 1}
     - _Afterimage_Offset: {r: 0, g: 0.1, b: 0, a: 0}
@@ -89,4 +93,5 @@ Material:
     - _GlowColor: {r: 0, g: 0, b: 1, a: 1}
     - _InsetColor: {r: 0.3019608, g: 0, b: 0.6470588, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Tiles: {r: 4, g: 4, b: 0, a: 0}
   m_BuildTextureStacks: []

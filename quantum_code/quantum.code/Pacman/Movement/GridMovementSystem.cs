@@ -18,9 +18,10 @@ namespace Quantum.Pacman.Ghost {
             }
 
             if (filter.Mover->FreezeTime > 0) {
-                if ((filter.Mover->FreezeTime -= f.DeltaTime) > 0) {
-                    return;
+                if ((filter.Mover->FreezeTime -= f.DeltaTime) <= 0) {
+                    filter.Mover->FreezeTime = 0;
                 }
+                return;
             }
 
             //TODO this sucks.

@@ -95,6 +95,7 @@ namespace Quantum.Pacman.Pellets {
 
             player->PelletChain++;
             player->PelletsEaten++;
+            mover->FreezeTime += f.DeltaTime;
             if (value == 2) {
                 f.Signals.OnPowerPelletStart(entity);
                 player->PowerPelletTimer = FP._10;

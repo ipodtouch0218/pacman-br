@@ -8,8 +8,14 @@ public class GridColorHandler : QuantumCallbacks {
     [SerializeField] private Gradient gradient;
 
     [SerializeField] private float gradientStartSeconds = 5f;
+    [SerializeField] private float maxWaveIntensity = 0.07f;
 
     private MaterialPropertyBlock mpb;
+
+    private void Start() {
+        mpb = new();
+        tilemapRenderer.GetPropertyBlock(mpb);
+    }
 
     public override unsafe void OnUpdateView(QuantumGame game) {
         var globals = game.Frames.Predicted.Global;
@@ -26,11 +32,8 @@ public class GridColorHandler : QuantumCallbacks {
             percentage = 1;
         }
 
-        if (mpb == null) {
-            mpb = new();
-            tilemapRenderer.GetPropertyBlock(mpb);
-        }
         mpb.SetColor("_Color", gradient.Evaluate(percentage));
+        mpb.SetFloat("_WaveIntensity", (1f - percentage) * maxWaveIntensity);
         tilemapRenderer.SetPropertyBlock(mpb);
     }
 }
