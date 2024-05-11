@@ -11,6 +11,10 @@ public class LoopingAudioClip {
     public int Length => LoopEndSamples - LoopStartSamples;
 
     public static void Update(AudioSource source, LoopingAudioClip clip) {
+        if (clip == null) {
+            return;
+        }
+
         if (source.timeSamples >= clip.LoopEndSamples) {
             source.timeSamples -= clip.Length;
         }

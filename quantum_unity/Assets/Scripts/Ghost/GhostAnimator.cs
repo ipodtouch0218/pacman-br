@@ -13,6 +13,7 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     [SerializeField] private float animationSpeed = 4, flashTimeRemaining = 5, flashesPerSecond = 1;
 
     [SerializeField] private ParticleSystem trailParticle;
+    [SerializeField] private GameObject eyeTrails;
 
     [SerializeField] private Light2D ghostLight;
     [SerializeField] private Color scaredLightColor = Color.blue;
@@ -42,6 +43,7 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventGridMoverReachedCenterOfTile>(this, OnGridMoverReachedCenterOfTile);
 
         originalLightColor = ghostLight.color;
+        eyeTrails.SetActive(false);
         trailRenderer = trailParticle.GetComponent<ParticleSystemRenderer>();
         trailRenderer.GetPropertyBlock(trailMpb = new());
     }
@@ -86,16 +88,19 @@ public unsafe class GhostAnimator : QuantumCallbacks {
             currentSprites = movementSprites;
             ghostLight.color = originalLightColor;
             trailMpb.SetColor("_AdditiveColor", originalLightColor);
+            eyeTrails.SetActive(false);
             break;
         case GhostState.Scared:
             currentSprites = scaredSprites;
             ghostLight.color = scaredLightColor;
             trailMpb.SetColor("_AdditiveColor", scaredLightColor);
+            eyeTrails.SetActive(false);
             break;
         case GhostState.Eaten:
             currentSprites = eatenSprites;
             ghostLight.color = originalLightColor;
             emission.enabled = false;
+            eyeTrails.SetActive(true);
             break;
         }
         trailRenderer.SetPropertyBlock(trailMpb);

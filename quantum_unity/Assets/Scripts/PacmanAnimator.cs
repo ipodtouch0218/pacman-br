@@ -182,7 +182,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             return;
         }
 
-        sparkleParticles.transform.rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0, 360f), Vector3.up) * sparkleParticles.transform.rotation;
+        int direction = e.Frame.Get<GridMover>(e.Pacman).Direction;
+        Vector3 newForward = GridMover.DirectionToVector(direction).XOY.ToUnityVector3();
+        sparkleParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
         sparkleParticles.Play();
 
         audioSource.PlayOneShot(eatClips[Mathf.Min(e.Combo - 1, eatClips.Length - 1)]);
