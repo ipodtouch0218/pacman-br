@@ -1,6 +1,7 @@
 global {
 	FP FreezeDuration;
 	FP TimeSinceGameStart;
+	FP TimerDuration;
 }
 
 signal OnGameFreeze(FP duration);

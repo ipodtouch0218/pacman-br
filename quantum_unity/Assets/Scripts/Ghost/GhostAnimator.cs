@@ -13,7 +13,8 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     [SerializeField] private float animationSpeed = 4, flashTimeRemaining = 5, flashesPerSecond = 1;
 
     [SerializeField] private ParticleSystem trailParticle;
-    [SerializeField] private GameObject eyeTrails;
+    [SerializeField] private GameObject eyeTrail;
+    [SerializeField] private TrailRenderer[] eyeTrails;
 
     [SerializeField] private Light2D ghostLight;
     [SerializeField] private Color scaredLightColor = Color.blue;
@@ -43,7 +44,7 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventGridMoverReachedCenterOfTile>(this, OnGridMoverReachedCenterOfTile);
 
         originalLightColor = ghostLight.color;
-        eyeTrails.SetActive(false);
+        eyeTrail.SetActive(false);
         trailRenderer = trailParticle.GetComponent<ParticleSystemRenderer>();
         trailRenderer.GetPropertyBlock(trailMpb = new());
     }
@@ -88,19 +89,19 @@ public unsafe class GhostAnimator : QuantumCallbacks {
             currentSprites = movementSprites;
             ghostLight.color = originalLightColor;
             trailMpb.SetColor("_AdditiveColor", originalLightColor);
-            eyeTrails.SetActive(false);
+            eyeTrail.SetActive(false);
             break;
         case GhostState.Scared:
             currentSprites = scaredSprites;
             ghostLight.color = scaredLightColor;
             trailMpb.SetColor("_AdditiveColor", scaredLightColor);
-            eyeTrails.SetActive(false);
+            eyeTrail.SetActive(false);
             break;
         case GhostState.Eaten:
             currentSprites = eatenSprites;
             ghostLight.color = originalLightColor;
             emission.enabled = false;
-            eyeTrails.SetActive(true);
+            eyeTrail.SetActive(true);
             break;
         }
         trailRenderer.SetPropertyBlock(trailMpb);
@@ -119,5 +120,13 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         Vector3 worldPosition = FPVectorUtils.CellToWorld(e.Tile, e.Game.Frames.Predicted).XOY.ToUnityVector3();
         trailParticle.transform.position = worldPosition;
         trailParticle.Emit(1);
+    }
+
+    public void OnTeleportStateChanged(bool value) {
+        foreach (var trail in eyeTrails) {
+            trail.emitting = !value;
+        }
+        spriteRenderer.gameObject.SetActive(!value);
+        ghostLight.gameObject.SetActive(!value);
     }
 }

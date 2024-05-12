@@ -2,6 +2,7 @@ component GridMover {
 	FP Speed;
 	FP SpeedMultiplier;
 	int Direction;
+	byte TeleportFrames;
 	bool IsLocked;
 	bool IsStationary;
 
@@ -20,4 +21,9 @@ event GridMoverChangeTile {
 event GridMoverReachedCenterOfTile {
 	entity_ref Entity;
 	FPVector2 Tile;
+}
+
+event TeleportEvent {
+	entity_ref Entity;
+	bool IsTeleporting;
 }

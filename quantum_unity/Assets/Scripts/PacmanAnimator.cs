@@ -10,7 +10,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     [SerializeField] public EntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles;
+    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles;
     [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Sprite[] movementSprites, deathSprites;
@@ -21,8 +21,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     [SerializeField] private Color[] playerColors;
     [SerializeField] private Light2D light;
 
-    private bool invulnerable;
-    private float invulnerableTimer;
     private float blinkSpeedPeriod;
     private bool dead;
     private float deathAnimationTimer, deathParticlesTimer;
@@ -62,12 +60,21 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         spriteRenderer.GetPropertyBlock(mpb);
     }
 
-    public void Update() {
-        if (invulnerable) {
-            invulnerableTimer += Time.deltaTime;
-            spriteRenderer.enabled = (invulnerableTimer % (blinkSpeedPeriod * 2)) < blinkSpeedPeriod;
+    public void Initialize(QuantumGame game) {
+        if (!game.Frames.Predicted.TryGet(entity.EntityRef, out PacmanPlayer pac)) {
+            return;
         }
 
+        Color playerColor = Color.gray;
+        if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
+            playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
+        }
+
+        var main = respawnParticles.main;
+        main.startColor = playerColor;
+    }
+
+    public void Update() {
         if (dead) {
             // Play animation...
             bool playDeathSound = deathAnimationTimer < deathDelay;
@@ -88,6 +95,8 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             if (deathParticlesTimer > 0) {
                 if ((deathParticlesTimer -= Time.deltaTime) <= 0) {
                     respawnParticles.Play();
+                    var emission = sparkleParticles.emission;
+                    emission.enabled = true;
                 }
             }
         }
@@ -96,6 +105,12 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     public override void OnUpdateView(QuantumGame game) {
         if (!game.Frames.Predicted.TryGet(entity.EntityRef, out PacmanPlayer pac) || !game.Frames.Predicted.TryGet(entity.EntityRef, out GridMover mover)) {
             return;
+        }
+
+        if (pac.Invincibility > 0) {
+            spriteRenderer.enabled = (pac.Invincibility.AsFloat % (blinkSpeedPeriod * 2)) < blinkSpeedPeriod;
+        } else {
+            spriteRenderer.enabled = true;
         }
 
         Color playerColor = Color.gray;
@@ -141,9 +156,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             if (mover.IsStationary) {
                 index = Mathf.FloorToInt(spritesPerCycle / 2) + offset;
             } else {
-                index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle) - 0.001f) + offset;
+                index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle)) + offset;
             }
-            spriteRenderer.sprite = movementSprites[index];
+            spriteRenderer.sprite = movementSprites[Mathf.Clamp(index, 0, movementSprites.Length - 1)];
         }
     }
 
@@ -162,8 +177,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             return;
         }
 
-        invulnerable = true;
-        invulnerableTimer = 0;
         spriteRenderer.enabled = true;
         dead = false;
     }
@@ -173,8 +186,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             return;
         }
 
-        invulnerable = false;
         spriteRenderer.enabled = true;
+        var emission = sparkleParticles.emission;
+        emission.enabled = false;
     }
 
     public void OnCharacterEaten(EventCharacterEaten e) {
@@ -184,8 +198,8 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         int direction = e.Frame.Get<GridMover>(e.Pacman).Direction;
         Vector3 newForward = GridMover.DirectionToVector(direction).XOY.ToUnityVector3();
-        sparkleParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
-        sparkleParticles.Play();
+        eatParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
+        eatParticles.Play();
 
         audioSource.PlayOneShot(eatClips[Mathf.Min(e.Combo - 1, eatClips.Length - 1)]);
     }

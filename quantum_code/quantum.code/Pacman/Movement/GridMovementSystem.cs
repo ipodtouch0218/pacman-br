@@ -13,6 +13,12 @@ namespace Quantum.Pacman.Ghost {
 
         public override void Update(Frame f, ref Filter filter) {
 
+            if (filter.Mover->TeleportFrames > 0) {
+                if (--filter.Mover->TeleportFrames == 0) {
+                    f.Events.TeleportEvent(filter.Entity, false);
+                }
+            }
+
             if (filter.Mover->IsLocked) {
                 return;
             }
@@ -87,8 +93,15 @@ namespace Quantum.Pacman.Ghost {
             filter.Mover->IsStationary = !CanMoveInDirection(f, ref filter, filter.Mover->Direction);
             if (!filter.Mover->IsStationary) {
                 // Move smoothly
-                filter.Transform->Position = MoveInDirection(f, previousPosition, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
+                var moveResult = MoveInDirection(f, previousPosition, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
+                filter.Transform->Position = moveResult.NewPosition;
                 filter.Mover->DistanceMoved += filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime;
+
+                if (moveResult.Teleported) {
+                    f.Events.TeleportEvent(filter.Entity, true);
+                    filter.Mover->TeleportFrames = 2;
+                }
+
             } else {
                 // Snap to whole number position
                 filter.Transform->Position = FPVectorUtils.Apply(previousPosition, FPMath.Round);
@@ -177,18 +190,32 @@ namespace Quantum.Pacman.Ghost {
             }
         }
 
-        private static FPVector2 MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
+        struct MovementResult {
+            public FPVector2 NewPosition;
+            public bool Teleported;
+        }
+
+        private static MovementResult MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
             FPVector2 newPosition = position + GridMover.DirectionToVector(direction) * amount;
 
             var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-            newPosition.X = FPMath.Repeat(newPosition.X - mapdata.MapOrigin.X, mapdata.MapSize.X) + mapdata.MapOrigin.X;
-            newPosition.Y = FPMath.Repeat(newPosition.Y - mapdata.MapOrigin.Y, mapdata.MapSize.Y) + mapdata.MapOrigin.Y;
 
-            return newPosition;
+            FPVector2 wrappedPosition = default;
+            wrappedPosition.X = RepeatBetween(newPosition.X - mapdata.MapOrigin.X, -1, mapdata.MapSize.X) + mapdata.MapOrigin.X;
+            wrappedPosition.Y = RepeatBetween(newPosition.Y - mapdata.MapOrigin.Y, -1, mapdata.MapSize.Y) + mapdata.MapOrigin.Y;
+
+            return new() {
+                NewPosition = wrappedPosition,
+                Teleported = newPosition != wrappedPosition
+            };
         }
 
         private static void MoveInDirection(ref Transform2D transform, int direction, FP amount) {
             transform.Position += GridMover.DirectionToVector(direction) * amount;
+        }
+
+        private static FP RepeatBetween(FP value, FP min, FP max) {
+            return FPMath.Repeat(value - min, max - min) + min;
         }
     }
 }

@@ -65,6 +65,7 @@ MonoBehaviour:
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
+      TeleportFrames: 0
       IsLocked:
         Value: 0
       IsStationary:
@@ -153,6 +154,7 @@ MonoBehaviour:
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
+      TeleportFrames: 0
       IsLocked:
         Value: 0
       IsStationary:
@@ -241,6 +243,7 @@ MonoBehaviour:
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
+      TeleportFrames: 0
       IsLocked:
         Value: 0
       IsStationary:
@@ -329,6 +332,7 @@ MonoBehaviour:
       SpeedMultiplier:
         RawValue: 65536
       Direction: 0
+      TeleportFrames: 0
       IsLocked:
         Value: 0
       IsStationary:

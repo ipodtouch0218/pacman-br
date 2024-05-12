@@ -6,6 +6,7 @@ namespace Quantum.Pacman {
 
         public override void OnInit(Frame f) {
             f.Signals.OnGameFreeze(FP._5);
+            f.Global->TimerDuration = 3 * 60;
         }
 
         public override void Update(Frame f) {

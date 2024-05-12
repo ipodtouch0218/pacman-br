@@ -83,7 +83,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _WaveAlpha: 0.25
     - _WaveHeight: 3.2
-    - _WaveIntensity: 0.07
+    - _WaveIntensity: 0
     - _WaveSpeed: 20
     m_Colors:
     - _Afterimage_Color: {r: 0.312, g: 0, b: 1, a: 1}
