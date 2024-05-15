@@ -20,8 +20,8 @@ MonoBehaviour:
     UserAsset:
       Id:
         Value: 2646864575692090043
-    Scene: Game
-    ScenePath: Assets/Photon/QuantumDemo/Game/Game.unity
+    Scene: MazeCE1
+    ScenePath: Assets/Scenes/MazeCE1.unity
     SceneGuid: 03bd5ba32b9950244a08f22579187d8b
     WorldSize: 256
     BucketsCount: 16
@@ -44,7 +44,8 @@ MonoBehaviour:
     StaticColliders3D: []
     MapEntities: []
   Prototypes:
-  - Ghost:
+  - Fruit: []
+    Ghost:
     - TargetPosition:
         X:
           RawValue: 1245184
@@ -133,7 +134,8 @@ MonoBehaviour:
     View: []
     PhysicsJoints2D: []
     PhysicsJoints3D: []
-  - Ghost:
+  - Fruit: []
+    Ghost:
     - TargetPosition:
         X:
           RawValue: 983040
@@ -222,7 +224,8 @@ MonoBehaviour:
     View: []
     PhysicsJoints2D: []
     PhysicsJoints3D: []
-  - Ghost:
+  - Fruit: []
+    Ghost:
     - TargetPosition:
         X:
           RawValue: 851968
@@ -311,7 +314,8 @@ MonoBehaviour:
     View: []
     PhysicsJoints2D: []
     PhysicsJoints3D: []
-  - Ghost:
+  - Fruit: []
+    Ghost:
     - TargetPosition:
         X:
           RawValue: 1114112

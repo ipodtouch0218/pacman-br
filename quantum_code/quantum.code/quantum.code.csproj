@@ -82,6 +82,7 @@
     <Compile Include="FrameContext.User.cs" />
     <Compile Include="Pacman\Freeze\FreezableSystemGroup.cs" />
     <Compile Include="Pacman\Freeze\FreezeSystem.cs" />
+    <Compile Include="Pacman\Fruit\FruitSystem.cs" />
     <Compile Include="Pacman\Ghost\Ghost.cs" />
     <Compile Include="Pacman\Ghost\GhostAISystem.cs" />
     <Compile Include="Pacman\Ghost\GhostHouseSystem.cs" />
@@ -104,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Pacman\Freeze\Freeze.qtn" />
+    <None Include="Pacman\Fruit\Fruit.qtn" />
     <None Include="Pacman\Ghost\Ghost.qtn" />
     <None Include="Pacman\Movement\GridMover.qtn" />
     <None Include="Pacman\Input.qtn" />

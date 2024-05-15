@@ -16,7 +16,7 @@ public class SpawnPointBaker : MapDataBakerCallback {
         var dataAsset = UnityDB.FindAsset<MapCustomDataAsset>(data.Asset.Settings.UserAsset.Id);
 
         BakeSpawnpoints(dataAsset);
-        BakePillSpawnpoints(dataAsset);
+        BakeFruitSpawnpoints(dataAsset);
 
 #if UNITY_EDITOR
         EditorUtility.SetDirty(dataAsset);
@@ -38,17 +38,21 @@ public class SpawnPointBaker : MapDataBakerCallback {
             int direction = (int) (angle / 90);
             dataAsset.Settings.SpawnPoints[i].Direction = direction;
         }
+
+        Debug.Log($"Baked {spawns.Length} Pacman Spawnpoints");
     }
-    private void BakePillSpawnpoints(MapCustomDataAsset dataAsset) {
-        GameObject[] spawns = GameObject.FindGameObjectsWithTag("Pill Spawnpoint");
+    private void BakeFruitSpawnpoints(MapCustomDataAsset dataAsset) {
+        GameObject[] spawns = GameObject.FindGameObjectsWithTag("Fruit Spawnpoint");
         if (spawns == null || spawns.Length <= 0) {
             return;
         }
 
-        dataAsset.Settings.PillSpawnPoints = new FPVector2[spawns.Length];
+        dataAsset.Settings.FruitSpawnPoints = new FPVector2[spawns.Length];
 
         for (int i = 0; i < spawns.Length; i++) {
-            dataAsset.Settings.PillSpawnPoints[i] = spawns[i].transform.position.ToFPVector2();
+            dataAsset.Settings.FruitSpawnPoints[i] = spawns[i].transform.position.ToFPVector2();
         }
+
+        Debug.Log($"Baked {spawns.Length} Fruit Spawnpoints");
     }
 }

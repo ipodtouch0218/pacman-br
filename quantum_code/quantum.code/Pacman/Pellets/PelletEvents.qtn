@@ -17,6 +17,8 @@ synced event PowerPelletEnd {
 	entity_ref Entity;
 }
 
+signal OnPelletRespawn();
+
 signal OnPelletEat();
 
 signal OnPowerPelletStart(entity_ref entity);

@@ -14,7 +14,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Sprite[] movementSprites, deathSprites;
-    [SerializeField] private AudioClip wa, ka, death;
+    [SerializeField] private AudioClip wa, ka, death, powerPellet;
     [SerializeField] private AudioClip[] eatClips;
 
     [SerializeField] private Color scaredColor;
@@ -52,6 +52,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventGameFreeze>(this, OnGameFreeze);
         QuantumEvent.Subscribe<EventGameUnfreeze>(this, OnGameUnfreeze);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
+        QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
         OnPacmanCreated?.Invoke(this);
@@ -226,5 +227,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         audioSource.PlayOneShot(waSound ? wa : ka);
         waSound = !waSound;
+    }
+
+    public void OnFruitEaten(EventFruitEaten e) {
+        if (e.Pacman != entity.EntityRef) {
+            return;
+        }
+
+        audioSource.PlayOneShot(powerPellet);
     }
 }

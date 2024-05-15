@@ -17,7 +17,7 @@ namespace Quantum {
         public bool[] CollisionData;
         public byte[] PelletData;
 
-        public FPVector2[] PillSpawnPoints;
-
+        public AssetRefEntityPrototype FruitPrototype;
+        public FPVector2[] FruitSpawnPoints;
     }
 }

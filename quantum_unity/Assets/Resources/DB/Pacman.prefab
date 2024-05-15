@@ -15055,7 +15055,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -25288,10 +25288,9 @@ MonoBehaviour:
   OnEntityDestroyed:
     m_PersistentCalls:
       m_Calls: []
-  onTeleport:
+  onTeleportStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  teleportDistance: 10
 --- !u!114 &1611264076732834984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25310,6 +25309,7 @@ MonoBehaviour:
     SpeedMultiplier:
       RawValue: 65536
     Direction: 0
+    TeleportFrames: 0
     IsLocked:
       Value: 0
     IsStationary:
@@ -25396,6 +25396,7 @@ MonoBehaviour:
   wa: {fileID: 8300000, guid: b036184657bb2744ca711a4f390ac0e8, type: 3}
   ka: {fileID: 8300000, guid: 86b7a0cb3ffc65b4490a7f77d02cd9e4, type: 3}
   death: {fileID: 8300000, guid: 39ae41ffad7ce054692938606e7f581f, type: 3}
+  powerPellet: {fileID: 8300000, guid: 1bc62598b6e61bf4cb1f6130074598ad, type: 3}
   eatClips:
   - {fileID: 8300000, guid: 32d350e4caa93b54092b9395134cb0c3, type: 3}
   - {fileID: 8300000, guid: b3b8c27e3f5cff14aaa4c0c9bf3a8b12, type: 3}

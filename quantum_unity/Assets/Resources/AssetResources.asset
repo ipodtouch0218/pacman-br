@@ -46,11 +46,21 @@ MonoBehaviour:
         Id:
           Value: 159194854215405264
       ResourcePath: DB/Pacman
+    - Path: Resources/DB/Fruit|EntityPrototype
+      AssetRef:
+        Id:
+          Value: 211565312298772629
+      ResourcePath: DB/Fruit
     - Path: Resources/DB/Map1_mesh
       AssetRef:
         Id:
           Value: 810189026489540597
       ResourcePath: DB/Map1_mesh
+    - Path: Resources/DB/Fruit|EntityView
+      AssetRef:
+        Id:
+          Value: 1123147609871121587
+      ResourcePath: DB/Fruit
     - Path: Resources/DB/Ghost|EntityPrototype
       AssetRef:
         Id:

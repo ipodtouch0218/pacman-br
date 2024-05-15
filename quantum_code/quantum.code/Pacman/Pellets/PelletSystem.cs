@@ -1,5 +1,6 @@
 ﻿using Photon.Deterministic;
 using Quantum.Collections;
+using Quantum.Pacman.Fruit;
 using Quantum.Util;
 
 namespace Quantum.Pacman.Pellets {
@@ -30,6 +31,13 @@ namespace Quantum.Pacman.Pellets {
             f.Global->PowerPelletRemainingTime = remainingPowerPelletTime;
         }
 
+        public static void SpawnNewPellets(Frame f) {
+            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset);
+            int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
+
+            SpawnNewPellets(f, f.Global->RngSession.Next(0, designs));
+        }
+
         public static void SpawnNewPellets(Frame f, int pelletConfig) {
             QDictionary<FPVector2, byte> pelletDict = f.ResolveDictionary(f.Global->PelletData);
             pelletDict.Clear();
@@ -38,16 +46,20 @@ namespace Quantum.Pacman.Pellets {
             var pellets = map.PelletData;
 
             int offset = pelletConfig * map.MapSize.X.AsInt * map.MapSize.Y.AsInt;
+            int count = 0;
             for (int x = 0; x < map.MapSize.X; x++) {
                 for (int y = 0; y < map.MapSize.Y; y++) {
                     int index = x + (y * map.MapSize.X.AsInt) + offset;
                     byte pellet = pellets[index];
                     if (pellet != 0) {
                         pelletDict.Add(new FPVector2(x, y), pellet);
+                        count++;
                     }
                 }
             }
+            f.Global->TotalPellets = count;
 
+            f.Signals.OnPelletRespawn();
             f.Events.PelletRespawn(pelletConfig);
 
             var filter = f.Filter<PacmanPlayer, Transform2D>();
@@ -95,7 +107,7 @@ namespace Quantum.Pacman.Pellets {
 
             player->PelletChain++;
             player->PelletsEaten++;
-            mover->FreezeTime += f.DeltaTime;
+            // mover->FreezeTime += f.DeltaTime;
             if (value == 2) {
                 f.Signals.OnPowerPelletStart(entity);
                 player->PowerPelletTimer = FP._10;
@@ -109,12 +121,13 @@ namespace Quantum.Pacman.Pellets {
             f.Signals.OnPacmanScored(entity, player->PelletChain);
             f.Events.PelletEat(f, entity, tile, player->PelletChain);
 
+            if (pelletDict.Count == (f.Global->TotalPellets * FP._0_33).AsInt) {
+                FruitSystem.SpawnFruit(f);
+            }
+
             // TODO: follow a pattern? random?
             if (pelletDict.Count <= 0) {
-                var map = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-                int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
-
-                SpawnNewPellets(f, f.Global->RngSession.Next(0, designs));
+                SpawnNewPellets(f);
             }
         }
 

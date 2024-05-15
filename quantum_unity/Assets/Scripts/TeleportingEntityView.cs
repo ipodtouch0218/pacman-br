@@ -21,7 +21,6 @@ public class TeleportingEntityView : EntityView {
 
         isTeleporting = e.IsTeleporting;
         onTeleportStateChanged?.Invoke(isTeleporting);
-        Debug.Log($"teleport state cahnge: {isTeleporting}");
     }
 
     protected override void ApplyTransform(ref UpdatePostionParameter param) {

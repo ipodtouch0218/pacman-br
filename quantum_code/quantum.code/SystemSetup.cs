@@ -1,5 +1,6 @@
 ﻿using Quantum.Pacman;
 using Quantum.Pacman.Freeze;
+using Quantum.Pacman.Fruit;
 using Quantum.Pacman.Ghost;
 using Quantum.Pacman.Pellets;
 using Quantum.Platformer;
@@ -30,6 +31,7 @@ namespace Quantum {
                 }),
                 new GhostHouseSystem(),
                 new FreezeSystem(),
+                new FruitSystem(),
                 new PlayerSpawnSystem(),
             };
         }
