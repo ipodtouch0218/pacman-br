@@ -1,5 +1,7 @@
 synced event PelletRespawn {
 	int Configuration;
+	bool PlayEffect;
+	bool WipeFromLeft;
 }
 
 synced event PelletEat {

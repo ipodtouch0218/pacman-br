@@ -36,7 +36,7 @@ public class PointHandler : MonoBehaviour {
         }
 
         PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, e.Frame).ToUnityVector3(), prefab.transform.rotation);
-        indicator.Initialize(e.Chain, colors[Mathf.Min(colors.Length, e.Chain / 10)]);
+        indicator.Initialize(e.Chain, colors[Mathf.Clamp(e.Chain / 10, 0, colors.Length - 1)]);
         pelletIndicators[e.Tile] = indicator.gameObject;
     }
 }

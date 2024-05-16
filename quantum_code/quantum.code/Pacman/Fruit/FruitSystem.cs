@@ -5,6 +5,12 @@ namespace Quantum.Pacman.Fruit {
     public unsafe class FruitSystem : SystemSignalsOnly, ISignalOnTrigger2D, ISignalOnPelletRespawn {
 
         public static void SpawnFruit(Frame f) {
+
+            if (f.Exists(f.Global->CurrentFruit)) {
+                // Don't spawn
+                return;
+            }
+
             var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
 
             FPVector2 spawnpoint = map.GhostHouse + FPVector2.Down * 3; // Default to below the ghost house
@@ -31,12 +37,16 @@ namespace Quantum.Pacman.Fruit {
 
             var fruitPrototype = f.FindAsset<EntityPrototype>(map.FruitPrototype.Id);
             EntityRef newFruit = f.Create(fruitPrototype);
+            f.Global->CurrentFruit = newFruit;
 
             if (f.Unsafe.TryGetPointer(newFruit, out Transform2D* transform) && f.Unsafe.TryGetPointer(newFruit, out Quantum.Fruit* fruit)) {
                 transform->Position = spawnpoint;
-                fruit->Graphic = 0;
-                fruit->Points = 100;
+
+                var fruitData = map.FruitSpawnOrder[FPMath.Clamp(f.Global->FruitsSpawned, 0, map.FruitSpawnOrder.Length - 1)];
+                fruit->Graphic = fruitData.SpriteIndex;
+                fruit->Points = fruitData.Points;
             }
+            f.Global->FruitsSpawned++;
         }
 
         public void OnPelletRespawn(Frame f) {
@@ -52,7 +62,7 @@ namespace Quantum.Pacman.Fruit {
                 return;
             }
 
-            if (!f.TryGet(info.Other, out Quantum.Fruit fruit) || f.DestroyPending(info.Other)) {
+            if (!f.TryGet(info.Other, out Quantum.Fruit fruit) || f.DestroyPending(info.Other) || !f.TryGet(info.Other, out Transform2D transform)) {
                 return;
             }
 
@@ -62,7 +72,8 @@ namespace Quantum.Pacman.Fruit {
             f.Signals.OnPacmanScored(info.Entity, fruit.Points);
             f.Destroy(info.Other);
 
-            PelletSystem.SpawnNewPellets(f);
+            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
+            PelletSystem.SpawnNextPellets(f, transform.Position.X < map.GhostHouse.X);
         }
     }
 }

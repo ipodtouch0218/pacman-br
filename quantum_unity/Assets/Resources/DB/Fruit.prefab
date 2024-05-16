@@ -325,6 +325,54 @@ MonoBehaviour:
   entity: {fileID: 1948616832682206109}
   particles: {fileID: 4839844880584937212, guid: 9a49e4bd0f64cfa41b7d99c91c125c92,
     type: 3}
+  spriteRenderer: {fileID: 2038928871954514536}
+  sprites:
+  - {fileID: 1504097709, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -193423060, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 1341411323, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 2097764711, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 836829715, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 634771846, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -1981843167, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -546577270, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -1153148626, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -1800298242, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 1591532181, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 609450408, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 1466540519, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -1642356995, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 510485108, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 40066900, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -1780038144, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 593920612, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 2021973030, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -584770596, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: -732541711, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  - {fileID: 886183744, guid: b7c0258c1c712964090ae7f31b44ccb4, type: 3}
+  growSizeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 13.674715
+      outSlope: 13.674715
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1725589
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1649549889155800548
 MonoBehaviour:
   m_ObjectHideFlags: 0

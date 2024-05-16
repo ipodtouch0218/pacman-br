@@ -7,3 +7,8 @@ synced event FruitEaten {
 	entity_ref Pacman;
 	entity_ref Fruit;
 }
+
+global {
+	entity_ref CurrentFruit;
+	int FruitsSpawned;
+}

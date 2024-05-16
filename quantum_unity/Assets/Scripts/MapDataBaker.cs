@@ -14,45 +14,57 @@ public class MapDataBaker : MapDataBakerCallback {
     public override void OnBake(MapData data) {
         var dataAsset = UnityDB.FindAsset<MapCustomDataAsset>(data.Asset.Settings.UserAsset.Id);
 
-        Tilemap tilemap = Object.FindObjectOfType<Tilemap>();
+        Tilemap tilemap = GameObject.FindGameObjectWithTag("Maze").GetComponent<Tilemap>();
 
         if (!tilemap) {
             return;
         }
 
+        // Collision Data
         tilemap.CompressBounds();
         BoundsInt bounds = tilemap.cellBounds;
         int tilesPerScreen = bounds.size.x * bounds.size.y;
         dataAsset.Settings.MapOrigin = new FPVector2(bounds.position.x, bounds.position.y);
         dataAsset.Settings.MapSize = new FPVector2(bounds.size.x, bounds.size.y);
         dataAsset.Settings.CollisionData = new bool[tilesPerScreen];
-        dataAsset.Settings.PelletData = new byte[tilesPerScreen * (bounds.size.z - 1)];
 
-        Vector3 ghostHouse = GameObject.FindGameObjectWithTag("Ghost House").transform.position;
-        dataAsset.Settings.GhostHouse = new FPVector2(ghostHouse.x.ToFP(), ghostHouse.z.ToFP());
+        for (int x = 0; x < bounds.size.x; x++) {
+            for (int y = 0; y < bounds.size.y; y++) {
+                Vector3Int pos = bounds.position + new Vector3Int(x, y, 0);
+                TileBase tile = tilemap.GetTile(pos);
 
-        for (int z = 0; z < bounds.size.z; z++) {
+                dataAsset.Settings.CollisionData[x + y * bounds.size.x] = !tile;
+            }
+        }
+        Debug.Log($"Baked collision data ({bounds.size.x}x{bounds.size.y})");
+
+        // Pellet data
+        Tilemap[] dotMaps = tilemap.GetComponentsInChildren<Tilemap>(true);
+        dataAsset.Settings.PelletData = new byte[tilesPerScreen * dotMaps.Length];
+
+        for (int i = 1; i < dotMaps.Length; i++) {
+            Tilemap dotMap = dotMaps[i];
             for (int x = 0; x < bounds.size.x; x++) {
                 for (int y = 0; y < bounds.size.y; y++) {
-                    Vector3Int pos = bounds.position + new Vector3Int(x, y, z);
-                    TileBase tile = tilemap.GetTile(pos);
+                    Vector3Int pos = bounds.position + new Vector3Int(x, y, 0);
+                    TileBase tile = dotMap.GetTile(pos);
 
-                    if (z == 0) {
-                        // Collision layer
-                        dataAsset.Settings.CollisionData[x + y * bounds.size.x] = !tile;
-                    } else {
-                        // Pellet layer
-                        if (tile) {
-                            dataAsset.Settings.PelletData[x + (y * bounds.size.x) + ((z - 1) * tilesPerScreen)] = tile.name switch {
-                                "SmallPellet" => 1,
-                                "PowerPellet" => 2,
-                                _ => 0,
-                            };
-                        }
+                    if (tile) {
+                        int index = x + (y * bounds.size.x) + ((i - 1) * tilesPerScreen);
+                        dataAsset.Settings.PelletData[index] = tile.name switch {
+                            "SmallPellet" => 1,
+                            "PowerPellet" => 2,
+                            _ => 0,
+                        };
                     }
                 }
             }
         }
+        Debug.Log($"Baked {dotMaps.Length - 1} dot layouts");
+
+        // Ghost house
+        Vector3 ghostHouse = GameObject.FindGameObjectWithTag("Ghost House").transform.position;
+        dataAsset.Settings.GhostHouse = new FPVector2(ghostHouse.x.ToFP(), ghostHouse.z.ToFP());
 
 #if UNITY_EDITOR
         EditorUtility.SetDirty(dataAsset);

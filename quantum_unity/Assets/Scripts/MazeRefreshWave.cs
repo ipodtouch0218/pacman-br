@@ -39,7 +39,12 @@ public class MazeRefreshWave : MonoBehaviour {
     }
 
     public void OnPelletRespawn(EventPelletRespawn e) {
-        if (fromLeft = (Random.Range(0, 2) == 0)) {
+
+        if (!e.PlayEffect) {
+            return;
+        }
+
+        if (fromLeft = e.WipeFromLeft) {
             // From left
             transform.position = Vector3.right * minX;
             transform.localScale = new(1, 1, 1);

@@ -10,6 +10,12 @@ namespace Quantum {
             public int Direction;
         }
 
+        [Serializable]
+        public struct FruitData {
+            public int SpriteIndex;
+            public int Points;
+        }
+
         public SpawnPointData[] SpawnPoints;
         public FPVector2 MapOrigin;
         public FPVector2 MapSize;
@@ -19,5 +25,6 @@ namespace Quantum {
 
         public AssetRefEntityPrototype FruitPrototype;
         public FPVector2[] FruitSpawnPoints;
+        public FruitData[] FruitSpawnOrder;
     }
 }

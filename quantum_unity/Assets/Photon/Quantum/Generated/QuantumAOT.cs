@@ -22,6 +22,7 @@ public class QuantumAOT {
   public List<Photon.Deterministic.FPVector2> FPVector2;
   public List<Quantum.AssetRefNavMesh> AssetRefNavMesh;
   public List<Quantum.Core.FrameBase.EntitiesConfig.ComponentBufferConfig> ComponentBufferConfig;
+  public List<Quantum.MapCustomData.FruitData> FruitData;
   public List<Quantum.MapCustomData.SpawnPointData> SpawnPointData;
   public List<Quantum.MapStaticCollider2D> MapStaticCollider2D;
   public List<Quantum.MapStaticCollider3D> MapStaticCollider3D;

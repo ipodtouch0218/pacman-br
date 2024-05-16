@@ -9,7 +9,7 @@ namespace Quantum.Pacman.Pellets {
         public override void OnInit(Frame f) {
             f.Global->PelletData = f.AllocateDictionary<FPVector2, byte>();
 
-            SpawnNewPellets(f, 0);
+            SpawnNewPellets(f, 0, false, false);
         }
 
         public override void Update(Frame f) {
@@ -31,19 +31,20 @@ namespace Quantum.Pacman.Pellets {
             f.Global->PowerPelletRemainingTime = remainingPowerPelletTime;
         }
 
-        public static void SpawnNewPellets(Frame f) {
-            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-            int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
-
-            SpawnNewPellets(f, f.Global->RngSession.Next(0, designs));
+        public static void SpawnNextPellets(Frame f, bool fromLeft) {
+            SpawnNewPellets(f, ++f.Global->CurrentLayout, true, fromLeft);
         }
 
-        public static void SpawnNewPellets(Frame f, int pelletConfig) {
+        public static void SpawnNewPellets(Frame f, int pelletConfig, bool playEffect, bool fromLeft) {
             QDictionary<FPVector2, byte> pelletDict = f.ResolveDictionary(f.Global->PelletData);
             pelletDict.Clear();
 
             var map = f.FindAsset<MapCustomData>(f.Map.UserAsset);
             var pellets = map.PelletData;
+
+            int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
+            pelletConfig = FPMath.Repeat(pelletConfig, designs).AsInt;
+
 
             int offset = pelletConfig * map.MapSize.X.AsInt * map.MapSize.Y.AsInt;
             int count = 0;
@@ -60,7 +61,7 @@ namespace Quantum.Pacman.Pellets {
             f.Global->TotalPellets = count;
 
             f.Signals.OnPelletRespawn();
-            f.Events.PelletRespawn(pelletConfig);
+            f.Events.PelletRespawn(pelletConfig, playEffect, fromLeft);
 
             var filter = f.Filter<PacmanPlayer, Transform2D>();
             while (filter.Next(out EntityRef entity, out PacmanPlayer pac, out Transform2D transform)) {
@@ -92,7 +93,18 @@ namespace Quantum.Pacman.Pellets {
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
-            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player) || !f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
+            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
+            if (tile.X < 0 || tile.X >= map.MapSize.X) {
+                return;
+            }
+            if (tile.Y < 0 || tile.Y >= map.MapSize.Y) {
+                return;
+            }
+
+            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)
+                || !f.Unsafe.TryGetPointer(entity, out GridMover* mover)
+                || !f.TryGet(entity, out Transform2D transform)) {
+
                 return;
             }
 
@@ -125,10 +137,12 @@ namespace Quantum.Pacman.Pellets {
                 FruitSystem.SpawnFruit(f);
             }
 
+            /*
             // TODO: follow a pattern? random?
             if (pelletDict.Count <= 0) {
-                SpawnNewPellets(f);
+                SpawnNextPellets(f, transform.Position.X < map.GhostHouse.X);
             }
+            */
         }
 
         public void OnPowerPelletEnd(Frame f, EntityRef pacman) {

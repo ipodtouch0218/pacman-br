@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerPellet
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -1016753095, guid: 828c4d804bdb97e4d95b78650325e61c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

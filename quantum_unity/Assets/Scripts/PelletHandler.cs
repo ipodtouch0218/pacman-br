@@ -1,4 +1,7 @@
+using Photon.Deterministic;
 using Quantum;
+using Quantum.Collections;
+using Quantum.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +17,7 @@ public class PelletHandler : MonoBehaviour {
     [SerializeField] private AudioClip powerPelletClip;
 
     //---Private Variables
-    private readonly Dictionary<int, GameObject> pellets = new();
+    private readonly Dictionary<int, GameObject> pelletGOs = new();
 
     public void OnValidate() {
         if (!audioSource) {
@@ -26,47 +29,40 @@ public class PelletHandler : MonoBehaviour {
         QuantumEvent.Subscribe<EventPelletRespawn>(this, OnEventPelletRespawn);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnEventPelletEat);
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnEventPowerPelletEat);
-
-        OnEventPelletRespawn(new EventPelletRespawn() {
-            Configuration = 0
-        });
     }
 
     public void OnEventPelletEat(EventPelletEat e) {
         int index = e.Tile.X.AsInt + e.Tile.Y.AsInt * mapData.Settings.MapSize.X.AsInt;
 
-        if (!pellets.TryGetValue(index, out GameObject pellet)) {
+        if (!pelletGOs.TryGetValue(index, out GameObject pellet)) {
             return;
         }
 
         Destroy(pellet);
-        pellets.Remove(index);
+        pelletGOs.Remove(index);
     }
 
-    public void OnEventPelletRespawn(EventPelletRespawn e) {
+    public unsafe void OnEventPelletRespawn(EventPelletRespawn e) {
         DestroyPellets();
 
-        int size = mapData.Settings.MapSize.X.AsInt * mapData.Settings.MapSize.Y.AsInt;
-        int offset = e.Configuration * size;
+        var frame = e.Game.Frames.Verified;
+        QDictionary<FPVector2, byte> pellets = frame.ResolveDictionary(frame.Global->PelletData);
 
-        for (int x = 0; x < mapData.Settings.MapSize.X; x++) {
-            for (int y = 0; y < mapData.Settings.MapSize.Y; y++) {
-                int index = (x + y * mapData.Settings.MapSize.X.AsInt) + offset;
+        foreach ((FPVector2 cell, byte value) in pellets) {
 
-                GameObject prefab = mapData.Settings.PelletData[index] switch {
-                    1 => smallPelletPrefab,
-                    2 => powerPelletPrefab,
-                    _ => null
-                };
+            GameObject prefab = value switch {
+                1 => smallPelletPrefab,
+                2 => powerPelletPrefab,
+                _ => null
+            };
 
-                if (prefab == null) {
-                    continue;
-                }
-
-                GameObject newPellet = Instantiate(prefab, transform, true);
-                newPellet.transform.position = new Vector3(x, 0, y) + mapData.Settings.MapOrigin.XOY.ToUnityVector3();
-                pellets.Add(index - offset, newPellet);
+            if (!prefab) {
+                continue;
             }
+
+            GameObject newPellet = Instantiate(prefab, transform, true);
+            newPellet.transform.position = FPVectorUtils.CellToWorld(cell, frame).XOY.ToUnityVector3();
+            pelletGOs.Add(FPVectorUtils.CellToIndex(cell, frame), newPellet);
         }
     }
 
@@ -75,9 +71,9 @@ public class PelletHandler : MonoBehaviour {
     }
 
     private void DestroyPellets() {
-        foreach ((var _, var pellet) in pellets) {
+        foreach ((var _, var pellet) in pelletGOs) {
             Destroy(pellet);
         }
-        pellets.Clear();
+        pelletGOs.Clear();
     }
 }
