@@ -1,7 +1,7 @@
 ﻿using Quantum.Pacman;
-using Quantum.Pacman.Freeze;
 using Quantum.Pacman.Fruit;
 using Quantum.Pacman.Ghost;
+using Quantum.Pacman.Logic;
 using Quantum.Pacman.Pellets;
 using Quantum.Platformer;
 
@@ -23,14 +23,14 @@ namespace Quantum {
                 new Core.PlayerConnectedSystem(),
 
                 // user systems go here
-                new FreezableSystemGroup("Freezable Systems", new SystemMainThread[] {
+                new GameLogicSystem(),
+                new PausableSystemGroup("Freezable Systems", new SystemMainThread[] {
                     new GhostAISystem(),
                     new GridMovementSystem(),
                     new PelletSystem(),
                     new PacmanSystem(),
                 }),
                 new GhostHouseSystem(),
-                new FreezeSystem(),
                 new FruitSystem(),
                 new PlayerSpawnSystem(),
             };

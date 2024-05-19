@@ -79,9 +79,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Afterimage_Alpha: 0.6
+    - _Afterimage_Alpha: 0.7
     - _EnableExternalAlpha: 0
-    - _WaveAlpha: 0.25
+    - _WaveAlpha: 0.35
     - _WaveHeight: 3.2
     - _WaveIntensity: 0
     - _WaveSpeed: 20

@@ -68,7 +68,7 @@ namespace Quantum.Pacman.Fruit {
 
             // Pacman interacting with a fruit.
 
-            f.Events.FruitEaten(info.Entity, info.Other);
+            f.Events.FruitEaten(info.Entity, info.Other, fruit.Points);
             f.Signals.OnPacmanScored(info.Entity, fruit.Points);
             f.Destroy(info.Other);
 

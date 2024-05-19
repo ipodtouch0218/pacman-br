@@ -1,0 +1,18 @@
+global {
+	FP GameStartingTimer;
+	bool GameStarted;
+	int GameStartTick;
+	FP Timer;
+}
+
+synced event GameStarting {
+
+}
+
+synced event GameStart {
+
+}
+
+synced event GameEnd {
+
+}

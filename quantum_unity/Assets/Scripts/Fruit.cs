@@ -12,6 +12,9 @@ public class Fruit : MonoBehaviour {
 
     [SerializeField] private AnimationCurve growSizeCurve;
 
+    [SerializeField] private float flashingPeriod = 1.5f;
+    [SerializeField] private Vector2 flashingMinMax = new(0.8f, 1);
+
     //---Private Variables
     private bool active;
     private float timer;
@@ -23,6 +26,8 @@ public class Fruit : MonoBehaviour {
     }
 
     public void Update() {
+        spriteRenderer.color = Color.white * Remap(Mathf.Sin((Time.time * 2 * Mathf.PI) / flashingPeriod), -1, 1, flashingMinMax.x, flashingMinMax.y);
+
         if (!active) {
             return;
         }
@@ -46,5 +51,14 @@ public class Fruit : MonoBehaviour {
 
         active = true;
         spriteRenderer.gameObject.transform.localScale = Vector3.one * growSizeCurve.Evaluate(timer);
+    }
+
+    private static float Remap(float value, float oldMin, float oldMax, float newMin, float newMax) {
+        float oldRange = oldMax - oldMin;
+        float newRange = newMax - newMin;
+
+        float percentage = (value - oldMin) / oldRange;
+
+        return (percentage * newRange) + newMin;
     }
 }

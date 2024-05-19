@@ -6,6 +6,7 @@ component Fruit {
 synced event FruitEaten {
 	entity_ref Pacman;
 	entity_ref Fruit;
+	int Points;
 }
 
 global {

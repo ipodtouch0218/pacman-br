@@ -80,18 +80,19 @@
     <Compile Include="Core\Core.cs" />
     <Compile Include="Frame.User.cs" />
     <Compile Include="FrameContext.User.cs" />
-    <Compile Include="Pacman\Freeze\FreezableSystemGroup.cs" />
-    <Compile Include="Pacman\Freeze\FreezeSystem.cs" />
     <Compile Include="Pacman\Fruit\FruitSystem.cs" />
     <Compile Include="Pacman\Ghost\Ghost.cs" />
     <Compile Include="Pacman\Ghost\GhostAISystem.cs" />
     <Compile Include="Pacman\Ghost\GhostHouseSystem.cs" />
+    <Compile Include="Pacman\Logic\GameLogicSystem.cs" />
     <Compile Include="Pacman\Movement\GridMovementSystem.cs" />
     <Compile Include="Pacman\Movement\GridMover.cs" />
     <Compile Include="MapCustomData.cs" />
-    <Compile Include="Pacman\PacmanPlayer.cs" />
-    <Compile Include="Pacman\PacmanSystem.cs" />
+    <Compile Include="Pacman\PausableSystemGroup.cs" />
+    <Compile Include="Pacman\Player\PacmanPlayer.cs" />
+    <Compile Include="Pacman\Player\PacmanSystem.cs" />
     <Compile Include="Pacman\Pellets\PelletSystem.cs" />
+    <Compile Include="Platformer\PlayerReadyCommand.cs" />
     <Compile Include="Platformer\PlayerSpawnSystem.cs" />
     <Compile Include="RuntimeConfig.User.cs" />
     <Compile Include="RuntimePlayer.User.cs" />
@@ -104,15 +105,15 @@
     <EmbeddedResource Include="db.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Pacman\Freeze\Freeze.qtn" />
     <None Include="Pacman\Fruit\Fruit.qtn" />
     <None Include="Pacman\Ghost\Ghost.qtn" />
+    <None Include="Pacman\Logic\GameLogic.qtn" />
     <None Include="Pacman\Movement\GridMover.qtn" />
     <None Include="Pacman\Input.qtn" />
     <None Include="Pacman\MapCustomData.qtn" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Pacman\PacmanPlayer.qtn" />
+    <None Include="Pacman\Player\PacmanPlayer.qtn" />
     <None Include="Pacman\Pellets\PelletGlobals.qtn" />
     <None Include="Pacman\Pellets\PelletEvents.qtn" />
     <None Include="Platformer\PlayerLink.qtn" />

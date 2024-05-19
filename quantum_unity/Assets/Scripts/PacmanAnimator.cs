@@ -49,8 +49,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventPacmanRespawned>(this, OnPacmanRespawned);
         QuantumEvent.Subscribe<EventPacmanVulnerable>(this, OnPacmanVulnerable);
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
-        QuantumEvent.Subscribe<EventGameFreeze>(this, OnGameFreeze);
-        QuantumEvent.Subscribe<EventGameUnfreeze>(this, OnGameUnfreeze);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
 
@@ -119,7 +117,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
         }
 
-        float timeSinceStart = game.Frames.Predicted.Global->TimeSinceGameStart.AsFloat;
+        float timeSinceStart = (game.Frames.Predicted.Number * game.Frames.Predicted.DeltaTime).AsFloat;
         float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
         float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
         bool scaredFlash = (pelletTimeRemaining < scaredBlinkStart) && (timeSinceStart % scaredBlinkPeriod < (scaredBlinkPeriod / 2));
@@ -203,21 +201,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         eatParticles.Play();
 
         audioSource.PlayOneShot(eatClips[Mathf.Min(e.Combo - 1, eatClips.Length - 1)]);
-    }
-
-    public void OnGameFreeze(EventGameFreeze e) {
-        if (respawnParticles.isPlaying) {
-            respawnParticles.Pause();
-        }
-        if (deathParticlesTimer > 0) {
-            deathParticlesTimer += e.Duration.AsFloat;
-        }
-    }
-
-    public void OnGameUnfreeze(EventGameUnfreeze e) {
-        if (respawnParticles.isPaused) {
-            respawnParticles.Play();
-        }
     }
 
     public void OnPelletEat(EventPelletEat e) {

@@ -7,7 +7,8 @@ using UnityEngine;
 public class PointHandler : MonoBehaviour {
 
     //---Serialized Variables
-    [SerializeField] private PointIndicator prefab;
+    [SerializeField] private PointIndicator ghostPrefab;
+    [SerializeField] private PointIndicator fruitPrefab;
     [SerializeField] private PelletPointIndicator pelletPrefab;
     [SerializeField] private Vector3 offset;
 
@@ -19,6 +20,7 @@ public class PointHandler : MonoBehaviour {
     public void Start() {
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
+        QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
     }
 
     public void OnCharacterEaten(EventCharacterEaten e) {
@@ -26,8 +28,8 @@ public class PointHandler : MonoBehaviour {
             return;
         }
 
-        PointIndicator indicator = Instantiate(prefab, t.Position.ToUnityVector3() + offset, prefab.transform.rotation);
-        indicator.Initialize(e.Combo);
+        PointIndicator indicator = Instantiate(ghostPrefab, t.Position.ToUnityVector3() + offset, ghostPrefab.transform.rotation);
+        indicator.Initialize(e.GainedPoints);
     }
 
     public void OnPelletEat(EventPelletEat e) {
@@ -35,8 +37,17 @@ public class PointHandler : MonoBehaviour {
             Destroy(obj);
         }
 
-        PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, e.Frame).ToUnityVector3(), prefab.transform.rotation);
+        PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, e.Frame).ToUnityVector3(), pelletPrefab.transform.rotation);
         indicator.Initialize(e.Chain, colors[Mathf.Clamp(e.Chain / 10, 0, colors.Length - 1)]);
         pelletIndicators[e.Tile] = indicator.gameObject;
+    }
+
+    public void OnFruitEaten(EventFruitEaten e) {
+        if (!e.Game.Frames.Verified.TryGet(e.Pacman, out Transform2D t)) {
+            return;
+        }
+
+        PointIndicator indicator = Instantiate(fruitPrefab, t.Position.ToUnityVector3() + offset, fruitPrefab.transform.rotation);
+        indicator.Initialize(e.Points);
     }
 }

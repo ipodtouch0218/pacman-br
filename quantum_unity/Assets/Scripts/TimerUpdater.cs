@@ -15,7 +15,7 @@ public unsafe class TimerUpdater : QuantumCallbacks {
 
     public override void OnUpdateView(QuantumGame game) {
         Frame f = game.Frames.Predicted;
-        float secondsRemaining = (f.Global->TimerDuration - f.Global->TimeSinceGameStart).AsFloat;
+        float secondsRemaining = f.Global->Timer.AsFloat;
 
         if (secondsRemaining < 60) {
             text.text = secondsRemaining.ToString("0.0");

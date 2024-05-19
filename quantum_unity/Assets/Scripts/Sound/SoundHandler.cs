@@ -9,6 +9,7 @@ public class SoundHandler : QuantumCallbacks {
     //---Serialized Variables
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private LoopingAudioClip defaultSound, scaredSound, eatenSound;
+    [SerializeField] private AudioClip startingClip;
 
     //---Private Variables
     private LoopingAudioClip currentClip;
@@ -19,7 +20,8 @@ public class SoundHandler : QuantumCallbacks {
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnPowerPelletEaten);
         QuantumEvent.Subscribe<EventPowerPelletEnd>(this, OnPowerPelletEnd);
         QuantumEvent.Subscribe<EventGhostStateChanged>(this, OnGhostChangeState);
-        QuantumEvent.Subscribe<EventGameUnfreeze>(this, OnGameUnfreeze);
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
+        QuantumEvent.Subscribe<EventGameStart>(this, OnGameStart);
     }
 
     public override void OnUpdateView(QuantumGame game) {
@@ -28,10 +30,6 @@ public class SoundHandler : QuantumCallbacks {
 
     public void Update() {
         LoopingAudioClip.Update(audioSource, currentClip);
-    }
-
-    public void OnGameUnfreeze(EventGameUnfreeze e) {
-        audioSource.Play();
     }
 
     public void OnPowerPelletEaten(EventPowerPelletEat e) {
@@ -48,6 +46,14 @@ public class SoundHandler : QuantumCallbacks {
         } else {
             eatenGhosts.Remove(e.Entity);
         }
+    }
+
+    public void OnGameStarting(EventGameStarting e) {
+        audioSource.PlayOneShot(startingClip);
+    }
+
+    public void OnGameStart(EventGameStart e) {
+        audioSource.Play();
     }
 
     private void TryChangeAudioClip(Frame f) {

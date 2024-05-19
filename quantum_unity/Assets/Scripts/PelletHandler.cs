@@ -14,6 +14,7 @@ public class PelletHandler : MonoBehaviour {
     [SerializeField] private GameObject smallPelletPrefab;
     [SerializeField] private GameObject powerPelletPrefab;
 
+    [SerializeField] private GameObject powerPelletCollectPrefab;
     [SerializeField] private AudioClip powerPelletClip;
 
     //---Private Variables
@@ -68,6 +69,11 @@ public class PelletHandler : MonoBehaviour {
 
     public void OnEventPowerPelletEat(EventPowerPelletEat e) {
         audioSource.PlayOneShot(powerPelletClip);
+
+        if (e.Game.Frames.Verified.TryGet(e.Entity, out Transform2D transform)) {
+            GameObject newPrefab = Instantiate(powerPelletCollectPrefab);
+            newPrefab.transform.position = transform.Position.XOY.ToUnityVector3();
+        }
     }
 
     private void DestroyPellets() {
