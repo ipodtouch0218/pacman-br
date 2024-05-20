@@ -1,5 +1,6 @@
 using Photon.Deterministic;
 using Quantum;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,9 +8,9 @@ using UnityEngine;
 public class SoundHandler : QuantumCallbacks {
 
     //---Serialized Variables
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource sfxSource, musicSource;
     [SerializeField] private LoopingAudioClip defaultSound, scaredSound, eatenSound;
-    [SerializeField] private AudioClip startingClip;
+    [SerializeField] private AudioClip startingClip, countdownClip, endClip;
 
     //---Private Variables
     private LoopingAudioClip currentClip;
@@ -22,6 +23,8 @@ public class SoundHandler : QuantumCallbacks {
         QuantumEvent.Subscribe<EventGhostStateChanged>(this, OnGhostChangeState);
         QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
         QuantumEvent.Subscribe<EventGameStart>(this, OnGameStart);
+        QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
+        QuantumEvent.Subscribe<EventTimerSecondPassed>(this, OnTimerSecondPassed);
     }
 
     public override void OnUpdateView(QuantumGame game) {
@@ -29,7 +32,7 @@ public class SoundHandler : QuantumCallbacks {
     }
 
     public void Update() {
-        LoopingAudioClip.Update(audioSource, currentClip);
+        LoopingAudioClip.Update(sfxSource, currentClip);
     }
 
     public void OnPowerPelletEaten(EventPowerPelletEat e) {
@@ -49,11 +52,25 @@ public class SoundHandler : QuantumCallbacks {
     }
 
     public void OnGameStarting(EventGameStarting e) {
-        audioSource.PlayOneShot(startingClip);
+        sfxSource.PlayOneShot(startingClip);
     }
 
     public void OnGameStart(EventGameStart e) {
-        audioSource.Play();
+        sfxSource.Play();
+        musicSource.Play();
+    }
+
+    public void OnGameEnd(EventGameEnd e) {
+        sfxSource.Stop();
+        sfxSource.PlayOneShot(endClip);
+
+        StartCoroutine(FadeMusic(3, 1));
+    }
+
+    public void OnTimerSecondPassed(EventTimerSecondPassed e) {
+        if (e.SecondsRemaining <= 10) {
+            sfxSource.PlayOneShot(countdownClip);
+        }
     }
 
     private void TryChangeAudioClip(Frame f) {
@@ -69,10 +86,23 @@ public class SoundHandler : QuantumCallbacks {
             currentClip = defaultSound;
         }
 
-        bool play = oldClip != currentClip && audioSource.isPlaying;
-        audioSource.clip = currentClip.Clip;
+        bool play = oldClip != currentClip && sfxSource.isPlaying;
+        sfxSource.clip = currentClip.Clip;
         if (play) {
-            audioSource.Play();
+            sfxSource.Play();
         }
+    }
+
+    private IEnumerator FadeMusic(float duration, float delay = 0) {
+        yield return new WaitForSeconds(delay);
+
+        float initialVolume = musicSource.volume;
+        float timer = 0;
+        while ((timer += Time.deltaTime) < duration) {
+            musicSource.volume = Mathf.Lerp(initialVolume, 0, timer / duration);
+            yield return null;
+        }
+
+        musicSource.volume = 0;
     }
 }

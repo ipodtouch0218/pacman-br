@@ -9,8 +9,8 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
     [SerializeField] public EntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles;
+    [SerializeField] private SpriteRenderer spriteRenderer, arrowRenderer;
+    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles, sparkParticles;
     [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Sprite[] movementSprites, deathSprites;
@@ -67,10 +67,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         Color playerColor = Color.gray;
         if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
             playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
+        } else {
+            arrowRenderer.gameObject.SetActive(false);
         }
 
         var main = respawnParticles.main;
         main.startColor = playerColor;
+        arrowRenderer.color = playerColor;
     }
 
     public void Update() {
@@ -102,7 +105,8 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public override void OnUpdateView(QuantumGame game) {
-        if (!game.Frames.Predicted.TryGet(entity.EntityRef, out PacmanPlayer pac) || !game.Frames.Predicted.TryGet(entity.EntityRef, out GridMover mover)) {
+        var frame = game.Frames.Predicted;
+        if (!frame.TryGet(entity.EntityRef, out PacmanPlayer pac) || !frame.TryGet(entity.EntityRef, out GridMover mover)) {
             return;
         }
 
@@ -113,11 +117,11 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
 
         Color playerColor = Color.gray;
-        if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
+        if (frame.TryGet(entity.EntityRef, out PlayerLink pl)) {
             playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
         }
 
-        float timeSinceStart = (game.Frames.Predicted.Number * game.Frames.Predicted.DeltaTime).AsFloat;
+        float timeSinceStart = (frame.Number * frame.DeltaTime).AsFloat;
         float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
         float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
         bool scaredFlash = (pelletTimeRemaining < scaredBlinkStart) && (timeSinceStart % scaredBlinkPeriod < (scaredBlinkPeriod / 2));
@@ -158,6 +162,71 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
                 index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle)) + offset;
             }
             spriteRenderer.sprite = movementSprites[Mathf.Clamp(index, 0, movementSprites.Length - 1)];
+        }
+
+        UpdateSparks(frame);
+    }
+
+    private void UpdateSparks(Frame frame) {
+
+        var emission = sparkParticles.emission;
+        var shape = sparkParticles.shape;
+
+        PacmanPlayer pacman = frame.Get<PacmanPlayer>(entity.EntityRef);
+        GridMover* mover = frame.Unsafe.GetPointer<GridMover>(entity.EntityRef);
+
+        if (pacman.IsDead || mover->IsLocked || mover->IsStationary) {
+            emission.enabled = false;
+            return;
+        }
+
+        Quantum.Input input = *frame.GetPlayerInput(0);
+        bool left = input.TargetDirection == 0;
+        bool up = input.TargetDirection == 1;
+        bool right = input.TargetDirection == 2;
+        bool down = input.TargetDirection == 3;
+
+        switch (mover->Direction) {
+        case 0:
+            // Moving Left
+            // Check for Up and Down
+            emission.enabled = up ^ down;
+            if (up) {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, 0.5f), Quaternion.Euler(90, 0, 45));
+            } else {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, -0.5f), Quaternion.Euler(90, 0, 90));
+            }
+            break;
+        case 1:
+            // Moving Up
+            // Check for Left and Right
+            emission.enabled = left ^ right;
+            if (left) {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(90, 0, 0));
+            } else {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(90, 0, -45));
+            }
+            break;
+        case 2:
+            // Moving Right
+            // Check for Up and Down
+            emission.enabled = up ^ down;
+            if (up) {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, 0.5f), Quaternion.Euler(90, 0, -90));
+            } else {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, -0.5f), Quaternion.Euler(90, 0, -135));
+            }
+            break;
+        case 3:
+            // Moving Down
+            // Check for Left and Right
+            emission.enabled = left ^ right;
+            if (left) {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(90, 0, 135));
+            } else {
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(90, 0, 180));
+            }
+            break;
         }
     }
 

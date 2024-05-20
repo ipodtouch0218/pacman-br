@@ -17,7 +17,9 @@ public unsafe class TimerUpdater : QuantumCallbacks {
         Frame f = game.Frames.Predicted;
         float secondsRemaining = f.Global->Timer.AsFloat;
 
-        if (secondsRemaining < 60) {
+        if (secondsRemaining < 10) {
+            text.text = secondsRemaining.ToString("0.00");
+        } else if (secondsRemaining < 60) {
             text.text = secondsRemaining.ToString("0.0");
         } else {
             text.text = TimeSpan.FromSeconds(secondsRemaining).ToString(@"m\:ss");

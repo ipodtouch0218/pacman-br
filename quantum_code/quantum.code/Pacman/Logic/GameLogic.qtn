@@ -16,3 +16,7 @@ synced event GameStart {
 synced event GameEnd {
 
 }
+
+event TimerSecondPassed {
+	int SecondsRemaining;
+}

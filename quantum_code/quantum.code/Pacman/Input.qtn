@@ -1,6 +1,3 @@
 input {
-	button Up;
-	button Down;
-	button Left;
-	button Right;
+	sbyte TargetDirection;
 }

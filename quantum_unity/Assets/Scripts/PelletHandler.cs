@@ -32,6 +32,14 @@ public class PelletHandler : MonoBehaviour {
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnEventPowerPelletEat);
     }
 
+    public void Start() {
+        if (QuantumRunner.Default != null) {
+            OnEventPelletRespawn(new() {
+                Game = QuantumRunner.Default.Game
+            });
+        }
+    }
+
     public void OnEventPelletEat(EventPelletEat e) {
         int index = e.Tile.X.AsInt + e.Tile.Y.AsInt * mapData.Settings.MapSize.X.AsInt;
 

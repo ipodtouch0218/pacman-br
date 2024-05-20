@@ -20,13 +20,18 @@ namespace Quantum.Pacman.Logic {
                     f.Events.GameStart();
                 }
             } else if (f.Global->GameStarted) {
-                // End game!
-                if ((f.Global->Timer -= f.DeltaTime) <= 0) {
+                FP previousTimer = f.Global->Timer;
+                FP newTimer = f.Global->Timer -= f.DeltaTime;
+                if (newTimer <= 0) {
+                    // Game end!
                     f.Global->GameStarted = false;
                     f.Global->Timer = 0;
                     f.SystemDisable<PausableSystemGroup>();
 
                     f.Events.GameEnd();
+                } else if (FPMath.CeilToInt(newTimer) != FPMath.CeilToInt(previousTimer)) {
+                    // A second passed!
+                    f.Events.TimerSecondPassed(FPMath.CeilToInt(newTimer));
                 }
             } else {
                 // Waiting for players to ready up...

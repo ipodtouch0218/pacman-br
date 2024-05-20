@@ -382,6 +382,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  flashingPeriod: 1.5
+  flashingMinMax: {x: 0.8, y: 1}
 --- !u!114 &1649549889155800548
 MonoBehaviour:
   m_ObjectHideFlags: 0

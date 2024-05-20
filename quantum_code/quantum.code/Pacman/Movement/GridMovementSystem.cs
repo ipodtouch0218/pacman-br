@@ -34,19 +34,8 @@ namespace Quantum.Pacman.Ghost {
             if (f.Unsafe.TryGetPointer(filter.Entity, out PlayerLink* link)) {
                 // Player movement
                 Input input = *f.GetPlayerInput(link->Player);
-                if (input.Left.IsDown ^ input.Right.IsDown) {
-                    if (input.Left.IsDown) {
-                        TryChangeDirection(f, ref filter, 0, FP._0_20);
-                    } else if (input.Right.IsDown) {
-                        TryChangeDirection(f, ref filter, 2, FP._0_20);
-                    }
-                }
-                if (input.Up.IsDown ^ input.Down.IsDown) {
-                    if (input.Up.IsDown) {
-                        TryChangeDirection(f, ref filter, 1, FP._0_20);
-                    } else if (input.Down.IsDown) {
-                        TryChangeDirection(f, ref filter, 3, FP._0_20);
-                    }
+                if (input.TargetDirection != -1) {
+                    TryChangeDirection(f, ref filter, input.TargetDirection, FP._0_20);
                 }
             } else if (f.Unsafe.TryGetPointer(filter.Entity, out Quantum.Ghost* ghost)) {
                 // AI movement
@@ -132,7 +121,7 @@ namespace Quantum.Pacman.Ghost {
             return FPVector2.DistanceSquared(nextPosition, target);
         }
 
-        private static bool CanMoveInDirection(Frame f, ref Filter filter, int direction) {
+        public static bool CanMoveInDirection(Frame f, ref Filter filter, int direction) {
             var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
 
             FPVector2 tilePosition = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
@@ -145,7 +134,7 @@ namespace Quantum.Pacman.Ghost {
                 return direction == 1 || direction == 3;
             }
 
-                int index = FPVectorUtils.CellToIndex(tilePosition, f);
+            int index = FPVectorUtils.CellToIndex(tilePosition, f);
             if (index == FPVectorUtils.WorldToIndex(mapdata.GhostHouse + (FPVector2.Up * 2), f)) {
                 // Ghost house enterance
                 bool isEaten = f.TryGet(filter.Entity, out Quantum.Ghost ghost) && ghost.State == GhostState.Eaten;

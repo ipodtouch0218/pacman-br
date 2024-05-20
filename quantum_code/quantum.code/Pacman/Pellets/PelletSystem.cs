@@ -43,7 +43,7 @@ namespace Quantum.Pacman.Pellets {
             var pellets = map.PelletData;
 
             int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
-            pelletConfig = FPMath.Repeat(pelletConfig, designs).AsInt;
+            pelletConfig = FPMath.Repeat(pelletConfig, designs - 1).AsInt;
 
 
             int offset = pelletConfig * map.MapSize.X.AsInt * map.MapSize.Y.AsInt;

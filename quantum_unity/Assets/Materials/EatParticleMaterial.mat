@@ -64,7 +64,7 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _BlendOp: 0
-    - _BloomIntensity: 10
+    - _BloomIntensity: 2
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
