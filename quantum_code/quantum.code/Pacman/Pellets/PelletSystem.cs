@@ -122,7 +122,7 @@ namespace Quantum.Pacman.Pellets {
             // mover->FreezeTime += f.DeltaTime;
             if (value == 2) {
                 f.Signals.OnPowerPelletStart(entity);
-                player->PowerPelletTimer = FP._10;
+                player->PowerPelletTimer = FP.FromString("7.5");
                 mover->SpeedMultiplier = FP._1;
 
                 f.Events.PowerPelletEat(entity);

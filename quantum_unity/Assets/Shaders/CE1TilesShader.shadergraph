@@ -1691,8 +1691,8 @@
     "m_ObjectId": "18775d6a2a6849c2aaba51bb8ee3a5c8",
     "m_Title": "Wave Clamp",
     "m_Position": {
-        "x": -1743.0,
-        "y": 1899.0
+        "x": -1470.0,
+        "y": 1904.0
     }
 }
 
@@ -2819,8 +2819,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -395.0,
-            "y": 1958.0,
+            "x": -404.0,
+            "y": 1963.0,
             "width": 208.0,
             "height": 326.0
         }

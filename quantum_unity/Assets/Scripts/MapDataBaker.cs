@@ -23,6 +23,8 @@ public class MapDataBaker : MapDataBakerCallback {
         // Collision Data
         tilemap.CompressBounds();
         BoundsInt bounds = tilemap.cellBounds;
+        bounds.size -= new Vector3Int(2, 2, 0);
+        bounds.position += new Vector3Int(1, 1, 0);
         int tilesPerScreen = bounds.size.x * bounds.size.y;
         dataAsset.Settings.MapOrigin = new FPVector2(bounds.position.x, bounds.position.y);
         dataAsset.Settings.MapSize = new FPVector2(bounds.size.x, bounds.size.y);

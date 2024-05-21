@@ -93,5 +93,5 @@ Material:
     - _GlowColor: {r: 0, g: 0, b: 1, a: 1}
     - _InsetColor: {r: 0.3019608, g: 0, b: 0.6470588, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Tiles: {r: 4, g: 4, b: 0, a: 0}
+    - _Tiles: {r: 4, g: 7, b: 0, a: 0}
   m_BuildTextureStacks: []

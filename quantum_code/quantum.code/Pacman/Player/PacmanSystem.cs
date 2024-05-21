@@ -1,7 +1,7 @@
 ﻿using Photon.Deterministic;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
 
         public struct Filter {
             public EntityRef Entity;
@@ -56,9 +56,9 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public void OnPowerPelletStart(Frame f, EntityRef entity) {
-            if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)) {
-                pacman->GhostCombo = 0;
-            }
+            //if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)) {
+            //    pacman->GhostCombo = 0;
+            //}
             if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 mover->SpeedMultiplier = FP._1;
             }
@@ -68,6 +68,12 @@ namespace Quantum.Pacman.Ghost {
                 if (!pacman2->HasPowerPellet) {
                     mover2->SpeedMultiplier = FP.FromString("0.85");
                 }
+            }
+        }
+
+        public void OnPowerPelletEnd(Frame f, EntityRef entity) {
+            if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)) {
+                pacman->GhostCombo = 0;
             }
         }
 

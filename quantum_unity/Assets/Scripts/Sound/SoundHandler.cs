@@ -70,6 +70,8 @@ public class SoundHandler : QuantumCallbacks {
     public void OnTimerSecondPassed(EventTimerSecondPassed e) {
         if (e.SecondsRemaining <= 10) {
             sfxSource.PlayOneShot(countdownClip);
+        } else if (e.SecondsRemaining % 60 == 1) {
+            sfxSource.PlayOneShot(endClip);
         }
     }
 
