@@ -1,4 +1,5 @@
 using Quantum;
+using Quantum.Pacman.Ghost;
 using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -175,7 +176,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         PacmanPlayer pacman = frame.Get<PacmanPlayer>(entity.EntityRef);
         GridMover* mover = frame.Unsafe.GetPointer<GridMover>(entity.EntityRef);
 
-        if (pacman.IsDead || mover->IsLocked || mover->IsStationary) {
+        if (!frame.SystemIsEnabledInHierarchy<GridMovementSystem>() || pacman.IsDead || mover->IsLocked || mover->IsStationary || mover->FreezeTime > 0) {
             emission.enabled = false;
             return;
         }

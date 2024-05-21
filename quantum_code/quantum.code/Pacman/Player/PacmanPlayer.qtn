@@ -4,6 +4,7 @@ component PacmanPlayer {
 	int Score;
 
 	FP PowerPelletTimer;
+	FP PowerPelletFullTimer;
 	int GhostCombo;
 
 	bool IsDead;

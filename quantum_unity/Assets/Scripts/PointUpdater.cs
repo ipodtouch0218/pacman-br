@@ -18,12 +18,12 @@ public class PointUpdater : QuantumCallbacks {
 
     public override void OnUpdateView(QuantumGame game) {
         var f = game.Frames.Predicted;
-        if (!f.TryGet(entity.EntityRef, out PacmanPlayer pacman)) {
+        if (!f.TryGet(entity.EntityRef, out PacmanPlayer pacman) || !pacman.HasPowerPellet) {
             return;
         }
 
         // TODO: change
-        powerMeterImage.fillAmount = pacman.PowerPelletTimer.AsFloat / 10f;
+        powerMeterImage.fillAmount = pacman.PowerPelletTimer.AsFloat / pacman.PowerPelletFullTimer.AsFloat;
     }
 
     public void OnPacmanScored(EventPacmanScored e) {
