@@ -1,7 +1,8 @@
 ﻿using Photon.Deterministic;
+using System.Collections.Generic;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnComponentAdded<PacmanPlayer>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
 
         public struct Filter {
             public EntityRef Entity;
@@ -136,7 +137,43 @@ namespace Quantum.Pacman.Ghost {
 
             pacman->Score += points;
 
-            f.Events.PacmanScored(pacmanEntity, points, pacman->Score);
+            RecalculateRankings(f);
+            f.Events.PacmanScored(pacmanEntity, *pacman, points, pacman->Score);
+        }
+
+        public void OnAdded(Frame f, EntityRef entity, PacmanPlayer* component) {
+            RecalculateRankings(f);
+        }
+
+        private static void RecalculateRankings(Frame f) {
+
+            // TODO: is this slow? :(
+
+            List<EntityComponentPointerPair<PacmanPlayer>> players = new(4);
+
+            foreach (var ecp in f.Unsafe.GetComponentBlockIterator<PacmanPlayer>()) {
+                players.Add(ecp);
+            }
+
+            players.Sort((a, b) => {
+                return b.Component->Score - a.Component->Score;
+            });
+
+            byte sharedRanking = 0;
+            byte uniqueRanking = 0;
+            int previousScore = players[0].Component->Score;
+            foreach (var player in players) {
+                PacmanPlayer* pac = player.Component;
+
+                if (previousScore != pac->Score) {
+                    // Different score, increment the ranking.
+                    sharedRanking = uniqueRanking;
+                    previousScore = pac->Score;
+                }
+
+                pac->Ranking = sharedRanking;
+                pac->UniqueRanking = uniqueRanking++;
+            }
         }
     }
 }

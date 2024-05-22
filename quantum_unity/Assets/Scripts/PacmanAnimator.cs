@@ -6,7 +6,9 @@ using UnityEngine.Rendering.Universal;
 
 public unsafe class PacmanAnimator : QuantumCallbacks {
 
-    public static event Action<PacmanAnimator> OnPacmanCreated;
+    public static event Action<QuantumGame, PacmanAnimator> OnPacmanCreated;
+
+    public Color PlayerColor { get; private set; }
 
     [SerializeField] public EntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
@@ -54,27 +56,21 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
-        OnPacmanCreated?.Invoke(this);
 
         mpb = new();
         spriteRenderer.GetPropertyBlock(mpb);
     }
 
     public void Initialize(QuantumGame game) {
-        if (!game.Frames.Predicted.TryGet(entity.EntityRef, out PacmanPlayer pac)) {
-            return;
-        }
-
-        Color playerColor = Color.gray;
+        PlayerColor = Color.gray;
         if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
-            playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
-        } else {
-            arrowRenderer.gameObject.SetActive(false);
+            PlayerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
         }
 
         var main = respawnParticles.main;
-        main.startColor = playerColor;
-        arrowRenderer.color = playerColor;
+        main.startColor = PlayerColor;
+        arrowRenderer.color = PlayerColor;
+        OnPacmanCreated?.Invoke(game, this);
     }
 
     public void Update() {
@@ -117,11 +113,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             spriteRenderer.enabled = true;
         }
 
-        Color playerColor = Color.gray;
-        if (frame.TryGet(entity.EntityRef, out PlayerLink pl)) {
-            playerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
-        }
-
         float timeSinceStart = (frame.Number * frame.DeltaTime).AsFloat;
         float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
         float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
@@ -143,13 +134,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         if (otherPlayerHasPellet && (!pac.HasPowerPellet || scaredFlash)) {
             // Scared
             mpb.SetColor("_BaseColor", scaredColor);
-            mpb.SetColor("_OutlineColor", playerColor);
+            mpb.SetColor("_OutlineColor", PlayerColor);
             light.color = scaredColor;
         } else {
             // Other
-            mpb.SetColor("_BaseColor", playerColor);
+            mpb.SetColor("_BaseColor", PlayerColor);
             mpb.SetColor("_OutlineColor", Color.white);
-            light.color = playerColor;
+            light.color = PlayerColor;
         }
         spriteRenderer.SetPropertyBlock(mpb);
 
@@ -181,7 +172,12 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             return;
         }
 
-        Quantum.Input input = *frame.GetPlayerInput(0);
+        if (!frame.TryGet(entity.EntityRef, out PlayerLink pl)) {
+            emission.enabled = false;
+            return;
+        }
+
+        Quantum.Input input = *frame.GetPlayerInput(pl.Player);
         bool left = input.TargetDirection == 0;
         bool up = input.TargetDirection == 1;
         bool right = input.TargetDirection == 2;

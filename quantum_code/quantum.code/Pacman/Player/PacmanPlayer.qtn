@@ -1,4 +1,7 @@
 component PacmanPlayer {
+	byte Ranking;
+	byte UniqueRanking;
+
 	int PelletsEaten;
 	int PelletChain;
 	int Score;
@@ -36,6 +39,7 @@ synced event PacmanKilled {
 
 synced event PacmanScored {
 	entity_ref Entity;
+	PacmanPlayer Pacman;
 	int GainedPoints;
 	int TotalPoints;
 }

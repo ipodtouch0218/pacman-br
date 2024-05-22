@@ -1,3 +1,4 @@
+using Quantum;
 using UnityEngine;
 
 public class ScorePanel : MonoBehaviour {
@@ -5,16 +6,15 @@ public class ScorePanel : MonoBehaviour {
     [SerializeField] private PointUpdater template;
 
     public void OnEnable() {
-        PacmanAnimator.OnPacmanCreated += PacmanAnimator_OnPacmanCreated;
+        PacmanAnimator.OnPacmanCreated += OnPacmanCreated;
     }
 
     public void OnDisable() {
-        PacmanAnimator.OnPacmanCreated -= PacmanAnimator_OnPacmanCreated;
+        PacmanAnimator.OnPacmanCreated -= OnPacmanCreated;
     }
 
-    private void PacmanAnimator_OnPacmanCreated(PacmanAnimator pacman) {
+    private void OnPacmanCreated(QuantumGame game, PacmanAnimator pacman) {
         PointUpdater newPointUpdater = Instantiate(template, transform);
-        newPointUpdater.entity = pacman.entity;
-        newPointUpdater.gameObject.SetActive(true);
+        newPointUpdater.Initialize(pacman);
     }
 }
