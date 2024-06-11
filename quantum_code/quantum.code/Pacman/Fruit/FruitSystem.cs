@@ -11,14 +11,15 @@ namespace Quantum.Pacman.Fruit {
                 return;
             }
 
-            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
+            MapCustomData map = MapCustomData.Current(f);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
 
-            FPVector2 spawnpoint = map.GhostHouse + FPVector2.Down * 3; // Default to below the ghost house
+            FPVector2 spawnpoint = maze.GhostHouse + FPVector2.Down * 3; // Default to below the ghost house
 
             // Find the spawnpoint with the highest minimum distance
             FP spawnpointDistance = 0;
 
-            foreach (FPVector2 possibleSpawn in map.FruitSpawnPoints) {
+            foreach (FPVector2 possibleSpawn in maze.FruitSpawnPoints) {
                 FP minimumDistance = FP.UseableMax;
 
                 var players = f.Filter<Transform2D, PacmanPlayer>();
@@ -72,8 +73,8 @@ namespace Quantum.Pacman.Fruit {
             f.Signals.OnPacmanScored(info.Entity, fruit.Points);
             f.Destroy(info.Other);
 
-            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
-            PelletSystem.SpawnNextPellets(f, transform.Position.X < map.GhostHouse.X);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PelletSystem.SpawnNextPellets(f, transform.Position.X < maze.GhostHouse.X);
         }
     }
 }

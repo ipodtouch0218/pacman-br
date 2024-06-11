@@ -32,7 +32,7 @@ namespace Quantum.Pacman.Ghost {
             }
 
             // Ghosts only.
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
             int ghostIndex = FPVectorUtils.CellToIndex(tile, f);
 
             if (ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
@@ -46,10 +46,10 @@ namespace Quantum.Pacman.Ghost {
                 switch (ghost->GhostHouseState) {
                 case GhostHouseState.ReturningToEntrance:
                     ChangeGhostHouseState(f, entity, ghost, GhostHouseState.MovingToCenter);
-                    ghost->TargetPosition = mapdata.GhostHouse;
+                    ghost->TargetPosition = maze.GhostHouse;
                     break;
                 case GhostHouseState.MovingToCenter:
-                    FPVector2 ghostHouseCenter = mapdata.GhostHouse;
+                    FPVector2 ghostHouseCenter = maze.GhostHouse;
                     switch (ghost->Mode) {
                     case GhostTargetMode.Inky:
                         ghost->TargetPosition = ghostHouseCenter + FPVector2.Left * 2;
@@ -60,7 +60,7 @@ namespace Quantum.Pacman.Ghost {
                         ChangeGhostHouseState(f, entity, ghost, GhostHouseState.MovingToSide);
                         break;
                     default:
-                        ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
+                        ghost->TargetPosition.Y = maze.GhostHouse.Y + 1;
                         ghost->GhostHouseWaitTime = 1;
                         ghost->ChangeState(f, entity, GhostState.Chase);
                         ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Waiting);
@@ -68,7 +68,7 @@ namespace Quantum.Pacman.Ghost {
                     }
                     break;
                 case GhostHouseState.MovingToSide:
-                    ghost->TargetPosition.Y = mapdata.GhostHouse.Y + 1;
+                    ghost->TargetPosition.Y = maze.GhostHouse.Y + 1;
                     ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Waiting);
                     ghost->GhostHouseWaitTime = 1;
                     ghost->ChangeState(f, entity, GhostState.Chase);
@@ -80,25 +80,25 @@ namespace Quantum.Pacman.Ghost {
                     }
 
                     if (queue.IndexOf(entity) == 0) {
-                        ghost->TargetPosition.Y = mapdata.GhostHouse.Y;
+                        ghost->TargetPosition.Y = maze.GhostHouse.Y;
                         ChangeGhostHouseState(f, entity, ghost, GhostHouseState.AlignVertical);
                     } else {
-                        ghost->TargetPosition.Y = mapdata.GhostHouse.Y + (ghost->TargetPosition.Y > mapdata.GhostHouse.Y ? -1 : 1);
+                        ghost->TargetPosition.Y = maze.GhostHouse.Y + (ghost->TargetPosition.Y > maze.GhostHouse.Y ? -1 : 1);
                     }
 
                     break;
                 case GhostHouseState.AlignVertical:
-                    if (ghost->TargetPosition.X != mapdata.GhostHouse.X) {
-                        ghost->TargetPosition.X = mapdata.GhostHouse.X;
+                    if (ghost->TargetPosition.X != maze.GhostHouse.X) {
+                        ghost->TargetPosition.X = maze.GhostHouse.X;
                         ChangeGhostHouseState(f, entity, ghost, GhostHouseState.AlignHorizontal);
                     } else {
-                        ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
+                        ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
                         mover->SpeedMultiplier = FP._0_33;
                         ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Leaving);
                     }
                     break;
                 case GhostHouseState.AlignHorizontal:
-                    ghost->TargetPosition = mapdata.GhostHouse + FPVector2.Up * 3;
+                    ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
                     mover->SpeedMultiplier = FP._0_33;
                     ChangeGhostHouseState(f, entity, ghost, GhostHouseState.Leaving);
                     break;

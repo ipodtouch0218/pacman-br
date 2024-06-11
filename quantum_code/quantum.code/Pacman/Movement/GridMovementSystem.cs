@@ -122,26 +122,26 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public static bool CanMoveInDirection(Frame f, ref Filter filter, int direction) {
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
 
             FPVector2 tilePosition = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
             tilePosition += GridMover.DirectionToVector(direction);
 
-            if (tilePosition.X < 0 || tilePosition.X >= mapdata.MapSize.X) {
+            if (tilePosition.X < 0 || tilePosition.X >= maze.Size.X) {
                 return direction == 0 || direction == 2;
             }
-            if (tilePosition.Y < 0 || tilePosition.Y >= mapdata.MapSize.Y) {
+            if (tilePosition.Y < 0 || tilePosition.Y >= maze.Size.Y) {
                 return direction == 1 || direction == 3;
             }
 
             int index = FPVectorUtils.CellToIndex(tilePosition, f);
-            if (index == FPVectorUtils.WorldToIndex(mapdata.GhostHouse + (FPVector2.Up * 2), f)) {
+            if (index == FPVectorUtils.WorldToIndex(maze.GhostHouse + (FPVector2.Up * 2), f)) {
                 // Ghost house enterance
                 bool isEaten = f.TryGet(filter.Entity, out Quantum.Ghost ghost) && ghost.State == GhostState.Eaten;
                 return direction != 3 || isEaten;
             }
 
-            return mapdata.CollisionData[index];
+            return maze.CollisionData[index];
         }
 
         private static void TryChangeDirection(Frame f, ref Filter filter, int newDirection, FP? tolerance = null) {
@@ -185,13 +185,12 @@ namespace Quantum.Pacman.Ghost {
         }
 
         private static MovementResult MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+
             FPVector2 newPosition = position + GridMover.DirectionToVector(direction) * amount;
-
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-
             FPVector2 wrappedPosition = default;
-            wrappedPosition.X = RepeatBetween(newPosition.X - mapdata.MapOrigin.X, -1, mapdata.MapSize.X) + mapdata.MapOrigin.X;
-            wrappedPosition.Y = RepeatBetween(newPosition.Y - mapdata.MapOrigin.Y, -1, mapdata.MapSize.Y) + mapdata.MapOrigin.Y;
+            wrappedPosition.X = RepeatBetween(newPosition.X - maze.Origin.X, -1, maze.Size.X) + maze.Origin.X;
+            wrappedPosition.Y = RepeatBetween(newPosition.Y - maze.Origin.Y, -1, maze.Size.Y) + maze.Origin.Y;
 
             return new() {
                 NewPosition = wrappedPosition,

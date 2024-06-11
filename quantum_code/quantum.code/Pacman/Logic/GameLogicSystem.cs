@@ -26,9 +26,10 @@ namespace Quantum.Pacman.Logic {
                     // Game end!
                     f.Global->GameStarted = false;
                     f.Global->Timer = 0;
-                    f.SystemDisable<PausableSystemGroup>();
 
+                    f.SystemDisable<PausableSystemGroup>();
                     f.Events.GameEnd();
+
                 } else if (FPMath.CeilToInt(newTimer) != FPMath.CeilToInt(previousTimer)) {
                     // A second passed!
                     f.Events.TimerSecondPassed(FPMath.CeilToInt(newTimer));

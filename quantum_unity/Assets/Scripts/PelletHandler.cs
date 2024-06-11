@@ -41,7 +41,7 @@ public class PelletHandler : MonoBehaviour {
     }
 
     public void OnEventPelletEat(EventPelletEat e) {
-        int index = e.Tile.X.AsInt + e.Tile.Y.AsInt * mapData.Settings.MapSize.X.AsInt;
+        int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * mapData.Settings.CurrentMazeData(e.Frame).Size.X.AsInt);
 
         if (!pelletGOs.TryGetValue(index, out GameObject pellet)) {
             return;

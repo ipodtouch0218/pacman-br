@@ -3,15 +3,26 @@
 
         public override void Update(Frame f) {
             for (int i = 0; i < f.PlayerCount; i++) {
-                if (f.GetPlayerCommand(i) is PlayerReadyCommand command) {
-                    var playerLinks = f.Filter<PlayerLink>();
-                    while (playerLinks.NextUnsafe(out _, out PlayerLink* playerLink)) {
-                        if (playerLink->Player == i && !playerLink->ReadyToPlay) {
-                            playerLink->ReadyToPlay = true;
-                            f.Signals.OnPlayerReady(playerLink->Player);
-                        }
-                    }
+                if (f.GetPlayerCommand(i) is not PlayerReadyCommand) {
+                    continue;
                 }
+
+                var playerLinks = f.Filter<PlayerLink>();
+                while (playerLinks.NextUnsafe(out _, out PlayerLink* playerLink)) {
+                    if (playerLink->Player != i || playerLink->ReadyToPlay) {
+                        continue;
+                    }
+
+                    playerLink->ReadyToPlay = true;
+                    f.Signals.OnPlayerReady(playerLink->Player);
+                }
+            }
+        }
+
+        public static void ClearAllPlayerReady(Frame f) {
+            var filter = f.Filter<PlayerLink>();
+            while (filter.NextUnsafe(out _, out PlayerLink* player)) {
+                player->ReadyToPlay = false;
             }
         }
 
@@ -28,15 +39,16 @@
             };
             f.Add(entity, playerlink);
 
-            if (f.Unsafe.TryGetPointer(entity, out GridMover* grid)) {
-                if (f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
-                    var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-                    var spawnpoint = mapdata.SpawnPoints[(int) player % mapdata.SpawnPoints.Length];
-
-                    transform->Position = spawnpoint.Position;
-                    grid->Direction = spawnpoint.Direction;
-                }
+            if (!f.Unsafe.TryGetPointer(entity, out GridMover* grid) ||
+                !f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
+                return;
             }
+
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            var spawnpoint = maze.SpawnPoints[player % maze.SpawnPoints.Length];
+
+            transform->Position = spawnpoint.Position;
+            grid->Direction = spawnpoint.Direction;
         }
     }
 }

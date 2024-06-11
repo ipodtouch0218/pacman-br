@@ -9,20 +9,20 @@ namespace Quantum.Util {
         }
 
         public static FPVector2 WorldToCell(FPVector2 input, Frame f) {
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
-            input -= mapdata.MapOrigin;
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            input -= maze.Origin;
             return Apply(input, FPMath.Round);
         }
 
         public static FPVector2 CellToWorld(FPVector2 input, Frame f) {
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
-            input += mapdata.MapOrigin;
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            input += maze.Origin;
             return Apply(input, FPMath.Round);
         }
 
         public static int CellToIndex(FPVector2 input, Frame f) {
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
-            return input.X.AsInt + (input.Y.AsInt * mapdata.MapSize.X.AsInt);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            return input.X.AsInt + (input.Y.AsInt * maze.Size.X.AsInt);
         }
 
         public static int WorldToIndex(FPVector2 input, Frame f) {

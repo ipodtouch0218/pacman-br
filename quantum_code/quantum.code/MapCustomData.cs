@@ -16,15 +16,33 @@ namespace Quantum {
             public int Points;
         }
 
-        public SpawnPointData[] SpawnPoints;
-        public FPVector2 MapOrigin;
-        public FPVector2 MapSize;
-        public FPVector2 GhostHouse;
-        public bool[] CollisionData;
-        public byte[] PelletData;
+        [Serializable]
+        public class MazeData {
+            public SpawnPointData[] SpawnPoints;
+            public FPVector2 Origin;
+            public FPVector2 Size;
+            public FPVector2 GhostHouse;
+            public bool[] CollisionData;
+            public byte[] PelletData;
 
-        public AssetRefEntityPrototype FruitPrototype;
-        public FPVector2[] FruitSpawnPoints;
+            public FPVector2[] FruitSpawnPoints;
+        }
+
+        public MazeData[] Mazes;
         public FruitData[] FruitSpawnOrder;
+        public AssetRefEntityPrototype FruitPrototype;
+
+        public MazeData CurrentMazeData(Frame f) {
+            int index = f.Global->CurrentMazeIndex;
+            if (index < 0 || index >= Mazes.Length) {
+                return null;
+            }
+
+            return Mazes[index];
+        }
+
+        public static MapCustomData Current(Frame f) {
+            return f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
+        }
     }
 }

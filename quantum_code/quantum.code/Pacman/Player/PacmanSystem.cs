@@ -126,6 +126,9 @@ namespace Quantum.Pacman.Ghost {
                 _ => 3200,
             };
 
+            // Bonus power pellet time
+            pacman->PowerPelletTimer = FPMath.Min(pacman->PowerPelletTimer + FP._0_50, pacman->PowerPelletFullTimer);
+
             f.Signals.OnPacmanScored(pacmanEntity, points);
             f.Events.CharacterEaten(f, pacmanEntity, other, pacman->GhostCombo, points);
         }

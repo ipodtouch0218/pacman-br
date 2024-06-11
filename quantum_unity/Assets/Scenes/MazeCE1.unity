@@ -5681,8 +5681,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411349190}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.5, y: 0.50000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5696,7 +5696,7 @@ Transform:
   - {fileID: 1746508055}
   - {fileID: 734109395}
   - {fileID: 1503513481}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1071162705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447554628
 GameObject:
@@ -14700,7 +14700,7 @@ GameObject:
   - component: {fileID: 1071162706}
   - component: {fileID: 1071162708}
   m_Layer: 0
-  m_Name: BaseTilemap
+  m_Name: Maze #1
   m_TagString: Maze
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14733,6 +14733,7 @@ Transform:
   - {fileID: 661604746}
   - {fileID: 1483523669}
   - {fileID: 1603694253}
+  - {fileID: 411349191}
   m_Father: {fileID: 734971373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1071162706
@@ -22636,8 +22637,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293781611
+  m_fontColor: {r: 0.41960785, g: 0.9098039, b: 0.92941177, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -26733,7 +26734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -27755,6 +27756,7 @@ GameObject:
   - component: {fileID: 2068968506}
   - component: {fileID: 2068968505}
   - component: {fileID: 2068968507}
+  - component: {fileID: 2068968508}
   m_Layer: 0
   m_Name: MapData
   m_TagString: Untagged
@@ -27811,6 +27813,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 746ffb62565f3ca4eac1833bd7a7b606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2068968508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068968504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da6e6b02d023ce4596272220c5f0ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 2068968505}
 --- !u!1 &2140751209
 GameObject:
   m_ObjectHideFlags: 0
@@ -28003,7 +28018,6 @@ SceneRoots:
   - {fileID: 987400661}
   - {fileID: 206999465}
   - {fileID: 406828574}
-  - {fileID: 411349191}
   - {fileID: 734971373}
   - {fileID: 458601938273832216}
   - {fileID: 1290216459}

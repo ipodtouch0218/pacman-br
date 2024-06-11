@@ -39,18 +39,18 @@ namespace Quantum.Pacman.Pellets {
             QDictionary<FPVector2, byte> pelletDict = f.ResolveDictionary(f.Global->PelletData);
             pelletDict.Clear();
 
-            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset);
-            var pellets = map.PelletData;
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            var pellets = maze.PelletData;
 
-            int designs = map.PelletData.Length / (map.MapSize.X.AsInt * map.MapSize.Y.AsInt);
+            int designs = maze.PelletData.Length / (maze.Size.X.AsInt * maze.Size.Y.AsInt);
             pelletConfig = FPMath.Repeat(pelletConfig, designs - 1).AsInt;
 
 
-            int offset = pelletConfig * map.MapSize.X.AsInt * map.MapSize.Y.AsInt;
+            int offset = pelletConfig * maze.Size.X.AsInt * maze.Size.Y.AsInt;
             int count = 0;
-            for (int x = 0; x < map.MapSize.X; x++) {
-                for (int y = 0; y < map.MapSize.Y; y++) {
-                    int index = x + (y * map.MapSize.X.AsInt) + offset;
+            for (int x = 0; x < maze.Size.X; x++) {
+                for (int y = 0; y < maze.Size.Y; y++) {
+                    int index = x + (y * maze.Size.X.AsInt) + offset;
                     byte pellet = pellets[index];
                     if (pellet != 0) {
                         pelletDict.Add(new FPVector2(x, y), pellet);
@@ -93,11 +93,11 @@ namespace Quantum.Pacman.Pellets {
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
-            var map = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id);
-            if (tile.X < 0 || tile.X >= map.MapSize.X) {
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            if (tile.X < 0 || tile.X >= maze.Size.X) {
                 return;
             }
-            if (tile.Y < 0 || tile.Y >= map.MapSize.Y) {
+            if (tile.Y < 0 || tile.Y >= maze.Size.Y) {
                 return;
             }
 

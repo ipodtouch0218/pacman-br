@@ -45,7 +45,7 @@ namespace Quantum.Pacman.Ghost {
                 return;
             }
 
-            var mapdata = f.FindAsset<MapCustomData>(f.Map.UserAsset);
+            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
 
             FPVector2 target;
             // Target based on ghost rules.
@@ -63,7 +63,7 @@ namespace Quantum.Pacman.Ghost {
             case GhostTargetMode.Inky:
                 // Blinky position + (vector between blinky and player position + 2 tiles in front) * 2
                 var ghostFilter = f.Filter<Transform2D, Quantum.Ghost>();
-                while (ghostFilter.Next(out var _, out var ghostTransform, out var ghost)) {
+                while (ghostFilter.Next(out _, out var ghostTransform, out var ghost)) {
                     if (ghost.Mode != GhostTargetMode.Blinky) {
                         continue;
                     }
@@ -84,7 +84,7 @@ namespace Quantum.Pacman.Ghost {
                 if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform.Value.Position) > (8 * 8)) {
                     target = playerTile;
                 } else {
-                    target = mapdata.MapOrigin;
+                    target = maze.Origin;
                 }
                 break;
             }
@@ -130,7 +130,10 @@ namespace Quantum.Pacman.Ghost {
                 ghost->ChangeState(f, info.Other, GhostState.Eaten);
                 ghost->TimeSinceEaten = 0;
                 GhostHouseSystem.ChangeGhostHouseState(f, info.Other, ghost, GhostHouseState.ReturningToEntrance);
-                ghost->TargetPosition = f.FindAsset<MapCustomData>(f.Map.UserAsset.Id).GhostHouse + FPVector2.Up * 3;
+
+                MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+                ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
+
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
                 //f.Signals.OnGameFreeze(FP._0_50);
                 pacMover->FreezeTime = FP._0_50;
