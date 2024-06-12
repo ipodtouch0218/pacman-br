@@ -284,7 +284,26 @@ MonoBehaviour:
     m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 34
+    m_Metrics:
+      m_Width: 44
+      m_Height: 44
+      m_HorizontalBearingX: 10
+      m_HorizontalBearingY: -40
+      m_HorizontalAdvance: 56
+    m_GlyphRect:
+      m_X: 418
+      m_Y: 108
+      m_Width: 44
+      m_Height: 44
+    m_Scale: 2
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   m_CharacterTable:
+  - m_ElementType: 1
+    m_Unicode: 43
+    m_GlyphIndex: 34
+    m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 46
     m_GlyphIndex: 17

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ScreenFade : MonoBehaviour {
 
-    //---Serialized Variables
-    [SerializeField] private Image image;
+    //---Public
+    public Image lowPriorityImage, highPriorityImage;
 
     public void Start() {
         QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
@@ -14,14 +14,15 @@ public class ScreenFade : MonoBehaviour {
     }
 
     public void OnGameStarting(EventGameStarting e) {
-        StartCoroutine(FadeToValue(0, 2, 0.5f));
+        StartCoroutine(FadeToValue(lowPriorityImage, 0, 2, 0.5f));
     }
 
     public void OnGameEnd(EventGameEnd e) {
-        StartCoroutine(FadeToValue(1, 3, 2));
+        StartCoroutine(FadeToValue(lowPriorityImage, 1, 3, 2));
+        StartCoroutine(FadeToValue(highPriorityImage, 1, 3, 7));
     }
 
-    private IEnumerator FadeToValue(float target, float time, float delay) {
+    public IEnumerator FadeToValue(Image image, float target, float time, float delay) {
         yield return new WaitForSeconds(delay);
         Color color = image.color;
         float start = color.a;

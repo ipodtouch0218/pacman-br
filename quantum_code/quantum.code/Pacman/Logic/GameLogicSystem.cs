@@ -13,7 +13,7 @@ namespace Quantum.Pacman.Logic {
                 // Start game!
                 if ((f.Global->GameStartingTimer -= f.DeltaTime) <= 0) {
                     f.Global->GameStarted = true;
-                    f.Global->Timer = 180;
+                    f.Global->Timer = 10;
                     f.Global->GameStartTick = f.Number;
 
                     f.SystemEnable<PausableSystemGroup>();

@@ -32,7 +32,6 @@ public class MapDataBaker : MapDataBakerCallback {
             BoundsInt bounds = tilemap.cellBounds;
             Vector3Int size = bounds.size - new Vector3Int(2, 2, 0);
             Vector3Int origin = bounds.min + new Vector3Int(1, 1, 0);
-            Debug.Log(origin + "," + size);
 
             maze.Size = ((Vector3) size).ToFPVector3().XY;
             maze.Origin = ((Vector3) origin).ToFPVector3().XY;

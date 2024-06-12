@@ -35,7 +35,7 @@ public unsafe class TimerUpdater : QuantumCallbacks {
     }
 
     public void OnTimerSecondPassed(EventTimerSecondPassed e) {
-        if (e.SecondsRemaining % 60 == 1) {
+        if (e.SecondsRemaining >= 60 && e.SecondsRemaining % 60 == 1) {
             StartCoroutine(Flash());
         }
     }
@@ -43,7 +43,7 @@ public unsafe class TimerUpdater : QuantumCallbacks {
     private IEnumerator Flash() {
         WaitForSeconds delay = new(0.1f);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             yield return delay;
             text.color = Color.white;
             yield return delay;

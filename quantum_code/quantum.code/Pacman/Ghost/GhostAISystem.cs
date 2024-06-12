@@ -135,13 +135,10 @@ namespace Quantum.Pacman.Ghost {
                 ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
 
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);
-                //f.Signals.OnGameFreeze(FP._0_50);
-                pacMover->FreezeTime = FP._0_50;
-                f.Unsafe.GetPointer<GridMover>(info.Other)->FreezeTime = FP._0_50;
                 break;
 
             case GhostState.Chase:
-                if (pac->Invincibility <= 0 && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
+                if (!pac->Invincible && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                     f.Signals.OnPacmanKilled(info.Entity);
                 }
                 break;

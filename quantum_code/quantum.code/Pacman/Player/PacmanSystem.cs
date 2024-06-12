@@ -31,7 +31,13 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
-            if (pac->PowerPelletTimer > 0 && filter.Mover->FreezeTime <= 0) {
+            if (filter.Mover->FreezeTime <= 0 && pac->TemporaryInvincibility > 0) {
+                if ((pac->TemporaryInvincibility -= f.DeltaTime) <= 0) {
+                    pac->TemporaryInvincibility = 0;
+                }
+            }
+
+            if (pac->HasPowerPellet && filter.Mover->FreezeTime <= 0) {
                 var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
                 for (int i = 0; i < hits.Count; i++) {
                     var hit = hits[i];
@@ -45,12 +51,10 @@ namespace Quantum.Pacman.Ghost {
                     }
 
                     // We collided with a PacmanPlayer
-                    if (pac->HasPowerPellet && !otherPac->HasPowerPellet && otherPac->Invincibility <= 0) {
+                    if (!otherPac->HasPowerPellet && !otherPac->Invincible) {
                         // Pac1 eaten Pac2
                         f.Signals.OnCharacterEaten(filter.Entity, hit.Entity);
                         f.Signals.OnPacmanKilled(hit.Entity);
-                        //f.Signals.OnGameFreeze(FP._0_50);
-                        filter.Mover->FreezeTime = FP._0_50;
                     }
                 }
             }
@@ -128,6 +132,15 @@ namespace Quantum.Pacman.Ghost {
 
             // Bonus power pellet time
             pacman->PowerPelletTimer = FPMath.Min(pacman->PowerPelletTimer + FP._0_50, pacman->PowerPelletFullTimer);
+
+            // Freeze
+            if (f.Unsafe.TryGetPointer(pacmanEntity, out GridMover* pacmanMover)) {
+                pacman->TemporaryInvincibility = FP._0_10;
+                pacmanMover->FreezeTime = FP._0_50;
+            }
+            if (f.Unsafe.TryGetPointer(other, out GridMover* otherMover)) {
+                otherMover->FreezeTime = FP._0_50;
+            }
 
             f.Signals.OnPacmanScored(pacmanEntity, points);
             f.Events.CharacterEaten(f, pacmanEntity, other, pacman->GhostCombo, points);
