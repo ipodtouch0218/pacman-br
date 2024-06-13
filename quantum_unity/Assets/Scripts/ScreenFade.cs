@@ -19,7 +19,7 @@ public class ScreenFade : MonoBehaviour {
 
     public void OnGameEnd(EventGameEnd e) {
         StartCoroutine(FadeToValue(lowPriorityImage, 1, 3, 2));
-        StartCoroutine(FadeToValue(highPriorityImage, 1, 3, 7));
+        StartCoroutine(FadeToValue(highPriorityImage, 1, 0.5f, 5.5f));
     }
 
     public IEnumerator FadeToValue(Image image, float target, float time, float delay) {

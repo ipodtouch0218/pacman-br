@@ -24,7 +24,7 @@ namespace Quantum {
 
                 // user systems go here
                 new GameLogicSystem(),
-                new PausableSystemGroup("Freezable Systems", new SystemMainThread[] {
+                new PausableSystemGroup("Freezable Systems", new SystemBase[] {
                     new GhostAISystem(),
                     new GridMovementSystem(),
                     new PelletSystem(),

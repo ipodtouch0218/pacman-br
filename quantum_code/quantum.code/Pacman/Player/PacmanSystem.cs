@@ -1,8 +1,8 @@
-﻿using Photon.Deterministic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Photon.Deterministic;
 
 namespace Quantum.Pacman.Ghost {
-    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnComponentAdded<PacmanPlayer>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
+    public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
 
         public struct Filter {
             public EntityRef Entity;
@@ -151,45 +151,54 @@ namespace Quantum.Pacman.Ghost {
                 return;
             }
 
-            pacman->Score += points;
+            pacman->RoundScore += points;
 
             RecalculateRankings(f);
-            f.Events.PacmanScored(pacmanEntity, *pacman, points, pacman->Score);
-        }
-
-        public void OnAdded(Frame f, EntityRef entity, PacmanPlayer* component) {
-            RecalculateRankings(f);
+            f.Events.PacmanScored(pacmanEntity, *pacman, points, pacman->RoundScore);
         }
 
         private static void RecalculateRankings(Frame f) {
+            // TODO: is this slow? :(
+            Dictionary<EntityRef, Ranking> thisRoundRankings = CalculateRankings(f, true);
+            Dictionary<EntityRef, Ranking> entireGameRankings = CalculateRankings(f, false);
 
+            foreach (var ranking in thisRoundRankings) {
+                PacmanPlayer* pac = f.Unsafe.GetPointer<PacmanPlayer>(ranking.Key);
+                pac->RoundRanking = thisRoundRankings[ranking.Key];
+                pac->TotalRanking = entireGameRankings[ranking.Key];
+            }
+        }
+
+        public static Dictionary<EntityRef, Ranking> CalculateRankings(Frame f, bool thisRoundOnly) {
             // TODO: is this slow? :(
 
-            List<EntityComponentPointerPair<PacmanPlayer>> players = new(4);
+            Dictionary<EntityRef, Ranking> rankings = new(4);
+            List<EntityComponentPair<PacmanPlayer>> players = new(4);
 
-            foreach (var ecp in f.Unsafe.GetComponentBlockIterator<PacmanPlayer>()) {
+            foreach (var ecp in f.GetComponentIterator<PacmanPlayer>()) {
                 players.Add(ecp);
             }
 
-            players.Sort((a, b) => {
-                return b.Component->Score - a.Component->Score;
-            });
+            players.Sort((a, b) => b.Component.GetScore(thisRoundOnly) - a.Component.GetScore(thisRoundOnly));
 
             byte sharedRanking = 0;
             byte uniqueRanking = 0;
-            int previousScore = players[0].Component->Score;
+            int previousScore = players[0].Component.GetScore(thisRoundOnly);
             foreach (var player in players) {
-                PacmanPlayer* pac = player.Component;
-
-                if (previousScore != pac->Score) {
+                int score = player.Component.GetScore(thisRoundOnly);
+                if (previousScore != score) {
                     // Different score, increment the ranking.
                     sharedRanking = uniqueRanking;
-                    previousScore = pac->Score;
+                    previousScore = score;
                 }
 
-                pac->Ranking = sharedRanking;
-                pac->UniqueRanking = uniqueRanking++;
+                rankings.Add(player.Entity, new Ranking() {
+                    SharedRanking = sharedRanking,
+                    UniqueRanking = uniqueRanking++,
+                });
             }
+
+            return rankings;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿namespace Quantum.Platformer {
-    public unsafe class PlayerSpawnSystem : SystemMainThread, ISignalOnPlayerDataSet {
+    public unsafe class PlayerSpawnSystem : SystemMainThread, ISignalOnComponentAdded<PacmanPlayer>, ISignalOnPlayerDataSet {
 
         public override void Update(Frame f) {
             for (int i = 0; i < f.PlayerCount; i++) {
@@ -49,6 +49,13 @@
 
             transform->Position = spawnpoint.Position;
             grid->Direction = spawnpoint.Direction;
+        }
+
+        public void OnAdded(Frame f, EntityRef entity, PacmanPlayer* component) {
+            component->PreviousRoundRanking = new Ranking() {
+                SharedRanking = 0,
+                UniqueRanking = f.Global->PacmanCounter++,
+            };
         }
     }
 }

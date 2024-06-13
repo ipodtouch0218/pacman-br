@@ -1,12 +1,22 @@
-component PacmanPlayer {
-	byte Ranking;
+global {
+	byte PacmanCounter;
+}
+
+struct Ranking {
 	byte UniqueRanking;
+	byte SharedRanking;
+}
+
+component PacmanPlayer {
+	Ranking TotalRanking;
+	Ranking RoundRanking;
+	Ranking PreviousRoundRanking;
 
 	int TotalScore;
+	int RoundScore;
 
 	int PelletsEaten;
 	int PelletChain;
-	int Score;
 
 	FP PowerPelletTimer;
 	FP PowerPelletFullTimer;

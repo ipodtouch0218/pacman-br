@@ -62,10 +62,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void Initialize(QuantumGame game) {
-        PlayerColor = Color.gray;
-        if (game.Frames.Predicted.TryGet(entity.EntityRef, out PlayerLink pl)) {
-            PlayerColor = playerColors[(pl.Player._index - 1) % playerColors.Length];
-        }
+        PlayerColor = Utils.GetPlayerColor(game.Frames.Predicted, entity.EntityRef);
 
         var main = respawnParticles.main;
         main.startColor = PlayerColor;

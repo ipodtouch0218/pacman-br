@@ -11,13 +11,12 @@ public class ScorecardManager : MonoBehaviour {
     [SerializeField] private ScreenFade fade;
     [SerializeField] private Scorecard templateScorecard;
     [SerializeField] private int maxScorePerSecond = 25_000;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip wa, ka, doneCountingClip;
+    [SerializeField] private AudioSource sfxSource, musicSource;
+    [SerializeField] private AudioClip doneCountingClip, doneSortingClip;
+    [SerializeField] private AudioClip[] sortingClips;
 
     //---Private Variables
-    private readonly HashSet<Scorecard> scorecards = new();
-    private bool countingKa;
-    private float timeOfLastSound;
+    private readonly List<Scorecard> scorecards = new();
 
     public void OnValidate() {
         if (!resultsCanvas) {
@@ -41,9 +40,9 @@ public class ScorecardManager : MonoBehaviour {
 
     public void OnGameEnd(EventGameEnd e) {
         var players = e.Game.Frames.Predicted.Filter<PacmanPlayer>();
-        while (players.Next(out _, out var player)) {
+        while (players.Next(out var entity, out var player)) {
             Scorecard newScorecard = Instantiate(templateScorecard, resultsCanvas.transform);
-            newScorecard.Initialize(player);
+            newScorecard.Initialize(e.Game.Frames.Verified, entity, player);
             scorecards.Add(newScorecard);
         }
         StartCoroutine(ScorecardSequence());
@@ -51,37 +50,78 @@ public class ScorecardManager : MonoBehaviour {
 
     private IEnumerator ScorecardSequence() {
         // Wait for initial results screen
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(6);
         resultsCanvas.enabled = true;
         mainCanvas.enabled = false;
-        StartCoroutine(fade.FadeToValue(fade.highPriorityImage, 0, 0, 0));
+        StartCoroutine(fade.FadeToValue(fade.highPriorityImage, 0, 0.5f, 0));
+        musicSource.volume = 0;
+        musicSource.Play();
+        musicSource.time = 6;
+        StartCoroutine(FadeVolumeToValue(musicSource, 0.5f, 3f));
 
         // Start scorecards counting
         yield return new WaitForSeconds(2);
+        scorecards.Sort((a, b) => a.Ranking - b.Ranking);
         int scorePerSecond = Mathf.Min(maxScorePerSecond, scorecards.Max(sc => sc.ToAddScore));
         foreach (var scorecard in scorecards) {
             scorecard.StartCounting(scorePerSecond);
         }
 
         // Wait until all done
+        sfxSource.Play();
         while (scorecards.Any(sc => !sc.DoneCounting)) {
-            if (Time.time - timeOfLastSound > 0.05f) {
-                timeOfLastSound = Time.time;
-                audioSource.clip = countingKa ? ka : wa;
-                countingKa = !countingKa;
-                audioSource.Play();
+            foreach (var scorecard in scorecards) {
+                //scorecard.Ranking =
             }
+            sfxSource.time %= 0.1f;
             yield return null;
         }
 
-        audioSource.Stop();
-        audioSource.PlayOneShot(doneCountingClip);
+        sfxSource.Stop();
+        sfxSource.PlayOneShot(doneCountingClip);
 
-        // Sort
+        // Bubble sort!! Fancy
         yield return new WaitForSeconds(2);
-        foreach (var scorecard in scorecards) {
-            // scorecard.ChangeRanking
+        int swaps = 0;
+        for (int i = scorecards.Count - 1; i > 0; i--) {
+            for (int j = scorecards.Count - 1; j > 0; j--) {
+                if (scorecards[j].TotalScore <= scorecards[j - 1].TotalScore) {
+                    continue;
+                }
+
+                float time = Mathf.Max(0.1f, 1f / ++swaps);
+
+                // Swap
+                (scorecards[j], scorecards[j - 1]) = (scorecards[j - 1], scorecards[j]);
+                scorecards[j].Ranking = j;
+                scorecards[j - 1].Ranking = j - 1;
+
+                scorecards[j].MoveToPosition(time);
+                scorecards[j - 1].MoveToPosition(time);
+
+                sfxSource.PlayOneShot(sortingClips[Mathf.Clamp(swaps, 0, sortingClips.Length - 1)]);
+                yield return new WaitForSeconds(time);
+            }
         }
 
+        if (swaps > 0) {
+            sfxSource.PlayOneShot(doneSortingClip);
+        }
+
+        yield return new WaitForSeconds(3);
+
+        StartCoroutine(FadeVolumeToValue(musicSource, 0, 2f));
+        StartCoroutine(fade.FadeToValue(fade.highPriorityImage, 1, 0.5f, 1));
+    }
+
+    private static IEnumerator FadeVolumeToValue(AudioSource source, float target, float time) {
+        float start = source.volume;
+        float timer = 0;
+        while ((timer += Time.deltaTime) < time) {
+            source.volume = Mathf.Lerp(start, target, timer / time);
+            yield return null;
+        }
+
+        source.volume = target;
     }
 }

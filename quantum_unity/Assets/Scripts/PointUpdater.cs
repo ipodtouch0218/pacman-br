@@ -36,29 +36,7 @@ public class PointUpdater : QuantumCallbacks {
 
     public void OnPacmanScored(EventPacmanScored e) {
         PacmanPlayer pac = e.Game.Frames.Verified.Get<PacmanPlayer>(entity.EntityRef);
-        text.text = RankingToString(pac.Ranking + 1) + ". " + pac.Score.ToString().PadLeft(6, '0');
-    }
-
-    private static string RankingToString(int ranking) {
-
-        ranking = Mathf.Abs(ranking);
-
-        int lastNumber = ranking % 10;
-        char character;
-
-        // what.
-        if (ranking < 10 || ranking >= 20) {
-            character = lastNumber switch {
-                1 => 'A',
-                2 => 'B',
-                3 => 'C',
-                _ => 'D',
-            };
-        } else {
-            character = 'D';
-        }
-
-        return ranking.ToString() + character;
+        text.text = Utils.RankingToString(pac.RoundRanking.SharedRanking + 1) + ". " + pac.RoundScore.ToString().PadLeft(6, '0');
     }
 
     public void OnPowerPelletEat(EventPowerPelletEat e) {
@@ -93,7 +71,7 @@ public class PointUpdater : QuantumCallbacks {
         rt.position = previousPosition;
 
         PacmanPlayer player = game.Frames.Verified.Get<PacmanPlayer>(entity.EntityRef);
-        Vector2 position = player.UniqueRanking * rt.sizeDelta.y * Vector2.down;
+        Vector2 position = player.RoundRanking.UniqueRanking * rt.sizeDelta.y * Vector2.down;
 
         Vector2 moveVelocity = position - rt.anchoredPosition;
 
