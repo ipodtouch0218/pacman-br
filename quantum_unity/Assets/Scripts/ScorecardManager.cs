@@ -14,6 +14,7 @@ public class ScorecardManager : MonoBehaviour {
     [SerializeField] private AudioSource sfxSource, musicSource;
     [SerializeField] private AudioClip doneCountingClip, doneSortingClip;
     [SerializeField] private AudioClip[] sortingClips;
+    [SerializeField] private ParticleSystem sortParticles;
 
     //---Private Variables
     private readonly List<Scorecard> scorecards = new();
@@ -70,9 +71,6 @@ public class ScorecardManager : MonoBehaviour {
         // Wait until all done
         sfxSource.Play();
         while (scorecards.Any(sc => !sc.DoneCounting)) {
-            foreach (var scorecard in scorecards) {
-                //scorecard.Ranking =
-            }
             sfxSource.time %= 0.1f;
             yield return null;
         }
@@ -89,7 +87,7 @@ public class ScorecardManager : MonoBehaviour {
                     continue;
                 }
 
-                float time = Mathf.Max(0.1f, 1f / ++swaps);
+                float time = Mathf.Max(0.1f, 1f / (++swaps + 0.5f));
 
                 // Swap
                 (scorecards[j], scorecards[j - 1]) = (scorecards[j - 1], scorecards[j]);
@@ -100,6 +98,8 @@ public class ScorecardManager : MonoBehaviour {
                 scorecards[j - 1].MoveToPosition(time);
 
                 sfxSource.PlayOneShot(sortingClips[Mathf.Clamp(swaps, 0, sortingClips.Length - 1)]);
+                sortParticles.transform.position = (scorecards[j].transform.position + scorecards[j - 1].transform.position) / 2;
+                sortParticles.Play(true);
                 yield return new WaitForSeconds(time);
             }
         }

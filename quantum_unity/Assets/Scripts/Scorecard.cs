@@ -42,7 +42,7 @@ public class Scorecard : MonoBehaviour {
         pacmanSprite.color = Utils.GetPlayerColor(f, entityRef);
 
         Ranking = player.PreviousRoundRanking.UniqueRanking;
-        rankingText.text = Utils.RankingToString(player.PreviousRoundRanking.SharedRanking + 1);
+        rankingText.text = Utils.RankingToString(player.PreviousRoundRanking.SharedRanking + 1) + '.';
         finalRanking = player.TotalRanking.SharedRanking;
         MoveToPosition(0);
     }
@@ -83,11 +83,11 @@ public class Scorecard : MonoBehaviour {
             yield return null;
         } while (toAddScore > 0);
 
-        rankingText.text = Utils.RankingToString(finalRanking + 1);
+        rankingText.text = Utils.RankingToString(finalRanking + 1) + '.';
     }
 
     private void UpdateText(bool showZero) {
-        totalScoreText.text = totalScore.ToString();
+        totalScoreText.text = totalScore.ToString().PadLeft(6, '0');
         toAddScoreText.text = (showZero || toAddScore > 0) ? ('+' + toAddScore.ToString()) : "";
     }
 }
