@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Photon.Deterministic;
-using Quantum.Platformer;
+using Quantum.Pacman;
 
 namespace Quantum {
     public static partial class DeterministicCommandSetup {
@@ -8,6 +8,7 @@ namespace Quantum {
             // user commands go here
 
             factories.Add(new PlayerReadyCommand());
+            factories.Add(new StartNextRoundCommand());
         }
     }
 }

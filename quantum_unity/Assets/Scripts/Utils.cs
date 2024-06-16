@@ -9,7 +9,7 @@ public class Utils : MonoBehaviour {
         Color.cyan,
         Color.magenta,
         Color.green,
-        new(1, 0, 1)
+        new(0.5f, 0, 1)
     };
 
     public static Color GetPlayerColor(Frame frame, EntityRef entity) {

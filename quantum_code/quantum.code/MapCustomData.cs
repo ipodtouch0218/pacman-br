@@ -28,6 +28,8 @@ namespace Quantum {
             public FPVector2[] FruitSpawnPoints;
         }
 
+        public AssetRefEntityPrototype PacmanPrototype;
+
         public MazeData[] Mazes;
         public FruitData[] FruitSpawnOrder;
         public AssetRefEntityPrototype FruitPrototype;

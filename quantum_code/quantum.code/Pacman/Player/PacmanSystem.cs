@@ -194,7 +194,7 @@ namespace Quantum.Pacman.Ghost {
 
                 rankings.Add(player.Entity, new Ranking() {
                     SharedRanking = sharedRanking,
-                    UniqueRanking = uniqueRanking++,
+                    UniqueRanking = uniqueRanking++
                 });
             }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Quantum;
 using TMPro;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class Scorecard : MonoBehaviour {
     private int totalScore;
     private int toAddScore;
     private Vector2 moveVelocity;
-    private Coroutine moveCoroutine;
+    private Coroutine moveCoroutine, rankCorotuine;
     private int finalRanking;
 
     public void OnValidate() {
@@ -45,6 +46,13 @@ public class Scorecard : MonoBehaviour {
         rankingText.text = Utils.RankingToString(player.PreviousRoundRanking.SharedRanking + 1) + '.';
         finalRanking = player.TotalRanking.SharedRanking;
         MoveToPosition(0);
+    }
+
+    public void LateUpdate() {
+        if (ScorecardManager.AnyCounting) {
+            int rank = ScorecardManager.Scorecards.Count(sc => sc.totalScore > totalScore);
+            rankingText.text = Utils.RankingToString(rank + 1) + '.';
+        }
     }
 
     public void StartCounting(int scorePerSecond) {
@@ -80,10 +88,10 @@ public class Scorecard : MonoBehaviour {
             toAddScore -= change;
 
             UpdateText(false);
-            yield return null;
-        } while (toAddScore > 0);
 
-        rankingText.text = Utils.RankingToString(finalRanking + 1) + '.';
+            yield return null;
+
+        } while (toAddScore > 0);
     }
 
     private void UpdateText(bool showZero) {

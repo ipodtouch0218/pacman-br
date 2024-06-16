@@ -92,8 +92,8 @@
     <Compile Include="Pacman\Player\PacmanPlayer.cs" />
     <Compile Include="Pacman\Player\PacmanSystem.cs" />
     <Compile Include="Pacman\Pellets\PelletSystem.cs" />
-    <Compile Include="Platformer\PlayerReadyCommand.cs" />
-    <Compile Include="Platformer\PlayerSpawnSystem.cs" />
+    <Compile Include="Pacman\StartNextRoundCommand.cs" />
+    <Compile Include="Pacman\PlayerReadyCommand.cs" />
     <Compile Include="RuntimeConfig.User.cs" />
     <Compile Include="RuntimePlayer.User.cs" />
     <Compile Include="SimulationConfig.User.cs" />

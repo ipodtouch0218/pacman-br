@@ -42,6 +42,7 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         currentSprites = movementSprites;
         QuantumEvent.Subscribe<EventGhostStateChanged>(this, OnGhostStateChanged);
         QuantumEvent.Subscribe<EventGridMoverReachedCenterOfTile>(this, OnGridMoverReachedCenterOfTile);
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
 
         originalLightColor = ghostLight.color;
         eyeTrail.SetActive(false);
@@ -128,5 +129,21 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         }
         spriteRenderer.gameObject.SetActive(!value);
         ghostLight.gameObject.SetActive(!value);
+    }
+
+    public void OnGameStarting(EventGameStarting e) {
+        Ghost ghost = e.Game.Frames.Predicted.Get<Ghost>(entity.EntityRef);
+        spriteRenderer.sprite = ghost.Mode switch {
+            GhostTargetMode.Pinky => movementSprites[2],
+            GhostTargetMode.Inky or GhostTargetMode.Clyde => movementSprites[6],
+            _ => movementSprites[0],
+        };
+        OnGhostStateChanged(new EventGhostStateChanged() {
+            Game = e.Game,
+            State = ghost.State,
+            Entity = entity.EntityRef,
+            Frame = e.Game.Frames.Predicted,
+            Tick = e.Game.Frames.Predicted.Number,
+        });
     }
 }

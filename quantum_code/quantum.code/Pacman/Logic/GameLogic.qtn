@@ -6,7 +6,7 @@ global {
 }
 
 synced event GameStarting {
-
+	int MazeIndex;
 }
 
 synced event GameStart {

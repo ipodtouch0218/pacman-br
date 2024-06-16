@@ -54,6 +54,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
 
@@ -222,6 +223,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             }
             break;
         }
+    }
+
+    public void OnGameStarting(EventGameStarting e) {
+        dead = false;
+        spriteRenderer.enabled = true;
+        var emission = sparkleParticles.emission;
+        emission.enabled = false;
     }
 
     public void OnPacmanKilled(EventPacmanKilled e) {

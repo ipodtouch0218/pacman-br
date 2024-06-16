@@ -26,6 +26,7 @@ public class MazeBorder : QuantumCallbacks {
     }
 
     public void Start() {
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
         QuantumEvent.Subscribe<EventGameStart>(this, OnGameStart);
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnPowerPelletEat);
         QuantumEvent.Subscribe<EventPowerPelletEnd>(this, OnPowerPelletEnd);
@@ -57,6 +58,11 @@ public class MazeBorder : QuantumCallbacks {
         }
     }
 
+
+    public void OnGameStarting(EventGameStarting e) {
+        emitting = false;
+        playersWithPellet.Clear();
+    }
 
     public void OnGameStart(EventGameStart e) {
         emitting = true;

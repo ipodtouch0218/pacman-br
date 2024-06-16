@@ -3,7 +3,6 @@ using Quantum.Pacman.Fruit;
 using Quantum.Pacman.Ghost;
 using Quantum.Pacman.Logic;
 using Quantum.Pacman.Pellets;
-using Quantum.Platformer;
 
 namespace Quantum {
     public static class SystemSetup {
@@ -32,7 +31,6 @@ namespace Quantum {
                 }),
                 new GhostHouseSystem(),
                 new FruitSystem(),
-                new PlayerSpawnSystem(),
             };
         }
     }

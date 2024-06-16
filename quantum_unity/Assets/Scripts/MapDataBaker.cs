@@ -18,8 +18,9 @@ public class MapDataBaker : MapDataBakerCallback {
         var dataAsset = UnityDB.FindAsset<MapCustomDataAsset>(data.Asset.Settings.UserAsset.Id);
         var settings = dataAsset.Settings;
 
-        Tilemap[] mazes = GameObject.FindGameObjectsWithTag("Maze")
-            .Select(go => go.GetComponent<Tilemap>())
+        GameObject parent = GameObject.FindGameObjectWithTag("Maze");
+        Tilemap[] mazes = parent.GetComponentsInChildren<Tilemap>(true)
+            .Where(tm => tm.transform.parent == parent.transform)
             .ToArray();
 
         settings.Mazes = new MapCustomData.MazeData[mazes.Length];

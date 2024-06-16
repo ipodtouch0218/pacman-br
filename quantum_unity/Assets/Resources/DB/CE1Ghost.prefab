@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 4722616993313937797}
   - component: {fileID: 2764139848288584657}
   m_Layer: 0
-  m_Name: Ghost
+  m_Name: CE1Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5704,11 +5704,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0120b722c3ca5454da1240b65656905f, type: 3}
-  m_Name: GhostEntityPrototype
+  m_Name: CE1GhostEntityPrototype
   m_EditorClassIdentifier: 
   Settings:
     Identifier:
-      Path: Resources/DB/Ghost|EntityPrototype
+      Path: Resources/DB/CE1Ghost|EntityPrototype
       Guid:
         Value: 1585148932474666226
   Parent: {fileID: 6774725943263295269}
@@ -5722,11 +5722,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d5baec4de8d2754a864a680181831e8, type: 3}
-  m_Name: GhostEntityView
+  m_Name: CE1GhostEntityView
   m_EditorClassIdentifier: 
   Settings:
     Identifier:
-      Path: Resources/DB/Ghost|EntityView
+      Path: Resources/DB/CE1Ghost|EntityView
       Guid:
         Value: 2131426291570486887
   Parent: {fileID: 1666884037578476132}

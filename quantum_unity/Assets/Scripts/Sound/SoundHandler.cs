@@ -56,7 +56,9 @@ public class SoundHandler : QuantumCallbacks {
     }
 
     public void OnGameStart(EventGameStart e) {
+        currentClip = defaultSound;
         sfxSource.Play();
+        musicSource.volume = 0.5f;
         musicSource.Play();
     }
 
@@ -77,9 +79,7 @@ public class SoundHandler : QuantumCallbacks {
 
     private void TryChangeAudioClip(Frame f) {
         LoopingAudioClip oldClip = currentClip;
-        bool scared = eatenGhosts.Any(g => {
-            return f.Get<Ghost>(g).TimeSinceEaten >= FP._0_50;
-        });
+        bool scared = eatenGhosts.Any(g => f.Get<Ghost>(g).TimeSinceEaten >= FP._0_50);
         if (scared) {
             currentClip = eatenSound;
         } else if (poweredUpPacman.Count != 0) {

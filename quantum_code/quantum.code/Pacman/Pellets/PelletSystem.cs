@@ -8,7 +8,6 @@ namespace Quantum.Pacman.Pellets {
 
         public override void OnInit(Frame f) {
             f.Global->PelletData = f.AllocateDictionary<FPVector2, byte>();
-
             SpawnNewPellets(f, 0, false, false);
         }
 
@@ -75,6 +74,10 @@ namespace Quantum.Pacman.Pellets {
         }
 
         public void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile) {
+            if (!f.Global->GameStarted) {
+                return;
+            }
+
             TryEatPellet(f, entity, tile, true);
         }
 

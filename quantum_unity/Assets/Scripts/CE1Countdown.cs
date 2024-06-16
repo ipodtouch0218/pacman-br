@@ -23,9 +23,14 @@ public class CE1Countdown : MonoBehaviour {
     }
 
     public void Start() {
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
         QuantumEvent.Subscribe<EventTimerSecondPassed>(this, OnTimerSecondPassed);
         QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
 
+        image.enabled = false;
+    }
+
+    public void OnGameStarting(EventGameStarting e) {
         image.enabled = false;
     }
 

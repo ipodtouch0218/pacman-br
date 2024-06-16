@@ -1,4 +1,4 @@
-using Quantum.Platformer;
+using Quantum.Pacman;
 using System;
 using System.Collections;
 using UnityEngine;

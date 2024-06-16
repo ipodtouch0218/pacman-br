@@ -61,21 +61,21 @@ MonoBehaviour:
         Id:
           Value: 1123147609871121587
       ResourcePath: DB/Fruit
-    - Path: Resources/DB/Ghost|EntityPrototype
+    - Path: Resources/DB/CE1Ghost|EntityPrototype
       AssetRef:
         Id:
           Value: 1585148932474666226
-      ResourcePath: DB/Ghost
+      ResourcePath: DB/CE1Ghost
     - Path: Resources/DB/Map1
       AssetRef:
         Id:
           Value: 1710471675203725834
       ResourcePath: DB/Map1
-    - Path: Resources/DB/Ghost|EntityView
+    - Path: Resources/DB/CE1Ghost|EntityView
       AssetRef:
         Id:
           Value: 2131426291570486887
-      ResourcePath: DB/Ghost
+      ResourcePath: DB/CE1Ghost
     - Path: Resources/DB/CustomData
       AssetRef:
         Id:

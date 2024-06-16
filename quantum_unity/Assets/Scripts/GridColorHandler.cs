@@ -24,7 +24,6 @@ public class GridColorHandler : QuantumCallbacks {
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
     }
 
-
     public void Update() {
         if ((screenshakeTimer -= Time.deltaTime) > 0) {
             // what...

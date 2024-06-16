@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Quantum;
+using Quantum.Pacman;
 using UnityEngine;
 
 public class ScorecardManager : MonoBehaviour {
+
+    public static readonly List<Scorecard> Scorecards = new();
+    public static bool AnyCounting => Scorecards.Any(sc => !sc.DoneCounting);
 
     //---Serialized Variables
     [SerializeField] private Canvas mainCanvas, resultsCanvas;
@@ -17,7 +21,7 @@ public class ScorecardManager : MonoBehaviour {
     [SerializeField] private ParticleSystem sortParticles;
 
     //---Private Variables
-    private readonly List<Scorecard> scorecards = new();
+    private QuantumGame game;
 
     public void OnValidate() {
         if (!resultsCanvas) {
@@ -32,11 +36,12 @@ public class ScorecardManager : MonoBehaviour {
     }
 
     public void OnGameStarting(EventGameStarting e) {
-        foreach (var scorecard in scorecards) {
+        foreach (var scorecard in Scorecards) {
             Destroy(scorecard.gameObject);
         }
-        scorecards.Clear();
+        Scorecards.Clear();
         resultsCanvas.enabled = false;
+        mainCanvas.enabled = true;
     }
 
     public void OnGameEnd(EventGameEnd e) {
@@ -44,9 +49,11 @@ public class ScorecardManager : MonoBehaviour {
         while (players.Next(out var entity, out var player)) {
             Scorecard newScorecard = Instantiate(templateScorecard, resultsCanvas.transform);
             newScorecard.Initialize(e.Game.Frames.Verified, entity, player);
-            scorecards.Add(newScorecard);
+            Scorecards.Add(newScorecard);
         }
         StartCoroutine(ScorecardSequence());
+
+        game = e.Game;
     }
 
     private IEnumerator ScorecardSequence() {
@@ -62,15 +69,15 @@ public class ScorecardManager : MonoBehaviour {
 
         // Start scorecards counting
         yield return new WaitForSeconds(2);
-        scorecards.Sort((a, b) => a.Ranking - b.Ranking);
-        int scorePerSecond = Mathf.Min(maxScorePerSecond, scorecards.Max(sc => sc.ToAddScore));
-        foreach (var scorecard in scorecards) {
+        Scorecards.Sort((a, b) => a.Ranking - b.Ranking);
+        int scorePerSecond = Mathf.Min(maxScorePerSecond, Scorecards.Max(sc => sc.ToAddScore));
+        foreach (var scorecard in Scorecards) {
             scorecard.StartCounting(scorePerSecond);
         }
 
         // Wait until all done
         sfxSource.Play();
-        while (scorecards.Any(sc => !sc.DoneCounting)) {
+        while (AnyCounting) {
             sfxSource.time %= 0.1f;
             yield return null;
         }
@@ -81,24 +88,24 @@ public class ScorecardManager : MonoBehaviour {
         // Bubble sort!! Fancy
         yield return new WaitForSeconds(2);
         int swaps = 0;
-        for (int i = scorecards.Count - 1; i > 0; i--) {
-            for (int j = scorecards.Count - 1; j > 0; j--) {
-                if (scorecards[j].TotalScore <= scorecards[j - 1].TotalScore) {
+        for (int i = Scorecards.Count - 1; i > 0; i--) {
+            for (int j = Scorecards.Count - 1; j > 0; j--) {
+                if (Scorecards[j].TotalScore <= Scorecards[j - 1].TotalScore) {
                     continue;
                 }
 
                 float time = Mathf.Max(0.1f, 1f / (++swaps + 0.5f));
 
                 // Swap
-                (scorecards[j], scorecards[j - 1]) = (scorecards[j - 1], scorecards[j]);
-                scorecards[j].Ranking = j;
-                scorecards[j - 1].Ranking = j - 1;
+                (Scorecards[j], Scorecards[j - 1]) = (Scorecards[j - 1], Scorecards[j]);
+                Scorecards[j].Ranking = j;
+                Scorecards[j - 1].Ranking = j - 1;
 
-                scorecards[j].MoveToPosition(time);
-                scorecards[j - 1].MoveToPosition(time);
+                Scorecards[j].MoveToPosition(time);
+                Scorecards[j - 1].MoveToPosition(time);
 
                 sfxSource.PlayOneShot(sortingClips[Mathf.Clamp(swaps, 0, sortingClips.Length - 1)]);
-                sortParticles.transform.position = (scorecards[j].transform.position + scorecards[j - 1].transform.position) / 2;
+                sortParticles.transform.position = (Scorecards[j].transform.position + Scorecards[j - 1].transform.position) / 2;
                 sortParticles.Play(true);
                 yield return new WaitForSeconds(time);
             }
@@ -108,10 +115,14 @@ public class ScorecardManager : MonoBehaviour {
             sfxSource.PlayOneShot(doneSortingClip);
         }
 
+        // Done sorting, wait and fade
         yield return new WaitForSeconds(3);
-
         StartCoroutine(FadeVolumeToValue(musicSource, 0, 2f));
         StartCoroutine(fade.FadeToValue(fade.highPriorityImage, 1, 0.5f, 1));
+
+        // Tell the game we're ready
+        yield return new WaitForSeconds(3);
+        game.SendCommand(new StartNextRoundCommand());
     }
 
     private static IEnumerator FadeVolumeToValue(AudioSource source, float target, float time) {

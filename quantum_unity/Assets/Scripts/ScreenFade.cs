@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class ScreenFade : MonoBehaviour {
 
-    //---Public
+    //---Public Variables
     public Image lowPriorityImage, highPriorityImage;
+
+    //---Private Variables
+    private readonly Color transparent = new (0,0,0,0);
 
     public void Start() {
         QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
@@ -14,6 +17,8 @@ public class ScreenFade : MonoBehaviour {
     }
 
     public void OnGameStarting(EventGameStarting e) {
+        highPriorityImage.color = transparent;
+        lowPriorityImage.color = Color.black;
         StartCoroutine(FadeToValue(lowPriorityImage, 0, 2, 0.5f));
     }
 

@@ -10,5 +10,19 @@
                 return RoundScore + TotalScore;
             }
         }
+
+        public void Reset() {
+            GhostCombo = 0;
+            PelletChain = 0;
+
+            PowerPelletFullTimer = 0;
+            PowerPelletTimer = 0;
+
+            RespawnTimer = 0;
+            IsDead = false;
+
+            Invincibility = 0;
+            TemporaryInvincibility = 0;
+        }
     }
 }
