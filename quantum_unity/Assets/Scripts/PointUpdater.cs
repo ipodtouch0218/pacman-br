@@ -12,19 +12,23 @@ public class PointUpdater : QuantumCallbacks {
 
     //---Private Variables
     private EntityRef entity;
+    private PlayerRef player;
 
     public void Start() {
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
+        QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
         QuantumEvent.Subscribe<EventPacmanScored>(this, OnPacmanScored);
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnPowerPelletEat);
         QuantumEvent.Subscribe<EventPowerPelletEnd>(this, OnPowerPelletEnd);
-        QuantumEvent.Subscribe<EventGameEnd>(this, OnGameEnd);
-        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
     }
 
-    public void Initialize(PacmanAnimator pacman) {
+    public void Initialize(Frame f, PacmanAnimator pacman) {
         entity = pacman.entity.EntityRef;
         text.color = pacman.PlayerColor;
         gameObject.SetActive(true);
+        if (f.TryGet(entity, out PlayerLink pl)) {
+            player = pl.Player;
+        }
     }
 
     public override void OnUpdateView(QuantumGame game) {
@@ -38,8 +42,11 @@ public class PointUpdater : QuantumCallbacks {
     }
 
     public void OnPacmanScored(EventPacmanScored e) {
-        PacmanPlayer pac = e.Game.Frames.Verified.Get<PacmanPlayer>(entity);
-        text.text = Utils.RankingToString(pac.RoundRanking.SharedRanking + 1) + ". " + pac.RoundScore.ToString().PadLeft(6, '0');
+        if (e.Entity != entity) {
+            return;
+        }
+
+        SetScore(e.TotalPoints);
     }
 
     public void OnPowerPelletEat(EventPowerPelletEat e) {
@@ -64,7 +71,11 @@ public class PointUpdater : QuantumCallbacks {
     }
 
     public void OnGameStarting(EventGameStarting e) {
-        text.text = "1A. 000000";
+        SetScore(0);
+    }
+
+    private void SetScore(int score) {
+        text.text = (player.IsValid ? "P" + (player + 1) + " " : "") + score.ToString().PadLeft(6, '0');
     }
 
     private IEnumerator MoveTowardsPosition(QuantumGame game, float travelTime, float delay) {
