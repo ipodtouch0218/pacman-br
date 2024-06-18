@@ -148,10 +148,10 @@ MonoBehaviour:
         Direction: 2
       - Position:
           X:
-            RawValue: 360448
+            RawValue: 1376215
           Y:
-            RawValue: 851968
-        Direction: 2
+            RawValue: 1048618
+        Direction: 0
       - Position:
           X:
             RawValue: 589824
