@@ -18,11 +18,11 @@ public unsafe class TimerUpdater : QuantumCallbacks {
 
     public void Start() {
         QuantumEvent.Subscribe<EventTimerSecondPassed>(this, OnTimerSecondPassed);
+        QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
         originalColor = text.color;
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        Frame f = game.Frames.Predicted;
+    public void UpdateText(Frame f) {
         float secondsRemaining = f.Global->Timer.AsFloat;
 
         if (secondsRemaining < 10) {
@@ -32,6 +32,14 @@ public unsafe class TimerUpdater : QuantumCallbacks {
         } else {
             text.text = TimeSpan.FromSeconds(secondsRemaining).ToString(@"m\:ss");
         }
+    }
+
+    public override void OnUpdateView(QuantumGame game) {
+        UpdateText(game.Frames.Predicted);
+    }
+
+    public void OnGameStarting(EventGameStarting e) {
+        UpdateText(e.Game.Frames.Predicted);
     }
 
     public void OnTimerSecondPassed(EventTimerSecondPassed e) {

@@ -19,7 +19,6 @@ namespace Quantum.Pacman.Logic {
                 // Start game!
                 if ((f.Global->GameStartingTimer -= f.DeltaTime) <= 0) {
                     f.Global->GameStarted = true;
-                    f.Global->Timer = 10;
                     f.Global->GameStartTick = f.Number;
 
                     f.SystemEnable<PausableSystemGroup>();
@@ -199,6 +198,8 @@ namespace Quantum.Pacman.Logic {
             f.Global->GameStartingTimer = 5;
             f.Global->GameStarted = false;
             f.Global->GameStartTick = 0;
+            f.Global->FruitsSpawned = 0;
+            f.Global->Timer = 180;
             f.Events.GameStarting(index);
         }
     }

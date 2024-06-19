@@ -24,7 +24,6 @@ public class CustomMapDataGizmos : MonoBehaviour {
             Gizmos.DrawWireCube(
                 (maze.Origin + (maze.Size / 2)).XOY.ToUnityVector3() - new Vector3(0.5f, 0, 0.5f),
                 maze.Size.XOY.ToUnityVector3());
-
         }
 
         foreach (var spawnpoint in GameObject.FindGameObjectsWithTag("Spawnpoint")) {
