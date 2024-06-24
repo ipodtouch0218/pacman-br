@@ -14,6 +14,9 @@
         public void Reset() {
             GhostCombo = 0;
             PelletChain = 0;
+            Bombs = 3;
+            BombTravelTimer = 0;
+            BombTravelTime = 0;
 
             PowerPelletFullTimer = 0;
             PowerPelletTimer = 0;

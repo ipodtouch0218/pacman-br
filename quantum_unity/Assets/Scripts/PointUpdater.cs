@@ -6,7 +6,7 @@ using UnityEngine;
 public class PointUpdater : QuantumCallbacks {
 
     //---Serialized Variables
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text text, bombs;
     [SerializeField] private GameObject powerMeter;
     [SerializeField] private SlicedFilledImage powerMeterImage;
 
@@ -25,6 +25,7 @@ public class PointUpdater : QuantumCallbacks {
     public void Initialize(Frame f, PacmanAnimator pacman) {
         entity = pacman.entity.EntityRef;
         text.color = pacman.PlayerColor;
+        bombs.color = pacman.PlayerColor;
         gameObject.SetActive(true);
         if (f.TryGet(entity, out PlayerLink pl)) {
             player = pl.Player;
@@ -33,12 +34,16 @@ public class PointUpdater : QuantumCallbacks {
 
     public override void OnUpdateView(QuantumGame game) {
         var f = game.Frames.Predicted;
-        if (!f.TryGet(entity, out PacmanPlayer pacman) || !pacman.HasPowerPellet) {
+        if (!f.TryGet(entity, out PacmanPlayer pacman)) {
             return;
         }
 
+        bombs.text = $"<sprite=0>X{pacman.Bombs}";
+
         // TODO: change
-        powerMeterImage.fillAmount = pacman.PowerPelletTimer.AsFloat / pacman.PowerPelletFullTimer.AsFloat;
+        if (pacman.HasPowerPellet) {
+            powerMeterImage.fillAmount = pacman.PowerPelletTimer.AsFloat / pacman.PowerPelletFullTimer.AsFloat;
+        }
     }
 
     public void OnPacmanScored(EventPacmanScored e) {

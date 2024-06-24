@@ -7,6 +7,7 @@ public class LocalInput : MonoBehaviour {
 
     private float[] directionInputTimes = new float[4];
     private sbyte targetDirection = -1;
+    private bool bomb;
 
     public void OnEnable() {
         QuantumCallback.Subscribe<CallbackPollInput>(this, PollInput);
@@ -45,10 +46,16 @@ public class LocalInput : MonoBehaviour {
         targetDirection = latestInput;
     }
 
+    public void OnBomb(InputValue value) {
+        bomb = value.isPressed;
+    }
+
     public void PollInput(CallbackPollInput callback) {
         Quantum.Input input = new() {
-            TargetDirection = targetDirection
+            TargetDirection = targetDirection,
+            Bomb = bomb
         };
+        bomb = false;
 
         callback.SetInput(input, DeterministicInputFlags.Repeatable);
     }

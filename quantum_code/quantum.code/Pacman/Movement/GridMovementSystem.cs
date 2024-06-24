@@ -82,9 +82,9 @@ namespace Quantum.Pacman.Ghost {
             filter.Mover->IsStationary = !CanMoveInDirection(f, ref filter, filter.Mover->Direction);
             if (!filter.Mover->IsStationary) {
                 // Move smoothly
-                var moveResult = MoveInDirection(f, previousPosition, filter.Mover->Direction, filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime);
+                var moveResult = MoveInDirection(f, previousPosition, filter.Mover->Direction, f.Global->GameSpeed * filter.Mover->SpeedMultiplier * f.DeltaTime);
                 filter.Transform->Position = moveResult.NewPosition;
-                filter.Mover->DistanceMoved += filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime;
+                filter.Mover->DistanceMoved += f.Global->GameSpeed * filter.Mover->SpeedMultiplier * f.DeltaTime;
 
                 if (moveResult.Teleported) {
                     f.Events.TeleportEvent(filter.Entity, true);
@@ -156,9 +156,9 @@ namespace Quantum.Pacman.Ghost {
             }
 
             bool canCorner = tolerance.HasValue;
-            tolerance ??= filter.Mover->Speed * filter.Mover->SpeedMultiplier * f.DeltaTime;
+            tolerance ??= f.Global->GameSpeed * filter.Mover->SpeedMultiplier * f.DeltaTime;
 
-            bool notTurnaround = (filter.Mover->Direction % 2) != (newDirection % 2);
+            bool notTurnaround = (filter.Mover->Direction != -1) && ((filter.Mover->Direction % 2) != (newDirection % 2));
             FPVector2 center = FPVectorUtils.Apply(filter.Transform->Position, FPMath.Round);
 
             if (notTurnaround) {
@@ -173,9 +173,7 @@ namespace Quantum.Pacman.Ghost {
 
             if (notTurnaround) {
                 filter.Transform->Position = center;
-
-                FP offset = canCorner ? tolerance.Value : FP._0_01;
-                MoveInDirection(ref *filter.Transform, newDirection, offset);
+                MoveInDirection(ref *filter.Transform, newDirection, FP._0_01);
             }
         }
 

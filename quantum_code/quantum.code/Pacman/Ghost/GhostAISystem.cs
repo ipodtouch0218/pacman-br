@@ -1,4 +1,5 @@
 ﻿using Photon.Deterministic;
+using Quantum.Physics2D;
 using Quantum.Util;
 
 namespace Quantum.Pacman.Ghost {
@@ -13,9 +14,45 @@ namespace Quantum.Pacman.Ghost {
         public override void Update(Frame f, ref Filter filter) {
 
             filter.Ghost->TimeSinceEaten += f.DeltaTime;
+            filter.Ghost->SetSpeedMultiplier(filter.Mover);
 
             if (filter.Ghost->GhostHouseState != GhostHouseState.NotInGhostHouse) {
                 // Don't handle ghost house movement.
+                return;
+            }
+
+            if (filter.Ghost->State == GhostState.Chase) {
+                // Slow down if directly behind another ghost or player
+                Hit? raycastHit = f.Physics2D.Raycast(filter.Transform->Position, filter.Mover->DirectionAsVector2(), FP._1_50);
+                if (raycastHit.HasValue) {
+                    filter.Mover->SpeedMultiplier = FP.FromString("0.85");
+                } else {
+                    HitCollection overlapHits = f.Physics2D.OverlapShape(filter.Transform->Position, 0, f.Get<PhysicsCollider2D>(filter.Entity).Shape);
+                    for (int i = 0; i < overlapHits.Count; i++) {
+                        Hit overlapHit = overlapHits.HitsBuffer[i];
+                        if (filter.Entity == overlapHit.Entity || filter.Entity.Index < overlapHit.Entity.Index) {
+                            // Higher wont slow down...
+                            continue;
+                        }
+                        if (f.Has<Quantum.Ghost>(overlapHit.Entity)) {
+                            // We are overlapping with a ghost. Slow our ass down
+                            filter.Mover->SpeedMultiplier = FP.FromString("0.85");
+                            break;
+                        }
+                    }
+
+                    filter.Mover->SpeedMultiplier = 1;
+                }
+            }
+
+            var maze = MapCustomData.Current(f).CurrentMazeData(f);
+            if (f.Global->GhostsInScatterMode) {
+                filter.Ghost->TargetPosition = filter.Ghost->Mode switch {
+                    GhostTargetMode.Blinky => maze.Origin + maze.Size + new FPVector2(-5, -5),
+                    GhostTargetMode.Pinky => maze.Origin + FPVector2.Up * maze.Size.Y + new FPVector2(4, -5),
+                    GhostTargetMode.Inky => maze.Origin + FPVector2.Right * maze.Size.X + new FPVector2(-5, 4),
+                    _ => maze.Origin + new FPVector2(4, 4),
+                };
                 return;
             }
 
@@ -27,7 +64,7 @@ namespace Quantum.Pacman.Ghost {
             GridMover? closestPlayerMover = null;
             Transform2D? closestPlayerTransform = null;
 
-            while (playerFilter.Next(out var _, out var playerTransform, out var playerMover, out var pacman)) {
+            while (playerFilter.Next(out _, out var playerTransform, out var playerMover, out var pacman)) {
                 if (pacman.IsDead) {
                     continue;
                 }
@@ -45,10 +82,8 @@ namespace Quantum.Pacman.Ghost {
                 return;
             }
 
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
-
-            FPVector2 target;
             // Target based on ghost rules.
+            FPVector2 target;
             FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform.Value.Position, FPMath.Round);
             switch (filter.Ghost->Mode) {
             default:
@@ -84,7 +119,7 @@ namespace Quantum.Pacman.Ghost {
                 if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform.Value.Position) > (8 * 8)) {
                     target = playerTile;
                 } else {
-                    target = maze.Origin;
+                    target = maze.Origin + new FPVector2(4, 4);
                 }
                 break;
             }

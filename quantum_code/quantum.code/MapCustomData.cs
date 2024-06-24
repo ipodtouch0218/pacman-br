@@ -17,7 +17,15 @@ namespace Quantum {
         }
 
         [Serializable]
+        public class GhostPhase {
+            public FP Timer;
+            public bool IsScatter;
+        }
+
+        [Serializable]
         public class MazeData {
+            public GhostPhase[] Phases;
+
             public SpawnPointData[] SpawnPoints;
             public FPVector2 Origin;
             public FPVector2 Size;
@@ -28,11 +36,13 @@ namespace Quantum {
             public FPVector2[] FruitSpawnPoints;
         }
 
+
         public AssetRefEntityPrototype PacmanPrototype;
 
         public MazeData[] Mazes;
         public FruitData[] FruitSpawnOrder;
         public AssetRefEntityPrototype FruitPrototype;
+        public FPAnimationCurve BombHeightCurve;
 
         public MazeData CurrentMazeData(Frame f) {
             int index = f.Global->CurrentMazeIndex;

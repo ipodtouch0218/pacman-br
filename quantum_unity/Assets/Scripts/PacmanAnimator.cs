@@ -1,6 +1,8 @@
 using Quantum;
 using Quantum.Pacman.Ghost;
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -10,25 +12,32 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
     public Color PlayerColor { get; private set; }
 
+    //---Serialized Variables
     [SerializeField] public EntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
     [SerializeField] private SpriteRenderer spriteRenderer, arrowRenderer;
-    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles, sparkParticles;
+    [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles, sparkParticles, bombParticles;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private GiveBomb giveBombPrefab;
 
     [SerializeField] private Sprite[] movementSprites, deathSprites;
-    [SerializeField] private AudioClip wa, ka, death, powerPellet;
+    [SerializeField] private AudioClip wa, ka, death, powerPellet, bombCollect, bombUse;
     [SerializeField] private AudioClip[] eatClips;
 
     [SerializeField] private Color scaredColor;
     [SerializeField] private Color[] playerColors;
     [SerializeField] private Light2D light;
 
+    [SerializeField] private TrailRenderer bombTrail;
+    [SerializeField] private TMP_Text bombText;
+
+    //---Private Variables
     private float blinkSpeedPeriod;
     private bool dead;
     private float deathAnimationTimer, deathParticlesTimer;
     private bool waSound;
 
+    private Coroutine fadeBombTextCoroutine;
     private MaterialPropertyBlock mpb;
 
 
@@ -55,6 +64,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
         QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
+        QuantumEvent.Subscribe<EventPacmanCollectBomb>(this, OnCollectBomb);
+        QuantumEvent.Subscribe<EventPacmanUseBomb>(this, OnUseBomb);
+        QuantumEvent.Subscribe<EventPacmanLandBombJump>(this, OnLandBombJump);
 
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
 
@@ -69,6 +81,10 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         main.startColor = PlayerColor;
         arrowRenderer.color = PlayerColor;
         OnPacmanCreated?.Invoke(game, this);
+
+        Color c = bombText.color;
+        c.a = 0;
+        bombText.color = c;
     }
 
     public void Update() {
@@ -154,6 +170,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             spriteRenderer.sprite = movementSprites[Mathf.Clamp(index, 0, movementSprites.Length - 1)];
         }
 
+        bombTrail.emitting = pac.BombTravelTimer > 0;
         UpdateSparks(frame);
     }
 
@@ -225,6 +242,42 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
     }
 
+    public void ShowBombCount(Frame f, bool addOne) {
+        int bombs = f.Get<PacmanPlayer>(entity.EntityRef).Bombs;
+        if (addOne && bombs > 0) {
+            bombText.text = "<sprite=0>X" + (bombs - 1) + " + 1";
+        } else {
+            bombText.text = "<sprite=0>X" + bombs;
+        }
+
+        if (addOne) {
+            audioSource.PlayOneShot(bombCollect);
+        }
+
+        Color c = bombText.color;
+        c.a = 1;
+        bombText.color = c;
+        if (fadeBombTextCoroutine != null) {
+            StopCoroutine(fadeBombTextCoroutine);
+        }
+        fadeBombTextCoroutine = StartCoroutine(FadeText(0.3f, 0.7f));
+    }
+
+    private IEnumerator FadeText(float fadeTime, float delay) {
+        yield return new WaitForSeconds(delay);
+        float totalTime = fadeTime;
+
+        Color c = bombText.color;
+        while ((fadeTime -= Time.deltaTime) > 0) {
+            c.a = fadeTime / totalTime;
+            bombText.color = c;
+            yield return null;
+        }
+
+        c.a = 0;
+        bombText.color = c;
+    }
+
     public void OnGameStarting(EventGameStarting e) {
         dead = false;
         spriteRenderer.enabled = true;
@@ -289,5 +342,32 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
 
         audioSource.PlayOneShot(powerPellet);
+    }
+
+    public void OnCollectBomb(EventPacmanCollectBomb e) {
+        if (e.Entity != entity.EntityRef) {
+            return;
+        }
+
+        GiveBomb newBomb = Instantiate(giveBombPrefab);
+        newBomb.Initialize(this);
+    }
+
+    public void OnUseBomb(EventPacmanUseBomb e) {
+        if (e.Entity != entity.EntityRef) {
+            return;
+        }
+
+        audioSource.PlayOneShot(bombUse);
+        bombParticles.Play();
+    }
+
+    public void OnLandBombJump(EventPacmanLandBombJump e) {
+        if (e.Entity != entity.EntityRef) {
+            return;
+        }
+
+        bombParticles.Play(false);
+        ShowBombCount(e.Game.Frames.Predicted, false);
     }
 }

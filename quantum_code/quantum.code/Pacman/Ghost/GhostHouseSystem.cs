@@ -15,6 +15,7 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public override void Update(Frame f, ref Filter filter) {
+
             if (filter.Ghost->GhostHouseWaitTime > 0) {
                 if ((filter.Ghost->GhostHouseWaitTime -= f.DeltaTime) <= 0) {
                     filter.Ghost->GhostHouseWaitTime = 0;

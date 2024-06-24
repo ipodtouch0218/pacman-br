@@ -374,8 +374,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prototype:
-    Speed:
-      RawValue: 327680
     SpeedMultiplier:
       RawValue: 65536
     Direction: 0

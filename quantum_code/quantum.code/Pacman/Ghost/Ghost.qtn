@@ -2,6 +2,11 @@ import enum GhostTargetMode(byte);
 import enum GhostState(byte);
 import enum GhostHouseState(byte);
 
+global {
+	list<entity_ref> GhostHouseQueue;
+	bool GhostsInScatterMode;
+}
+
 component Ghost {
 	FPVector2 TargetPosition;
 	bool ForceRandomMovement;
@@ -23,8 +28,4 @@ synced event GhostHouseStateChanged {
 	Frame Frame;
 	entity_ref Entity;
 	GhostHouseState State;
-}
-
-global {
-	list<entity_ref> GhostHouseQueue;
 }

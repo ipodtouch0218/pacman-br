@@ -1,4 +1,3 @@
-using Photon.Realtime;
 using Quantum;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -22,6 +21,7 @@ public class GridColorHandler : QuantumCallbacks {
         tilemapRenderer.GetPropertyBlock(mpb);
 
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
+        QuantumEvent.Subscribe<EventPacmanUseBomb>(this, OnPacmanUseBomb);
     }
 
     public void Update() {
@@ -60,11 +60,18 @@ public class GridColorHandler : QuantumCallbacks {
             return;
         }
 
+        /*
         if (!e.Frame.TryGet(e.Pacman, out PlayerLink playerLink) || !e.Game.GetLocalPlayers().Contains(playerLink.Player)) {
             return;
         }
+        */
 
         screenshakeTimer = screenshakeDuration;
         screenshakeDirection = mover.DirectionAsVector2().ToUnityVector2();
+    }
+
+    public void OnPacmanUseBomb(EventPacmanUseBomb e) {
+        screenshakeTimer = screenshakeDuration;
+        screenshakeDirection = Vector2.down;
     }
 }

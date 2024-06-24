@@ -4,6 +4,10 @@ using Photon.Deterministic;
 namespace Quantum.Pacman.Ghost {
     public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
 
+
+        public static readonly FP BombBaseTravelTime = FP.FromString("0.225");
+        public static readonly FP BombDistanceTravelTime = FP.FromString("0.0075");
+
         public struct Filter {
             public EntityRef Entity;
             public Transform2D* Transform;
@@ -24,6 +28,7 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
+            // Full Invincibility
             if (pac->Invincibility > 0) {
                 if ((pac->Invincibility -= f.DeltaTime) <= 0) {
                     pac->Invincibility = 0;
@@ -31,13 +36,70 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
-            if (filter.Mover->FreezeTime <= 0 && pac->TemporaryInvincibility > 0) {
+            if (pac->IsDead) {
+                return;
+            }
+
+            Input input = default;
+            if (f.TryGet(filter.Entity, out PlayerLink pl)) {
+                input = *f.GetPlayerInput(pl.Player);
+            } else {
+                // Bot input, potentially??
+            }
+
+            // Bombs
+            if (pac->BombTravelTimer > 0) {
+                // Flying through the air. Gracefully.
+                if ((pac->BombTravelTimer -= f.DeltaTime) <= 0) {
+                    pac->BombTravelTimer = 0;
+                    filter.Transform->Position = pac->BombEndPosition;
+                    f.Events.PacmanLandBombJump(filter.Entity);
+
+                } else {
+                    FP alpha = 1 - (pac->BombTravelTimer / pac->BombTravelTime);
+
+                    FPVector2 newPos = FPVector2.Lerp(pac->BombStartPosition, pac->BombEndPosition, alpha);
+
+                    var map = MapCustomData.Current(f);
+                    newPos += FPVector2.Up * map.BombHeightCurve.Evaluate(alpha);
+
+                    filter.Transform->Position = newPos;
+                    return;
+                }
+            } else if (pac->Bombs > 0 && filter.Mover->FreezeTime <= 0) {
+                // Check for bomb input
+                if (input.Bomb.WasPressed) {
+                    pac->Bombs--;
+
+                    var maze = MapCustomData.Current(f).CurrentMazeData(f);
+                    FPVector2 target = maze.GhostHouse + FPVector2.Down * 6;
+                    FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, filter.Transform->Position);
+                    filter.Mover->FreezeTime = travelTime;
+                    filter.Mover->Direction = -1;
+                    pac->TemporaryInvincibility = travelTime;
+                    pac->BombStartPosition = filter.Transform->Position;
+                    pac->BombEndPosition = target;
+
+                    f.Events.PacmanUseBomb(filter.Entity, target);
+                    pac->BombTravelTimer = travelTime;
+                    pac->BombTravelTime = travelTime;
+                    return;
+                }
+            }
+
+            if (filter.Mover->FreezeTime > 0) {
+                return;
+            }
+
+            // Temporary Invincibility
+            if (pac->TemporaryInvincibility > 0) {
                 if ((pac->TemporaryInvincibility -= f.DeltaTime) <= 0) {
                     pac->TemporaryInvincibility = 0;
                 }
             }
 
-            if (pac->HasPowerPellet && filter.Mover->FreezeTime <= 0) {
+            // Power Pellet
+            if (pac->HasPowerPellet) {
                 var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
                 for (int i = 0; i < hits.Count; i++) {
                     var hit = hits[i];

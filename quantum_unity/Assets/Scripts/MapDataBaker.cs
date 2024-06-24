@@ -23,10 +23,16 @@ public class MapDataBaker : MapDataBakerCallback {
             .Where(tm => tm.transform.parent == parent.transform)
             .ToArray();
 
+        MapCustomData.MazeData[] oldMazes = settings.Mazes;
         settings.Mazes = new MapCustomData.MazeData[mazes.Length];
 
         for (int i = 0; i < mazes.Length; i++) {
-            MapCustomData.MazeData maze = settings.Mazes[i] = new();
+            MapCustomData.MazeData maze;
+            if (i < oldMazes.Length) {
+                maze = settings.Mazes[i] = oldMazes[i];
+            } else {
+                maze = settings.Mazes[i] = new();
+            }
             Tilemap tilemap = mazes[i];
 
             tilemap.CompressBounds();

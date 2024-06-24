@@ -28,8 +28,8 @@ namespace Quantum {
                     new GridMovementSystem(),
                     new PelletSystem(),
                     new PacmanSystem(),
+                    new GhostHouseSystem(),
                 }),
-                new GhostHouseSystem(),
                 new FruitSystem(),
             };
         }

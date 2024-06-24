@@ -1,5 +1,8 @@
+global {
+	FP GameSpeed;
+}
+
 component GridMover {
-	FP Speed;
 	FP SpeedMultiplier;
 	int Direction;
 	byte TeleportFrames;

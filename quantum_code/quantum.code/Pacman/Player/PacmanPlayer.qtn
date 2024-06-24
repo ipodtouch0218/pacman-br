@@ -15,6 +15,12 @@ component PacmanPlayer {
 	int TotalScore;
 	int RoundScore;
 
+	int Bombs;
+	FP BombTravelTimer;
+	FP BombTravelTime;
+	FPVector2 BombStartPosition;
+	FPVector2 BombEndPosition;
+
 	int PelletsEaten;
 	int PelletChain;
 
@@ -62,5 +68,19 @@ event PacmanRespawned {
 }
 
 event PacmanVulnerable {
+	entity_ref Entity;
+}
+
+synced event PacmanCollectBomb {
+	entity_ref Entity;
+	int NewCount;
+}
+
+synced event PacmanUseBomb {
+	entity_ref Entity;
+	FPVector2 Target;
+}
+
+synced event PacmanLandBombJump {
 	entity_ref Entity;
 }

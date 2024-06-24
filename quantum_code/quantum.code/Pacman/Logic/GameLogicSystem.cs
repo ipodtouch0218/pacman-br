@@ -35,10 +35,24 @@ namespace Quantum.Pacman.Logic {
                     f.SystemDisable<PausableSystemGroup>();
                     f.Events.GameEnd();
 
-                } else if (FPMath.CeilToInt(newTimer) != FPMath.CeilToInt(previousTimer)) {
-                    // A second passed!
-                    f.Events.TimerSecondPassed(FPMath.CeilToInt(newTimer));
+                } else {
+                    // Mid-game
+                    var maze = MapCustomData.Current(f).CurrentMazeData(f);
+                    FP timeSinceStart = (f.Number - f.Global->GameStartTick) * f.DeltaTime;
+                    for (int i = maze.Phases.Length - 1; i >= 0; i--) {
+                        var phase = maze.Phases[i];
+                        if (phase.Timer < timeSinceStart) {
+                            f.Global->GhostsInScatterMode = phase.IsScatter;
+                            break;
+                        }
+                    }
+
+                    if (FPMath.CeilToInt(newTimer) != FPMath.CeilToInt(previousTimer)) {
+                        // A second passed!
+                        f.Events.TimerSecondPassed(FPMath.CeilToInt(newTimer));
+                    }
                 }
+
             } else {
                 // Host started
                 if (f.GetPlayerCommand(0) is StartNextRoundCommand) {
@@ -142,28 +156,29 @@ namespace Quantum.Pacman.Logic {
                 FPVector2 targetOffset = FPVector2.Zero;
                 switch (ghost->Mode) {
                 case GhostTargetMode.Blinky:
-                    ghost->GhostHouseState = GhostHouseState.NotInGhostHouse;
-                    ghost->GhostHouseWaitTime = 0;
-                    mover->Direction = 0;
-                    offset = FPVector2.Up * 3;
+                    ghost->GhostHouseState = GhostHouseState.Waiting;
+                    ghost->GhostHouseWaitTime = 10;
+                    offset = FPVector2.Up;
+                    mover->Direction = 3;
+                    targetOffset = FPVector2.Down;
                     break;
                 case GhostTargetMode.Pinky:
                     ghost->GhostHouseState = GhostHouseState.Waiting;
-                    ghost->GhostHouseWaitTime = 10;
-                    offset = FPVector2.Zero;
+                    ghost->GhostHouseWaitTime = 15;
+                    offset = FPVector2.Down;
                     mover->Direction = 1;
                     targetOffset = FPVector2.Up;
                     break;
                 case GhostTargetMode.Inky:
                     ghost->GhostHouseState = GhostHouseState.Waiting;
-                    ghost->GhostHouseWaitTime = 15;
+                    ghost->GhostHouseWaitTime = 20;
                     offset = FPVector2.Left * 2;
                     mover->Direction = 3;
                     targetOffset = FPVector2.Down;
                     break;
                 case GhostTargetMode.Clyde:
                     ghost->GhostHouseState = GhostHouseState.Waiting;
-                    ghost->GhostHouseWaitTime = 20;
+                    ghost->GhostHouseWaitTime = 30;
                     offset = FPVector2.Right * 2;
                     mover->Direction = 3;
                     targetOffset = FPVector2.Down;
@@ -200,7 +215,22 @@ namespace Quantum.Pacman.Logic {
             f.Global->GameStartTick = 0;
             f.Global->FruitsSpawned = 0;
             f.Global->Timer = 180;
+            f.Global->GhostsInScatterMode = true;
+            SetGameSpeedLevel(f, 15);
             f.Events.GameStarting(index);
+        }
+
+        public static void SetGameSpeedLevel(Frame f, int level) {
+            level = FPMath.Clamp(level, 0, 50);
+
+            FP speed;
+            if (level < 10) {
+                speed = FP.FromString("0.6356") * level + FP.FromString("3.214");
+            } else {
+                speed = FP.FromString("0.08575") * level + FP.FromString("8.7125");
+            }
+
+            f.Global->GameSpeed = speed;
         }
     }
 }

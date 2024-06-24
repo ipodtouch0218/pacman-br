@@ -138,14 +138,11 @@ namespace Quantum.Pacman.Pellets {
 
             if (pelletDict.Count == (f.Global->TotalPellets * FP._0_33).AsInt) {
                 FruitSystem.SpawnFruit(f);
+            } else if (pelletDict.Count == 0) {
+                // Collected the last pellet, spawn a bomb.
+                player->Bombs++;
+                f.Events.PacmanCollectBomb(entity, player->Bombs);
             }
-
-            /*
-            // TODO: follow a pattern? random?
-            if (pelletDict.Count <= 0) {
-                SpawnNextPellets(f, transform.Position.X < map.GhostHouse.X);
-            }
-            */
         }
 
         public void OnPowerPelletEnd(Frame f, EntityRef pacman) {
@@ -158,8 +155,8 @@ namespace Quantum.Pacman.Pellets {
 
             if (!playerHasPowerPellet) {
                 // No longer power pellet
-                var filteredGhosts = f.Filter<GridMover, Quantum.Ghost>();
-                while (filteredGhosts.NextUnsafe(out EntityRef entity, out GridMover* mover, out Quantum.Ghost* ghost)) {
+                var filteredGhosts = f.Filter<Quantum.Ghost>();
+                while (filteredGhosts.NextUnsafe(out EntityRef entity, out Quantum.Ghost* ghost)) {
                     if (ghost->State == GhostState.Scared) {
                         ghost->ChangeState(f, entity, GhostState.Chase);
                     }

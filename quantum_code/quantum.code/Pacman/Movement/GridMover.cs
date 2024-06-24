@@ -12,7 +12,8 @@ namespace Quantum {
                 0 => FPVector2.Left,
                 1 => FPVector2.Up,
                 2 => FPVector2.Right,
-                _ => FPVector2.Down,
+                3 => FPVector2.Down,
+                _ => FPVector2.Zero,
             };
         }
     }

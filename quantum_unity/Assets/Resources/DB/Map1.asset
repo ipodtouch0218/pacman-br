@@ -61,9 +61,7 @@ MonoBehaviour:
       TimeSinceEaten:
         RawValue: 0
     GridMover:
-    - Speed:
-        RawValue: 524288
-      SpeedMultiplier:
+    - SpeedMultiplier:
         RawValue: 65536
       Direction: 0
       TeleportFrames: 0
@@ -151,9 +149,7 @@ MonoBehaviour:
       TimeSinceEaten:
         RawValue: 0
     GridMover:
-    - Speed:
-        RawValue: 524288
-      SpeedMultiplier:
+    - SpeedMultiplier:
         RawValue: 65536
       Direction: 0
       TeleportFrames: 0
@@ -241,9 +237,7 @@ MonoBehaviour:
       TimeSinceEaten:
         RawValue: 0
     GridMover:
-    - Speed:
-        RawValue: 524288
-      SpeedMultiplier:
+    - SpeedMultiplier:
         RawValue: 65536
       Direction: 0
       TeleportFrames: 0
@@ -331,9 +325,7 @@ MonoBehaviour:
       TimeSinceEaten:
         RawValue: 0
     GridMover:
-    - Speed:
-        RawValue: 524288
-      SpeedMultiplier:
+    - SpeedMultiplier:
         RawValue: 65536
       Direction: 0
       TeleportFrames: 0

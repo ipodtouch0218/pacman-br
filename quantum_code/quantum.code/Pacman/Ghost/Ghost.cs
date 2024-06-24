@@ -10,7 +10,7 @@ namespace Quantum {
             State = state;
 
             // Modify speed
-            if (/* bodge... */ GhostHouseState != GhostHouseState.Leaving && f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
+            if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 SetSpeedMultiplier(mover);
             }
 
@@ -18,11 +18,25 @@ namespace Quantum {
         }
 
         public void SetSpeedMultiplier(GridMover* mover) {
-            mover->SpeedMultiplier = State switch {
-                GhostState.Scared => FP._0_50,
-                GhostState.Eaten => 3,
-                _ => 1
-            };
+            switch (State) {
+            case GhostState.Chase:
+                if (GhostHouseState == GhostHouseState.NotInGhostHouse) {
+                    mover->SpeedMultiplier = 1;
+                } else if (GhostHouseState == GhostHouseState.Waiting) {
+                    mover->SpeedMultiplier = FP.FromString("0.66");
+                }
+                break;
+            case GhostState.Scared:
+                if (GhostHouseState is GhostHouseState.NotInGhostHouse or GhostHouseState.Waiting) {
+                    mover->SpeedMultiplier = FP._0_50;
+                } else {
+                    mover->SpeedMultiplier = FP._0_25;
+                }
+                break;
+            case GhostState.Eaten:
+                mover->SpeedMultiplier = 3;
+                break;
+            }
         }
     }
 
