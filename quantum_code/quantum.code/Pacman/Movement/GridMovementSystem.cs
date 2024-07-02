@@ -39,7 +39,7 @@ namespace Quantum.Pacman.Ghost {
                 }
             } else if (f.Unsafe.TryGetPointer(filter.Entity, out Quantum.Ghost* ghost)) {
                 // AI movement
-                if ((ghost->State == GhostState.Scared || ghost->ForceRandomMovement) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
+                if ((ghost->State == GhostState.Scared || (!f.Global->GhostsInScatterMode && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                     // Random movement
                     int nextDirection = (filter.Mover->Direction + 2) % 4;
                     List<int> possibleDirections = new();

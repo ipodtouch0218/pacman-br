@@ -32,6 +32,12 @@ namespace Quantum.Pacman.Logic {
                     f.Global->GameStarted = false;
                     f.Global->Timer = 0;
 
+                    var filter = f.Filter<PacmanPlayer>();
+                    while (filter.NextUnsafe(out _, out PacmanPlayer* pac)) {
+                        int bombScore = pac->Bombs * (pac->Bombs + 1) * 750 / 2; // equal to sum(750x)
+                        pac->RoundScore += bombScore;
+                    }
+
                     f.SystemDisable<PausableSystemGroup>();
                     f.Events.GameEnd();
 

@@ -21,12 +21,10 @@ public class Scorecard : MonoBehaviour {
     [SerializeField] private float height = 110;
 
     //---Private Variables
-    private EntityRef entity;
     private int totalScore;
     private int toAddScore;
     private Vector2 moveVelocity;
-    private Coroutine moveCoroutine, rankCorotuine;
-    private int finalRanking;
+    private Coroutine moveCoroutine;
 
     public void OnValidate() {
         if (!rt) {
@@ -35,7 +33,6 @@ public class Scorecard : MonoBehaviour {
     }
 
     public void Initialize(Frame f, EntityRef entityRef, PacmanPlayer player) {
-        entity = entityRef;
         totalScore = player.TotalScore;
         toAddScore = player.RoundScore;
         UpdateText(true);
@@ -44,7 +41,6 @@ public class Scorecard : MonoBehaviour {
 
         Ranking = player.PreviousRoundRanking.UniqueRanking;
         rankingText.text = Utils.RankingToString(player.PreviousRoundRanking.SharedRanking + 1) + '.';
-        finalRanking = player.TotalRanking.SharedRanking;
         MoveToPosition(0);
     }
 
