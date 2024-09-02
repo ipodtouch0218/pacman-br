@@ -65,6 +65,11 @@ MonoBehaviour:
           Value: 0
       CircleRadius:
         RawValue: 0
+      CapsuleSize:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
       EdgeExtent:
         RawValue: 0
       BoxExtents:
@@ -82,10 +87,13 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
     Shape3D:
       ShapeType: 0
       SphereRadius:
+        RawValue: 0
+      CapsuleRadius:
+        RawValue: 0
+      CapsuleHeight:
         RawValue: 0
       PositionOffset:
         X:
@@ -111,14 +119,12 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
+    LayerSource: 0
     Layer: 0
     CallbackFlags:
       Value: 0
   PhysicsBody:
     IsEnabled: 0
-    Version2D: 0
-    Version3D: 0
     Config2D: 116
     Config3D: 58
     RotationFreeze: 0
@@ -189,12 +195,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0120b722c3ca5454da1240b65656905f, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c37404f174494591b8ec9d24e5bc8e, type: 3}
   m_Name: NestedAssetTypeEntityPrototype
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/NestedAssetType|EntityPrototype
-      Guid:
-        Value: 2754795773236525080
+  Identifier:
+    Path: Resources/DB/NestedAssetType|EntityPrototype
+    Guid:
+      Value: 2754795773236525080
+  Container:
+    Components: []
   Parent: {fileID: 2779579518124822076}
+  SelfViewAsset: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

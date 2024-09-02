@@ -1,1 +1,0 @@
-﻿// QuantumCallbackHandler_InitLayers.cs has been removed

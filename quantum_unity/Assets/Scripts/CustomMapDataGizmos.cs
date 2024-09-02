@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class CustomMapDataGizmos : MonoBehaviour {
 
-    [SerializeField] private MapData data;
+    [SerializeField] private QuantumMapData data;
 
     public void OnValidate() {
         if (!data) {
-            data = GetComponent<MapData>();
+            data = GetComponent<QuantumMapData>();
         }
     }
 
     public void OnDrawGizmos() {
-        MapCustomData customData = UnityDB.FindAsset<MapCustomDataAsset>(data.Asset.Settings.UserAsset.Id).Settings;
+        
+        MapCustomData customData = QuantumUnityDB.GetGlobalAssetEditorInstance<MapCustomData>(data.Asset.UserAsset);
         GameObject obj = GameObject.FindGameObjectWithTag("Maze");
 
         Gizmos.color = Color.yellow;

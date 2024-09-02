@@ -1,0 +1,15 @@
+component Fruit {
+	int Graphic;
+	int Points;
+}
+
+synced event FruitEaten {
+	entity_ref Pacman;
+	entity_ref Fruit;
+	int Points;
+}
+
+global {
+	entity_ref CurrentFruit;
+	int FruitsSpawned;
+}

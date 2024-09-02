@@ -15,6 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 5dcc004a-2697-4a5b-95ce-b949166b95c0
     AppIdFusion: 
+    AppIdQuantum: 0081a8bf-b93e-4623-a5cf-db9bf93f3db1
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 1.0
@@ -28,5 +29,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 2
+    ClientLogging: 2
   PlayerTtlInSeconds: 0
   EmptyRoomTtlInSeconds: 0
+  BestRegionSummaryKey: Quantum.BestRegionSummary

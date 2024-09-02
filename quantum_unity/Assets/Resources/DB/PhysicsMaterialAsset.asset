@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3877f5b7ce4fe5844a189b1f3f256c8c, type: 3}
+  m_Script: {fileID: -1548453761, guid: b156eeaae3f741b40af66649a4748430, type: 3}
   m_Name: PhysicsMaterialAsset
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/PhysicsMaterialAsset
-      Guid:
-        Value: 3256123452090092744
-    Restitution:
-      RawValue: 0
-    RestitutionCombineFunction: 1
-    FrictionStatic:
-      RawValue: 26214
-    FrictionDynamic:
-      RawValue: 26214
-    FrictionCombineFunction: 1
+  Identifier:
+    Path: Resources/DB/PhysicsMaterialAsset
+    Guid:
+      Value: 3256123452090092744
+  Restitution:
+    RawValue: 0
+  RestitutionCombineFunction: 1
+  FrictionStatic:
+    RawValue: 26214
+  FrictionDynamic:
+    RawValue: 26214
+  FrictionCombineFunction: 1

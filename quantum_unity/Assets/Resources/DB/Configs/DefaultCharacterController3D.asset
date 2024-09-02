@@ -9,50 +9,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab6f3d6bf4b1ff41a8a53503e10efb3, type: 3}
+  m_Script: {fileID: 1871108254, guid: b156eeaae3f741b40af66649a4748430, type: 3}
   m_Name: DefaultCharacterController3D
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController3DConfigAsset
-  Settings:
-    Identifier:
-      Path: Resources/DB/Configs/DefaultCharacterController3D
-      Guid:
-        Value: 4
-    Offset:
-      X:
-        RawValue: 0
-      Y:
-        RawValue: 32768
-      Z:
-        RawValue: 0
-    Radius:
+  Identifier:
+    Path: Resources/DB/Configs/DefaultCharacterController3D
+    Guid:
+      Value: 4
+  Offset:
+    X:
+      RawValue: 0
+    Y:
       RawValue: 32768
-    MaxPenetration:
-      RawValue: 3275
-    PenetrationCorrection:
-      RawValue: 32768
-    Extent:
-      RawValue: 6553
-    MaxContacts: 8
-    LayerMask:
-      BitMask: 55
-    UseManifoldNormal: 0
-    AirControl: 1
-    Acceleration:
-      RawValue: 1638400
-    Braking:
-      RawValue: 655360
-    BaseJumpImpulse:
-      RawValue: 393216
-    MaxSpeed:
-      RawValue: 196608
-    Gravity:
-      X:
-        RawValue: 0
-      Y:
-        RawValue: -655360
-      Z:
-        RawValue: 0
-    MaxSlope:
-      RawValue: 3932160
-    MaxSlopeSpeed:
-      RawValue: 327680
+    Z:
+      RawValue: 0
+  Radius:
+    RawValue: 32768
+  MaxPenetration:
+    RawValue: 3275
+  PenetrationCorrection:
+    RawValue: 32768
+  Extent:
+    RawValue: 6553
+  MaxContacts: 8
+  LayerMask:
+    BitMask: 55
+  UseManifoldNormal: 0
+  AirControl: 1
+  Acceleration:
+    RawValue: 1638400
+  Braking:
+    RawValue: 655360
+  BaseJumpImpulse:
+    RawValue: 393216
+  MaxSpeed:
+    RawValue: 196608
+  Gravity:
+    X:
+      RawValue: 0
+    Y:
+      RawValue: -655360
+    Z:
+      RawValue: 0
+  MaxSlope:
+    RawValue: 3932160
+  MaxSlopeSpeed:
+    RawValue: 327680

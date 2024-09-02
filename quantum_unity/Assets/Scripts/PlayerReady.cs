@@ -1,6 +1,7 @@
-using Quantum.Pacman;
 using System;
 using System.Collections;
+using Quantum;
+using Quantum.Pacman;
 using UnityEngine;
 
 public class PlayerReady : QuantumCallbacks {

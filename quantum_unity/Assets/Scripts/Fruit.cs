@@ -4,7 +4,7 @@ using UnityEngine;
 public class Fruit : MonoBehaviour {
 
     //---Serialized Variables
-    [SerializeField] private EntityView entity;
+    [SerializeField] private QuantumEntityView entity;
     [SerializeField] private GameObject particles;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -22,6 +22,9 @@ public class Fruit : MonoBehaviour {
     public void OnValidate() {
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+        if (!entity) {
+            entity = GetComponent<QuantumEntityView>();
         }
     }
 

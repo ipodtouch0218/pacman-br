@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public unsafe class GhostAnimator : QuantumCallbacks {
 
     //---Serialized Variables
-    [SerializeField] private EntityView entity;
+    [SerializeField] private QuantumEntityView entity;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] movementSprites, scaredSprites, eatenSprites;
@@ -28,7 +28,7 @@ public unsafe class GhostAnimator : QuantumCallbacks {
 
     public void OnValidate() {
         if (!entity) {
-            entity = GetComponentInChildren<EntityView>();
+            entity = GetComponentInChildren<QuantumEntityView>();
         }
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();

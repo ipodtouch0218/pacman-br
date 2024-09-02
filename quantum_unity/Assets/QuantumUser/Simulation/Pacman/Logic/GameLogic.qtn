@@ -1,0 +1,22 @@
+global {
+	FP GameStartingTimer;
+	bool GameStarted;
+	int GameStartTick;
+	FP Timer;
+}
+
+synced event GameStarting {
+	int MazeIndex;
+}
+
+synced event GameStart {
+
+}
+
+synced event GameEnd {
+
+}
+
+event TimerSecondPassed {
+	int SecondsRemaining;
+}

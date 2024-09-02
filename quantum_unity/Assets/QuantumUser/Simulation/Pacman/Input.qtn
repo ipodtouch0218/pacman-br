@@ -1,0 +1,4 @@
+input {
+	sbyte TargetDirection;
+	button Bomb;
+}

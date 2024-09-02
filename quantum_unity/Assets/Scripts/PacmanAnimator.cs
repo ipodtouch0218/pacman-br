@@ -13,7 +13,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     public Color PlayerColor { get; private set; }
 
     //---Serialized Variables
-    [SerializeField] public EntityView entity;
+    [SerializeField] public QuantumEntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
     [SerializeField] private SpriteRenderer spriteRenderer, arrowRenderer;
     [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles, sparkParticles, bombParticles;
@@ -43,7 +43,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
     public void OnValidate() {
         if (!entity) {
-            entity = GetComponent<EntityView>();
+            entity = GetComponent<QuantumEntityView>();
         }
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -116,8 +116,9 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public override void OnUpdateView(QuantumGame game) {
-        var frame = game.Frames.Predicted;
-        if (!frame.TryGet(entity.EntityRef, out PacmanPlayer pac) || !frame.TryGet(entity.EntityRef, out GridMover mover)) {
+        var f = game.Frames.Predicted;
+        if (!f.TryGet(entity.EntityRef, out PacmanPlayer pac)
+            || !f.TryGet(entity.EntityRef, out GridMover mover)) {
             return;
         }
 
@@ -127,7 +128,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
             spriteRenderer.enabled = true;
         }
 
-        float timeSinceStart = (frame.Number * frame.DeltaTime).AsFloat;
+        float timeSinceStart = (f.Number * f.DeltaTime).AsFloat;
         float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
         float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
         bool scaredFlash = (pelletTimeRemaining < scaredBlinkStart) && (timeSinceStart % scaredBlinkPeriod < (scaredBlinkPeriod / 2));
@@ -171,7 +172,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
 
         bombTrail.emitting = pac.BombTravelTimer > 0;
-        UpdateSparks(frame);
+        UpdateSparks(f);
     }
 
     private void UpdateSparks(Frame frame) {

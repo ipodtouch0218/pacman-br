@@ -76,6 +76,7 @@ PlayerSettings:
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
   androidFullscreenMode: 1
+  androidAutoRotationBehavior: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 1
@@ -136,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 1.0
   preloadedAssets: []
   metroInputSource: 0
@@ -230,6 +233,7 @@ PlayerSettings:
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
   metalAPIValidation: 1
+  metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
@@ -712,15 +716,23 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: QUANTUM_2_0_OR_NEWER
-    Nintendo Switch: QUANTUM_2_0_OR_NEWER
-    PS4: QUANTUM_2_0_OR_NEWER
-    Standalone: QUANTUM_2_0_OR_NEWER
-    WebGL: QUANTUM_2_0_OR_NEWER
-    Windows Store Apps: QUANTUM_2_0_OR_NEWER
-    XboxOne: QUANTUM_2_0_OR_NEWER
-    iPhone: QUANTUM_2_0_OR_NEWER
-    tvOS: QUANTUM_2_0_OR_NEWER
+    Android: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    EmbeddedLinux: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    GameCoreScarlett: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    GameCoreXboxOne: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    LinuxHeadlessSimulation: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    Nintendo Switch: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    PS4: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    PS5: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    QNX: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    Stadia: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    Standalone: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    VisionOS: QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    WebGL: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    Windows Store Apps: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    XboxOne: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    iPhone: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
+    tvOS: QUANTUM_2_0_OR_NEWER;QUANTUM_ENABLE_MIGRATION;QUANTUM_UNITY
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -778,6 +790,7 @@ PlayerSettings:
   metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628,
     a: 1}
   metroSplashScreenUseBackgroundColor: 0
+  syncCapabilities: 0
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}
   metroFTAName: 

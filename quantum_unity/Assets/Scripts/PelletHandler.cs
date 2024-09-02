@@ -10,7 +10,6 @@ public class PelletHandler : MonoBehaviour {
     //---Serialized Variables
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private MapCustomDataAsset mapData;
     [SerializeField] private GameObject smallPelletPrefab;
     [SerializeField] private GameObject powerPelletPrefab;
 
@@ -41,7 +40,8 @@ public class PelletHandler : MonoBehaviour {
     }
 
     public void OnEventPelletEat(EventPelletEat e) {
-        int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * mapData.Settings.CurrentMazeData(e.Frame).Size.X.AsInt);
+        var map = QuantumUnityDB.GetGlobalAsset<MapCustomData>(e.Game.Frames.Predicted.Map.UserAsset.Id);
+        int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * map.CurrentMazeData(e.Frame).Size.X.AsInt);
 
         if (!pelletGOs.TryGetValue(index, out GameObject pellet)) {
             return;
@@ -54,7 +54,7 @@ public class PelletHandler : MonoBehaviour {
     public unsafe void OnEventPelletRespawn(EventPelletRespawn e) {
         DestroyPellets();
 
-        var frame = e.Game.Frames.Verified;
+        var frame = e.Game.Frames.Predicted;
         QDictionary<FPVector2, byte> pellets = frame.ResolveDictionary(frame.Global->PelletData);
 
         foreach ((FPVector2 cell, byte value) in pellets) {

@@ -1,1 +1,0 @@
-﻿// EntityComponentAdapterBase.cs has been removed

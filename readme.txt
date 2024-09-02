@@ -1,0 +1,1 @@
+Migration instructions are found on the Photon online documentation under https://doc.photonengine.com/quantum/v3/getting-started/migration-guide

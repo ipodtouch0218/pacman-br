@@ -2,7 +2,7 @@ using Quantum;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TeleportingEntityView : EntityView {
+public class TeleportingEntityView : QuantumEntityView {
 
     //---Serialized Variables
     [SerializeField] private UnityEvent<bool> onTeleportStateChanged;
@@ -23,7 +23,7 @@ public class TeleportingEntityView : EntityView {
         onTeleportStateChanged?.Invoke(isTeleporting);
     }
 
-    protected override void ApplyTransform(ref UpdatePostionParameter param) {
+    protected override void ApplyTransform(ref UpdatePositionParameter param) {
         if (Vector3.Distance(param.NewPosition, param.UninterpolatedPosition) > 10) {
             isTeleporting = true;
         }

@@ -8,9 +8,6 @@ public class CE1FruitSpawnParticle : MonoBehaviour {
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private AnimationCurve sizeCurve, rotationCurve;
 
-    [InspectorButton("PlayEffect")]
-    [SerializeField] private bool startAnimation;
-
     //---Private Variables
     private bool active;
     private float timer;

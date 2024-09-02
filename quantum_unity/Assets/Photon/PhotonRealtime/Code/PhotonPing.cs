@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------------------
 // <copyright file="PhotonPing.cs" company="Exit Games GmbH">
-//   PhotonNetwork Framework for Unity - Copyright (C) 2018 Exit Games GmbH
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
 // </copyright>
 // <summary>
 // This file includes various PhotonPing implementations for different APIs,
@@ -11,20 +11,16 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+#if UNITY_2017_4_OR_NEWER
+#define SUPPORTED_UNITY
+#endif
+
 
 namespace Photon.Realtime
 {
     using System;
     using System.Collections;
     using System.Threading;
-
-    #if NETFX_CORE
-    using System.Diagnostics;
-    using Windows.Foundation;
-    using Windows.Networking;
-    using Windows.Networking.Sockets;
-    using Windows.Storage.Streams;
-    #endif
 
     #if !NO_SOCKET && !NETFX_CORE
     using System.Collections.Generic;
@@ -63,22 +59,13 @@ namespace Photon.Realtime
         private static readonly System.Random RandomIdProvider = new System.Random();
 
         /// <summary>Begins sending a ping.</summary>
-        public virtual bool StartPing(string ip)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool StartPing(string ip);
 
         /// <summary>Check if done.</summary>
-        public virtual bool Done()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Done();
 
         /// <summary>Dispose of this ping.</summary>
-        public virtual void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Dispose();
 
         /// <summary>Initialize this ping (GotResult, Successful, PingId).</summary>
         protected internal void Init()
@@ -120,8 +107,7 @@ namespace Photon.Realtime
                     }
 
                     this.sock.ReceiveTimeout = 5000;
-                    int port = (RegionHandler.PortToPingOverride != 0) ? RegionHandler.PortToPingOverride : 5055;
-                    this.sock.Connect(ip, port);
+                    this.sock.Connect(ip, RegionHandler.UdpPortToPing);
                 }
 
 
@@ -198,106 +184,6 @@ namespace Photon.Realtime
             this.sock = null;
         }
 
-    }
-    #endif
-
-
-    #if NETFX_CORE
-    /// <summary>Windows store API implementation of PhotonPing, based on DatagramSocket for UDP.</summary>
-    public class PingWindowsStore : PhotonPing
-    {
-        private DatagramSocket sock;
-        private readonly object syncer = new object();
-
-        public override bool StartPing(string host)
-        {
-            lock (this.syncer)
-            {
-                this.Init();
-
-                int port = (RegionHandler.PortToPingOverride != 0) ? RegionHandler.PortToPingOverride : 5055;
-                EndpointPair endPoint = new EndpointPair(null, string.Empty, new HostName(host), port.ToString());
-                this.sock = new DatagramSocket();
-                this.sock.MessageReceived += this.OnMessageReceived;
-
-                IAsyncAction result = this.sock.ConnectAsync(endPoint);
-                result.Completed = this.OnConnected;
-                this.DebugString += " End StartPing";
-                return true;
-            }
-        }
-
-        /// <summary>Check if done.</summary>
-        public override bool Done()
-        {
-            lock (this.syncer)
-            {
-                return this.GotResult || this.sock == null; // this just indicates the ping is no longer waiting. this.Successful value defines if the roundtrip completed
-            }
-        }
-
-        /// <summary>Dispose of this ping.</summary>
-        public override void Dispose()
-        {
-            lock (this.syncer)
-            {
-                this.sock = null;
-            }
-        }
-
-        private void OnConnected(IAsyncAction asyncinfo, AsyncStatus asyncstatus)
-        {
-            lock (this.syncer)
-            {
-                if (asyncinfo.AsTask().IsCompleted && !asyncinfo.AsTask().IsFaulted && this.sock != null && this.sock.Information.RemoteAddress != null)
-                {
-                    this.PingBytes[this.PingBytes.Length - 1] = this.PingId;
-
-                    DataWriter writer;
-                    writer = new DataWriter(this.sock.OutputStream);
-                    writer.WriteBytes(this.PingBytes);
-                    DataWriterStoreOperation res = writer.StoreAsync();
-                    res.AsTask().Wait(100);
-
-                    this.PingBytes[this.PingBytes.Length - 1] = (byte)(this.PingId + 1); // this buffer is re-used for the result/receive. invalidate the result now.
-
-                    writer.DetachStream();
-                    writer.Dispose();
-                }
-                else
-                {
-                    this.sock = null; // will cause Done() to return true but this.Successful defines if the roundtrip completed
-                }
-            }
-        }
-
-        private void OnMessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
-        {
-            lock (this.syncer)
-            {
-                DataReader reader = null;
-                try
-                {
-                    reader = args.GetDataReader();
-                    uint receivedByteCount = reader.UnconsumedBufferLength;
-                    if (receivedByteCount > 0)
-                    {
-                        byte[] resultBytes = new byte[receivedByteCount];
-                        reader.ReadBytes(resultBytes);
-
-                        //TODO: check result bytes!
-
-
-                        this.Successful = receivedByteCount == this.PingLength && resultBytes[resultBytes.Length - 1] == this.PingId;
-                        this.GotResult = true;
-                    }
-                }
-                catch
-                {
-                    // TODO: handle error
-                }
-            }
-        }
     }
     #endif
 

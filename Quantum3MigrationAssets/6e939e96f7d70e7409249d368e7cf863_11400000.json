@@ -1,0 +1,60 @@
+{
+    "Identifier": {
+        "Path": "Resources/DB/Configs/DefaultCharacterController2D",
+        "Guid": {
+            "Value": 3
+        }
+    },
+    "Offset": {
+        "X": {
+            "RawValue": 0
+        },
+        "Y": {
+            "RawValue": 0
+        }
+    },
+    "Radius": {
+        "RawValue": 45875
+    },
+    "MaxPenetration": {
+        "RawValue": 655
+    },
+    "PenetrationCorrection": {
+        "RawValue": 32768
+    },
+    "Extent": {
+        "RawValue": 13107
+    },
+    "MaxContacts": 4,
+    "LayerMask": {
+        "BitMask": 55
+    },
+    "UseManifoldNormal": false,
+    "AirControl": true,
+    "Acceleration": {
+        "RawValue": 1638400
+    },
+    "Braking": {
+        "RawValue": 655360
+    },
+    "BaseJumpImpulse": {
+        "RawValue": 458752
+    },
+    "MaxSpeed": {
+        "RawValue": 196608
+    },
+    "Gravity": {
+        "X": {
+            "RawValue": 0
+        },
+        "Y": {
+            "RawValue": -655360
+        }
+    },
+    "MaxSlope": {
+        "RawValue": 3932160
+    },
+    "MaxSlopeSpeed": {
+        "RawValue": 327680
+    }
+}

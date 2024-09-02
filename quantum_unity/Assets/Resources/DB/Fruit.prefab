@@ -153,6 +153,11 @@ MonoBehaviour:
           Value: 0
       CircleRadius:
         RawValue: 0
+      CapsuleSize:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
       EdgeExtent:
         RawValue: 0
       BoxExtents:
@@ -170,10 +175,13 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
     Shape3D:
       ShapeType: 0
       SphereRadius:
+        RawValue: 0
+      CapsuleRadius:
+        RawValue: 0
+      CapsuleHeight:
         RawValue: 0
       PositionOffset:
         X:
@@ -199,14 +207,12 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
+    LayerSource: 0
     Layer: 0
     CallbackFlags:
       Value: 64
   PhysicsBody:
     IsEnabled: 0
-    Version2D: 0
-    Version3D: 0
     Config2D: 116
     Config3D: 58
     RotationFreeze: 0
@@ -282,7 +288,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BindBehaviour: 1
   ManualDisposal: 0
-  GameObjectNameIsEntityRef: 1
+  ViewFlags: 0
+  InterpolationMode: 0
   ErrorCorrectionRateMin: 3.3
   ErrorCorrectionRateMax: 10
   ErrorPositionBlendStart: 0.25
@@ -408,15 +415,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0120b722c3ca5454da1240b65656905f, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c37404f174494591b8ec9d24e5bc8e, type: 3}
   m_Name: FruitEntityPrototype
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/Fruit|EntityPrototype
-      Guid:
-        Value: 211565312298772629
+  Identifier:
+    Path: Resources/DB/Fruit|EntityPrototype
+    Guid:
+      Value: 211565312298772629
+  Container:
+    Components: []
   Parent: {fileID: 6775164959972514448}
+  SelfViewAsset: {fileID: 6337118755329342517}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6337118755329342517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,12 +438,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5baec4de8d2754a864a680181831e8, type: 3}
+  m_Script: {fileID: 206745634, guid: b156eeaae3f741b40af66649a4748430, type: 3}
   m_Name: FruitEntityView
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/Fruit|EntityView
-      Guid:
-        Value: 1123147609871121587
-  Parent: {fileID: 1948616832682206109}
+  Identifier:
+    Path: Resources/DB/Fruit|EntityView
+    Guid:
+      Value: 1123147609871121587
+  Prefab: {fileID: 1835911068849750507}

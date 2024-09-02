@@ -1,0 +1,24 @@
+{
+    "name": "Quantum.Unity.Editor.Migration",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fdae25391b6090942b63551d0cc45292"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Quantum.CodeGen.Qtn.dll",
+        "Quantum.Engine.dll",
+        "Quantum.Log.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "QUANTUM_ENABLE_MIGRATION"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

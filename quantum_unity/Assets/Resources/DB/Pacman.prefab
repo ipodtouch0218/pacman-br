@@ -50058,6 +50058,11 @@ MonoBehaviour:
           Value: 0
       CircleRadius:
         RawValue: 32768
+      CapsuleSize:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
       EdgeExtent:
         RawValue: 0
       BoxExtents:
@@ -50075,10 +50080,13 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
     Shape3D:
       ShapeType: 0
       SphereRadius:
+        RawValue: 0
+      CapsuleRadius:
+        RawValue: 0
+      CapsuleHeight:
         RawValue: 0
       PositionOffset:
         X:
@@ -50104,14 +50112,12 @@ MonoBehaviour:
       UserTag: 0
       IsPersistent: 1
       CompoundShapes: []
-      IsSetFromSourceCollider: 0
+    LayerSource: 0
     Layer: 0
     CallbackFlags:
       Value: 64
   PhysicsBody:
     IsEnabled: 0
-    Version2D: 2
-    Version3D: 2
     Config2D: 3
     Config3D: 58
     RotationFreeze: 255
@@ -50187,7 +50193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BindBehaviour: 0
   ManualDisposal: 0
-  GameObjectNameIsEntityRef: 1
+  ViewFlags: 0
+  InterpolationMode: 0
   ErrorCorrectionRateMin: 3.3
   ErrorCorrectionRateMax: 10
   ErrorPositionBlendStart: 0.25
@@ -60259,15 +60266,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5baec4de8d2754a864a680181831e8, type: 3}
+  m_Script: {fileID: 206745634, guid: b156eeaae3f741b40af66649a4748430, type: 3}
   m_Name: PacmanEntityView
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/Pacman|EntityView
-      Guid:
-        Value: 3286830596560734521
-  Parent: {fileID: 1503700910394257556}
+  Identifier:
+    Path: Resources/DB/Pacman|EntityView
+    Guid:
+      Value: 3286830596560734521
+  Prefab: {fileID: 7592819552428075133}
 --- !u!114 &2747656340049747084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60277,12 +60283,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0120b722c3ca5454da1240b65656905f, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c37404f174494591b8ec9d24e5bc8e, type: 3}
   m_Name: PacmanEntityPrototype
   m_EditorClassIdentifier: 
-  Settings:
-    Identifier:
-      Path: Resources/DB/Pacman|EntityPrototype
-      Guid:
-        Value: 159194854215405264
+  Identifier:
+    Path: Resources/DB/Pacman|EntityPrototype
+    Guid:
+      Value: 159194854215405264
+  Container:
+    Components: []
   Parent: {fileID: 7343617014342494048}
+  SelfViewAsset: {fileID: 1342755181478882496}
+  references:
+    version: 2
+    RefIds: []

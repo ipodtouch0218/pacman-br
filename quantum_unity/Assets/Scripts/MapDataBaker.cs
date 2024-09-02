@@ -8,15 +8,16 @@ using Quantum;
 using UnityEditor;
 #endif
 
-public class MapDataBaker : MapDataBakerCallback {
+//[assembly: QuantumMapBakeAssembly]
+public class MazeDataBaker : MapDataBakerCallback {
 
-    public override void OnBeforeBake(MapData data) {
+    public override void OnBeforeBake(QuantumMapData data) {
 
     }
 
-    public override void OnBake(MapData data) {
-        var dataAsset = UnityDB.FindAsset<MapCustomDataAsset>(data.Asset.Settings.UserAsset.Id);
-        var settings = dataAsset.Settings;
+    public override void OnBake(QuantumMapData data) {
+        
+        var settings = QuantumUnityDB.GetGlobalAssetEditorInstance<MapCustomData>(data.Asset.UserAsset);
 
         GameObject parent = GameObject.FindGameObjectWithTag("Maze");
         Tilemap[] mazes = parent.GetComponentsInChildren<Tilemap>(true)
@@ -108,7 +109,7 @@ public class MapDataBaker : MapDataBakerCallback {
         }
 
 #if UNITY_EDITOR
-        EditorUtility.SetDirty(dataAsset);
+        EditorUtility.SetDirty(settings);
 #endif
     }
 

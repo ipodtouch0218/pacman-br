@@ -1,0 +1,73 @@
+{
+    "Identifier": {
+        "Path": "Resources/DB/Configs/DefaultNavMeshAgentConfig",
+        "Guid": {
+            "Value": 2
+        }
+    },
+    "UpdateInterval": 1,
+    "PathQuality": 1,
+    "CachedWaypointCount": 6,
+    "MaxRepathTimeout": {
+        "RawValue": 327680
+    },
+    "LineOfSightFunneling": false,
+    "DynamicLineOfSight": false,
+    "DynamicLineOfSightWaypointRange": {
+        "RawValue": 0
+    },
+    "AutomaticTargetCorrection": true,
+    "AutomaticTargetCorrectionRadius": {
+        "RawValue": 65536
+    },
+    "EnableWaypointDetectionAxis": false,
+    "WaypointDetectionAxisExtend": {
+        "RawValue": 32768
+    },
+    "WaypointDetectionAxisOffset": {
+        "RawValue": 0
+    },
+    "DefaultWaypointDetectionDistance": {
+        "RawValue": 655
+    },
+    "MovementType": 1,
+    "VerticalPositioning": 1,
+    "Speed": {
+        "RawValue": 229376
+    },
+    "AngularSpeed": {
+        "RawValue": 1310720
+    },
+    "Acceleration": {
+        "RawValue": 1310720
+    },
+    "StoppingDistance": {
+        "RawValue": 655
+    },
+    "AutoBraking": false,
+    "AutoBrakingDistance": {
+        "RawValue": 32768
+    },
+    "ClampAgentToNavmesh": false,
+    "ClampAgentToNavmeshCorrection": {
+        "RawValue": 16384
+    },
+    "AvoidanceType": 2,
+    "AvoidanceQuality": 3,
+    "Priority": 50,
+    "AvoidanceRadius": {
+        "RawValue": 32768
+    },
+    "AvoidanceLayer": 0,
+    "AvoidanceMask": {
+        "BitMask": 55
+    },
+    "MaxAvoidanceCandidates": 64,
+    "ReduceAvoidanceAtWaypoints": false,
+    "ReduceAvoidanceFactor": {
+        "RawValue": 262144
+    },
+    "AvoidanceCanReduceSpeed": false,
+    "ShowDebugSteering": false,
+    "ShowDebugAvoidance": false
+}

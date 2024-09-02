@@ -1,1 +1,0 @@
-// BsonReplaySerializer.cs has been removed

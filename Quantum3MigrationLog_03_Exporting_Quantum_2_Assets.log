@@ -1,0 +1,1617 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-Danny-GOD_PC" at "2024-09-02T03:14:28.1793691Z"
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.15.5'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-Danny-GOD_PC"
+[Licensing::IpcConnector] License Client channel disconnected successfully.
+[Licensing::IpcConnector] Connection attempt to the License Client on channel: "LicenseClient-Danny-GOD_PC-2022.3.41" failed because channel doesn't exist; code: "0x80000002"
+[Licensing::Module] Successfully launched the LicensingClient (PId: 20068)
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-Danny-GOD_PC-2022.3.41" at "2024-09-02T03:14:29.860673Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 20068, path: "C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.15.5+a2f8afb
+  Session Id:              073b2184ec92426daa53a96841899a00
+  Correlation Id:          cc19e90a76d06a0a17653d5b4ef7ed43
+  External correlation Id: 8734473804874852332
+  Machine Id:              AZQ2fx+t+6NcJoTXwX9pq0+1XHs=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Danny-GOD_PC-2022.3.41" (connect: 0.64s, validation: 0.05s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-Danny-GOD_PC-2022.3.41-notifications" at "2024-09-02T03:14:29.9161199Z"
+[Licensing::Module] Connected to LicensingClient (PId: 20068, launch time: 0.00, total connection time: 0.69s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/staging' branch; Version is '2022.3.41f1 (0f988161febf) revision 1022081'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22631) 64bit Core' Language: 'en' Physical Memory: 32701 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "SC-APR7-JWD8-46BE-DRGK-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.3.41f1\Editor\Unity.exe
+-executeMethod
+QuantumMigrationPreparation.ExportAssets
+-quantumAssetExportPath
+C:\Users\Danny\Documents\Projects\QuantumDemo\Quantum3MigrationAssets
+-quit
+-batchmode
+-logFile
+Quantum3MigrationLog_03_Exporting_Quantum_2_Assets.log
+-projectpath
+quantum_unity
+Successfully changed project path to: C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity
+C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [49896]  Target information:
+
+Player connection [49896]  * "[IP] 192.168.1.189 [Port] 55504 [Flags] 2 [Guid] 3972605647 [EditorId] 3972605647 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-VALBA74) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [49896] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [49896] Host joined alternative multi-casting on [225.0.0.222:34997]...
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-18640" after 0.5 seconds.
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 63 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.2d.tilemap.extras@3.1.2 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.2d.tilemap.extras@3.1.2)
+    com.unity.ads@4.4.2 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ads@4.4.2)
+    com.unity.ai.navigation@1.1.5 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ai.navigation@1.1.5)
+    com.unity.analytics@3.8.1 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.analytics@3.8.1)
+    com.unity.collab-proxy@2.4.4 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.collab-proxy@2.4.4)
+    com.unity.ide.rider@3.0.31 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ide.rider@3.0.31)
+    com.unity.ide.visualstudio@2.0.22 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ide.visualstudio@2.0.22)
+    com.unity.ide.vscode@1.2.5 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ide.vscode@1.2.5)
+    com.unity.inputsystem@1.7.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.inputsystem@1.7.0)
+    com.unity.purchasing@4.11.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.purchasing@4.11.0)
+    com.unity.test-framework@1.1.33 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.test-framework@1.1.33)
+    com.unity.textmeshpro@3.0.9 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.textmeshpro@3.0.9)
+    com.unity.timeline@1.7.6 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.timeline@1.7.6)
+    com.unity.toolchain.win-x86_64-linux-x86_64@2.0.6 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.toolchain.win-x86_64-linux-x86_64@2.0.6)
+    com.unity.xr.legacyinputhelpers@2.1.10 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10)
+    com.unity.sysroot@2.0.7 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.sysroot@2.0.7)
+    com.unity.sysroot.linux-x86_64@2.0.6 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.sysroot.linux-x86_64@2.0.6)
+    com.unity.ext.nunit@1.0.6 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+    com.unity.mathematics@1.2.6 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.mathematics@1.2.6)
+    com.unity.burst@1.8.17 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.burst@1.8.17)
+    com.unity.services.core@1.12.5 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.services.core@1.12.5)
+    com.unity.services.analytics@5.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.services.analytics@5.0.0)
+    com.unity.searcher@4.9.2 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1)
+  Built-in packages:
+    com.unity.2d.sprite@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.2d.sprite@1.0.0)
+    com.unity.2d.tilemap@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.2d.tilemap@1.0.0)
+    com.unity.render-pipelines.universal@14.0.11 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.render-pipelines.universal@14.0.11)
+    com.unity.ugui@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.ai@1.0.0)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.androidjni@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.assetbundle@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.cloth@1.0.0)
+    com.unity.modules.director@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.screencapture@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.umbra@1.0.0)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.vehicles@1.0.0)
+    com.unity.modules.video@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.video@1.0.0)
+    com.unity.modules.vr@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.vr@1.0.0)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.wind@1.0.0)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.xr@1.0.0)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.modules.subsystems@1.0.0)
+    com.unity.render-pipelines.core@14.0.11 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.render-pipelines.core@14.0.11)
+    com.unity.shadergraph@14.0.11 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.shadergraph@14.0.11)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: C:\Users\Danny\Documents\Projects\QuantumDemo\quantum_unity\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.09 seconds
+Refreshing native plugins compatible for Editor in 23.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.41f1 (0f988161febf)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2080 Ti (ID=0x1e07)
+    Vendor:   NVIDIA
+    VRAM:     11027 MB
+    Driver:   32.0.15.6081
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56640
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.011131 seconds.
+- Loaded All Assemblies, in  0.386 seconds
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.295 seconds
+Domain Reload Profiling: 680ms
+	BeginReloadAssembly (113ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (65ms)
+	LoadAllAssembliesAndSetupDomain (156ms)
+		LoadAssemblies (112ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (154ms)
+			TypeCache.Refresh (153ms)
+				TypeCache.ScanAssembly (137ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (295ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (244ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (20ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (164ms)
+			ProcessInitializeOnLoadMethodAttributes (50ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.41f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity
+DisplayProgressbar: Compiling Scripts
+ExitCode: 4 Duration: 0s285ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[ 800/1047  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.25 seconds), 1 items updated, 799 evaluated
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.41f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\2022.3.41f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity
+ExitCode: 0 Duration: 0s859ms
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.41f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/Danny/Documents/Projects/QuantumDemo/quantum_unity
+ExitCode: 0 Duration: 23s
+Finished compiling graph: 1051 nodes, 15583 flattened edges (12493 ToBuild, 176 ToUse), maximum node priority 997
+[ 127/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.rsp
+[ 129/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp
+[ 130/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.rsp
+[ 131/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.rsp
+[ 147/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.rsp
+[ 149/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.CodeGen.rsp
+[ 150/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEditor.TestRunner.rsp
+[ 153/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Internal.rsp
+[ 156/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Purchasing.Common.rsp
+[ 162/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.rsp
+[ 172/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.rsp
+[ 177/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Runtime.rsp
+[ 184/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleCore.rsp
+[ 204/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.rsp
+[ 205/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTCore.rsp
+[ 206/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityCore.rsp
+[ 208/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.rsp
+[ 209/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.rsp
+[ 210/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Telemetry.rsp
+[ 213/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Scheduler.rsp
+[ 222/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityStub.rsp
+[ 225/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Threading.rsp
+[ 226/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.rsp
+[ 227/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Internal.rsp
+[ 228/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.rsp
+[ 230/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.rsp
+[ 245/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTStub.rsp
+[ 251/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Device.rsp
+[ 252/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleMacosStub.rsp
+[ 255/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Editor.rsp
+[ 260/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Searcher.Editor.rsp
+[ 261/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.SpatialTracking.rsp
+[ 262/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Utilities.rsp
+[ 264/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.Editor.rsp
+[ 266/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Networking.rsp
+[ 268/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleStub.rsp
+[ 272/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Registration.rsp
+[ 279/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.rsp
+[ 280/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.SysrootPackage.Editor.rsp
+[ 281/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Stores.rsp
+[ 299/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.Editor.rsp
+[ 312/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.rsp
+[ 313/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.Editor.rsp
+[ 314/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.rsp
+[ 315/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Runtime.rsp
+[ 316/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Editor.rsp
+[ 317/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.XR.LegacyInputHelpers.rsp
+[ 318/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Editor.rsp
+[ 319/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.rsp
+[ 324/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.rsp
+[ 325/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.rsp
+[ 330/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.rsp
+[ 334/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Codeless.rsp
+[ 395/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/PhotonRealtime.rsp
+[ 396/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Editor.rsp
+[ 397/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/PhotonQuantum.rsp
+[ 398/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Editor.rsp
+[ 399/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.rsp
+[ 400/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.VisualStudio.Editor.rsp
+[ 401/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.rsp
+[ 402/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.rsp
+[ 403/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.rsp
+[ 404/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Analytics.DataPrivacy.rsp
+[ 405/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Updater.rsp
+[ 406/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ForUI.rsp
+[ 407/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.rsp
+[ 408/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.rsp
+[ 409/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Shaders.rsp
+[ 410/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.Editor.rsp
+[ 411/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEditor.XR.LegacyInputHelpers.rsp
+[ 412/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.rsp
+[ 413/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEditor.SpatialTracking.rsp
+[ 414/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.Editor.rsp
+[ 415/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEditor.Purchasing.rsp
+[ 425/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.Editor.rsp
+[ 426/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Toolchain.Win-x86_64-Linux-x86_64.rsp
+[ 427/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.Editor.rsp
+[ 431/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.rsp
+[ 439/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Analytics.rsp
+[ 448/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Analytics.rsp
+[ 449/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/PhotonQuantumEditor.rsp
+[ 450/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/PPv2URPConverters.rsp
+[ 451/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.rsp
+[ 452/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Editor.rsp
+[ 453/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/7602468127534590235.rsp
+[ 454/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/454294159692603704.rsp
+[ 455/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/8860347324984707772.rsp
+[ 456/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17029780749897486396.rsp
+[ 457/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.DevX.Editor.rsp
+[ 458/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.rsp
+[ 459/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.TestFramework.rsp
+[ 460/1047  0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Unity.CollabProxy.Editor.rsp
+[ 461/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1475724585155360059.rsp
+[ 462/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/4014436084419441659.rsp
+[ 463/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/3064155424177982801.rsp
+[ 464/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/11294775302662683298.rsp
+[ 465/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12062543880932173298.rsp
+[ 466/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/7860545731858047777.rsp
+[ 467/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15748370185648319145.rsp
+[ 468/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/6146630326014295711.rsp
+[ 469/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/13877112702143650221.rsp
+[ 470/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/2186758709940809457.rsp
+[ 471/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17525389461119239690.rsp
+[ 472/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/10678863128556690338.rsp
+[ 473/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/10654656162358534522.rsp
+[ 474/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/3956386453828450757.rsp
+[ 475/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/13903030043038675025.rsp
+[ 476/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/13686715218353603589.rsp
+[ 477/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15085861467720516389.rsp
+[ 478/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17833018831532810861.rsp
+[ 479/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/911446528535106498.rsp
+[ 480/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/2074369592318871490.rsp
+[ 481/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/3913888237084306484.rsp
+[ 482/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1907345496941296335.rsp
+[ 483/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/8306353738322043485.rsp
+[ 484/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12295599868861940527.rsp
+[ 485/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/4494907431374462528.rsp
+[ 486/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17441021761203345371.rsp
+[ 487/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15390860270861656597.rsp
+[ 488/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/10010842633742469623.rsp
+[ 489/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5014859245116676864.rsp
+[ 490/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/14969760148876702145.rsp
+[ 491/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12487318857060271555.rsp
+[ 492/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/14832617886295879631.rsp
+[ 493/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1418726328684876121.rsp
+[ 494/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1379359308984453704.rsp
+[ 495/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/18122428196630538320.rsp
+[ 496/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17346584914308636752.rsp
+[ 497/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5916180605834378387.rsp
+[ 498/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/9870516708743257357.rsp
+[ 499/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5803490648119114145.rsp
+[ 500/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1748161491239881818.rsp
+[ 501/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/18218310762646611085.rsp
+[ 502/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/8899139255040401798.rsp
+[ 503/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5546506141355401238.rsp
+[ 504/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/14814235663552238418.rsp
+[ 505/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17733497306726482857.rsp
+[ 506/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/16942202937359522267.rsp
+[ 507/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/11258323299798293270.rsp
+[ 508/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/10292501669419677951.rsp
+[ 508/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.dll (+2 others) [CacheHit 19b378af431bf0b1cf9654c71d15ae8300000000000000000000000000000003]
+[ 509/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/4772145154433932943.rsp
+[ 510/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/14402696373757716438.rsp
+[ 511/1047 1725246875s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.dll (+2 others)
+[ 513/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/2282191090610319379.rsp
+[ 514/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/6841316898876630997.rsp
+[ 515/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1638368849635582809.rsp
+[ 516/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/7864899638050208757.rsp
+[ 517/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12248871281822510316.rsp
+[ 518/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/8166486921578947860.rsp
+[ 519/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/3648465134513896125.rsp
+[ 520/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/16285879237017002407.rsp
+[ 521/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15958407531564136273.rsp
+[ 522/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/1527330650811682164.rsp
+[ 523/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15183149355271759364.rsp
+[ 524/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5024673825167471226.rsp
+[ 525/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/3938377011463375229.rsp
+[ 526/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12680641736833361268.rsp
+[ 527/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/9675442845102135732.rsp
+[ 528/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/6947401630772442630.rsp
+[ 529/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5806762800881712256.rsp
+[ 530/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/2400031028012695012.rsp
+[ 531/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/15394042617203071315.rsp
+[ 532/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17471587741674112842.rsp
+[ 533/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/9703144790800738880.rsp
+[ 534/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/53500308366735341.rsp
+[ 535/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/12812556936427222528.rsp
+[ 536/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/2781082588993088484.rsp
+[ 537/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/9111662996337956171.rsp
+[ 538/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/5678380843536809211.rsp
+[ 539/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/11169949131693821681.rsp
+[ 542/1047  0s] WriteResponseFile Library/Bee/artifacts/rsp/17025055007208638294.rsp
+[ 543/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.pdb
+[ 542/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.TestRunner.dll (+2 others) [CacheHit e323eb399994c9fb868293100daf541300000000000000000000000000000003]
+[ 544/1047 1725246875s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.TestRunner.dll (+2 others)
+[ 546/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.pdb
+[ 548/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
+[ 549/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
+[ 550/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 553/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 561/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.dll (+2 others) [CacheHit 2c0ea7e541df5d38a08b2a95c6bf860500000000000000000000000000000003]
+[ 564/1047 1725246877s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.dll (+2 others)
+[ 564/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.CodeGen.dll (+2 others) [CacheHit ae20b77f0b00efcaa38052dea12e001200000000000000000000000000000003]
+[ 568/1047 1725246877s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.CodeGen.dll (+2 others)
+[ 570/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityCore.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityCore.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 573/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTCore.dll (+2 others)
+[ 574/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.dll (+2 others)
+[ 575/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Utilities.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTCore.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Utilities.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 581/1047  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[ 585/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Searcher.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Searcher.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 586/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityStub.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityStub.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 588/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Internal.dll (+2 others)
+[ 589/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTStub.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Internal.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTStub.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 593/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.SpatialTracking.dll (+2 others)
+[ 594/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.dll (+2 others)
+[ 595/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.SysrootPackage.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.SpatialTracking.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.SysrootPackage.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 595/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.dll (+2 others) [CacheHit 74afe2b7e9555a38cd5d43900ac8fc2b00000000000000000000000000000003]
+[ 600/1047 1725246881s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.dll (+2 others)
+[ 603/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 607/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.dll (+2 others)
+[ 608/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Purchasing.Common.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Purchasing.Common.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 611/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.dll (+2 others)
+[ 612/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Telemetry.dll (+2 others)
+[ 613/1047  4s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Telemetry.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 614/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Scheduler.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Scheduler.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 622/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Device.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Device.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 625/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Internal.dll (+2 others)
+[ 626/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleCore.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Internal.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleCore.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 634/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Threading.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Threading.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 635/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 638/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.dll (+2 others)
+[ 639/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Networking.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Networking.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 654/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleMacosStub.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleMacosStub.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 656/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleStub.dll (+2 others)
+[ 657/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Registration.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleStub.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Registration.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 656/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Stores.dll (+2 others) [CacheHit 6ad514d05ff3bf46af876b24e7165d0100000000000000000000000000000003]
+[ 662/1047 1725246883s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Stores.dll (+2 others)
+[ 666/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.dll (+2 others)
+[ 667/1047  6s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.dll (+2 others)
+[ 668/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.dll (+2 others)
+[ 669/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Runtime.dll (+2 others)
+[ 670/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Runtime.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 676/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Codeless.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Codeless.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 678/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 679/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.Editor.dll (+2 others)
+[ 680/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.XR.LegacyInputHelpers.dll (+2 others)
+[ 681/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.XR.LegacyInputHelpers.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 684/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 693/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 688/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.dll (+2 others) [CacheHit be1db407fd86d7fc5fad0b190f7074c400000000000000000000000000000003]
+[ 696/1047 1725246885s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 710/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.VisualStudio.Editor.dll (+2 others) [CacheHit 96cde9255ae096b98f4702c8fc06e1c300000000000000000000000000000003]
+[ 718/1047 1725246885s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.VisualStudio.Editor.dll (+2 others)
+[ 711/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.dll (+2 others) [CacheHit 2408f7ef02aea6cf303478ab234401a500000000000000000000000000000003]
+[ 720/1047 1725246885s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.dll (+2 others)
+[ 722/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.dll (+2 others)
+[ 723/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/PhotonRealtime.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 726/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 727/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Editor.dll (+2 others)
+[ 728/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 733/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 734/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 735/1047  3s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Runtime.dll (+2 others)
+[ 736/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/PhotonQuantum.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Runtime.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 739/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.dll (+2 others)
+[ 740/1047  7s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.Editor.dll (+2 others)
+[ 741/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ForUI.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 743/1047  2s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Shaders.dll (+2 others)
+[ 744/1047  3s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ForUI.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Shaders.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 735/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.Purchasing.dll (+2 others) [CacheHit 63c354b2180a5bd661c2eb33307e1bb300000000000000000000000000000003]
+[ 745/1047 1725246891s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.Purchasing.dll (+2 others)
+[ 747/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Analytics.DataPrivacy.dll (+2 others)
+[ 748/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.XR.LegacyInputHelpers.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Analytics.DataPrivacy.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 749/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Analytics.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.XR.LegacyInputHelpers.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 750/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.dll (+2 others)
+[ 751/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.SpatialTracking.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Analytics.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEditor.SpatialTracking.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 756/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.Editor.dll (+2 others)
+[ 757/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 773/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.Editor.dll (+2 others)
+[ 774/1047  4s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Editor.dll (+2 others)
+[ 775/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.dll (+2 others)
+[ 776/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.Editor.dll (+2 others)
+[ 777/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Updater.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Updater.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 770/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.TestFramework.dll (+2 others) [CacheHit fc7d1ce55cfa3e58e8fdb983cc52456d00000000000000000000000000000003]
+[ 784/1047 1725246892s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.TestFramework.dll (+2 others)
+Failure while invoking caching client: Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.dll (+2 others)
+move_path failed: No error
+
+
+
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 779/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.DevX.Editor.dll (+2 others) [CacheHit 891914036d88c946cfa545a58469248400000000000000000000000000000003]
+[ 791/1047 1725246892s] Csc Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.DevX.Editor.dll (+2 others)
+[ 793/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Analytics.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Analytics.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 794/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/PhotonQuantum.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/PhotonQuantum.dll, with 129 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 795/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Analytics.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Analytics.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 796/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Configuration.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 797/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.CollabProxy.Editor.dll (+2 others)
+[ 798/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.AppleStub.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleStub.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.CollabProxy.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 799/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/PhotonQuantumEditor.dll (+2 others)
+Assets\Photon\Quantum\Editor\QuantumStateInspector.cs(687,11): warning CS0162: Unreachable code detected
+
+Assets\Photon\Quantum\Editor\QuantumStateInspector.cs(710,13): warning CS0162: Unreachable code detected
+[ 800/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Core.ShaderLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 801/1047  1s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Networking.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Networking.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 802/1047  1s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Threading.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Threading.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 803/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.AppleCore.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleCore.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 804/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.SecurityCore.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityCore.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 805/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.InputSystem.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.dll, with 131 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 806/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 807/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Environments.Internal.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Internal.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 808/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 809/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.InputSystem.TestFramework.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.TestFramework.dll, with 126 defines and 212 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 810/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Device.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Device.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 811/1047  1s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Editor.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 814/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.AppleMacosStub.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.AppleMacosStub.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 817/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Timeline.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.dll, with 126 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 818/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.XR.LegacyInputHelpers.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.XR.LegacyInputHelpers.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 819/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Shaders.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Shaders.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 820/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.SpatialTracking.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.SpatialTracking.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 821/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.UI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.dll, with 131 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 822/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/PPv2URPConverters.dll (+2 others)
+[ 823/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.2D.Tilemap.Extras.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 824/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Internal.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Internal.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/PPv2URPConverters.dll (+2 others) [CacheWrite 00000000000000000000000000000003]
+[ 825/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Analytics.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.dll, with 125 defines and 215 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 826/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Config.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 827/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Environments.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 828/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.TextMeshPro.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.dll, with 126 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 829/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Mathematics.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 830/1047  1s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.dll, with 127 defines and 232 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 831/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.Codeless.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Codeless.dll, with 125 defines and 230 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 832/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 833/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.AI.Navigation.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.dll, with 126 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 834/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Burst.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.dll, with 125 defines and 214 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 835/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Core.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Runtime.dll, with 128 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 836/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+Assets\Scripts\CE1Countdown.cs(7,40): warning CS0108: 'CE1Countdown.animation' hides inherited member 'Component.animation'. Use the new keyword if hiding was intended.
+
+Assets\Scripts\PointUpdater.cs(19,40): warning CS0108: 'PointUpdater.animation' hides inherited member 'Component.animation'. Use the new keyword if hiding was intended.
+
+Assets\Scripts\PacmanAnimator.cs(29,38): warning CS0108: 'PacmanAnimator.light' hides inherited member 'Component.light'. Use the new keyword if hiding was intended.
+[ 837/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/PhotonRealtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/PhotonRealtime.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 838/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipeline.Universal.ShaderLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 839/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Scheduler.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Scheduler.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 840/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.SecurityStub.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.SecurityStub.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 841/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.WinRTCore.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTCore.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 842/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.Stores.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.Stores.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 843/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Registration.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Registration.dll, with 125 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 844/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.InputSystem.ForUI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ForUI.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 845/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Purchasing.Common.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Purchasing.Common.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 846/1047  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[ 847/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Purchasing.WinRTStub.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Purchasing.WinRTStub.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 848/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Telemetry.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Telemetry.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 849/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Analytics.DataPrivacy.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Analytics.DataPrivacy.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 850/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Advertisements.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.dll, with 125 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 851/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Mathematics.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 852/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Timeline.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Timeline.Editor.dll, with 124 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 853/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.2D.Sprite.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 854/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll, with 123 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 855/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEditor.SpatialTracking.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEditor.SpatialTracking.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 856/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Environments.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Environments.Editor.dll, with 123 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 857/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Analytics.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Analytics.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 858/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.2D.Tilemap.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 859/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Core.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Editor.dll, with 124 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 860/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Editor.dll, with 124 defines and 240 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 861/1047  1s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Universal.Runtime.dll, with 131 defines and 232 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 862/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Configuration.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Configuration.Editor.dll, with 123 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 863/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.CollabProxy.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.CollabProxy.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 864/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.AI.Navigation.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.dll, with 123 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 865/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Advertisements.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 866/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.AI.Navigation.Updater.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Updater.dll, with 123 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 867/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll, with 123 defines and 295 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 868/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 125 defines and 277 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 869/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEditor.XR.LegacyInputHelpers.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEditor.XR.LegacyInputHelpers.dll, with 126 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 870/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Sysroot.Linux_x86_64.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 871/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.SysrootPackage.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.SysrootPackage.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 872/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.AI.Navigation.Editor.ConversionSystem.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.AI.Navigation.Editor.ConversionSystem.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 873/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/PPv2URPConverters.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/PPv2URPConverters.dll, with 123 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 874/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEditor.Purchasing.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEditor.Purchasing.dll, with 124 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 875/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Core.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Core.Editor.dll, with 124 defines and 243 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 876/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Searcher.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Searcher.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 877/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.ShaderGraph.Utilities.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Utilities.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 878/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Services.Analytics.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Services.Analytics.Editor.dll, with 123 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 879/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEditor.UI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.dll, with 126 defines and 233 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 880/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.TextMeshPro.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 881/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleStub.dll
+[ 882/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll
+[ 883/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Registration.dll
+[ 884/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll
+[ 885/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
+[ 886/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll
+[ 887/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
+[ 888/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.dll
+[ 889/1047  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[ 890/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.dll
+[ 891/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
+[ 892/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll
+[ 893/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll
+[ 894/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.Codeless.dll
+[ 895/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.PlasticSCM.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.dll, with 123 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 896/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Internal.dll
+[ 897/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Threading.dll
+[ 898/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.WinRTStub.dll
+[ 899/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.Stores.dll
+[ 900/1047  0s] CopyFiles Library/ScriptAssemblies/Purchasing.Common.dll
+[ 901/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll
+[ 902/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll
+[ 903/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
+[ 904/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.dll
+[ 905/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Device.dll
+[ 906/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonQuantum.dll
+[ 907/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Telemetry.dll
+[ 908/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityCore.dll
+[ 909/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Configuration.dll
+[ 910/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleCore.dll
+[ 911/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
+[ 912/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleMacosStub.dll
+[ 913/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
+[ 914/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.dll
+[ 915/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Scheduler.dll
+[ 916/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll
+[ 917/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll
+[ 918/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Mathematics.dll
+[ 919/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.Internal.dll
+[ 920/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonRealtime.dll
+[ 921/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Networking.dll
+[ 922/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.WinRTCore.dll
+[ 923/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.dll
+[ 924/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Analytics.dll
+[ 925/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.dll
+[ 926/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll
+[ 927/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
+[ 928/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll
+[ 929/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.dll
+[ 930/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
+[ 931/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
+[ 932/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.2D.Tilemap.Extras.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Tilemap.Extras.Editor.dll, with 123 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 933/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/UnityEngine.Advertisements.DevX.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/UnityEngine.Advertisements.DevX.Editor.dll, with 124 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 934/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.DevX.Editor.pdb
+[ 935/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.DevX.Editor.dll
+[ 936/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.Editor.pdb
+[ 937/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
+[ 938/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.ShaderGraph.Utilities.dll
+[ 939/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.ShaderGraph.Utilities.pdb
+[ 940/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Analytics.Editor.dll
+[ 941/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Analytics.Editor.pdb
+[ 942/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Searcher.Editor.pdb
+[ 943/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Searcher.Editor.dll
+[ 944/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Editor.pdb
+[ 945/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Editor.dll
+[ 946/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.Purchasing.dll
+[ 947/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.Purchasing.pdb
+[ 948/1047  0s] CopyFiles Library/ScriptAssemblies/PPv2URPConverters.dll
+[ 949/1047  0s] CopyFiles Library/ScriptAssemblies/PPv2URPConverters.pdb
+[ 950/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.pdb
+[ 951/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll
+[ 952/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
+[ 953/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
+[ 954/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll
+[ 955/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.pdb
+[ 956/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
+[ 957/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
+[ 958/1047  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[ 959/1047  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+[ 960/1047  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[ 961/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll
+[ 962/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Updater.pdb
+[ 963/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll
+[ 964/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.pdb
+[ 965/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Editor.pdb
+[ 966/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll
+[ 967/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
+[ 968/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+[ 969/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Configuration.Editor.pdb
+[ 970/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Configuration.Editor.dll
+[ 971/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll
+[ 972/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.pdb
+[ 973/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.pdb
+[ 974/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll
+[ 975/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.pdb
+[ 976/1047  0s] CopyFiles Library/ScriptAssemblies/Analytics.pdb
+[ 977/1047  0s] CopyFiles Library/ScriptAssemblies/Analytics.dll
+[ 978/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll
+[ 979/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.pdb
+[ 980/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.Editor.pdb
+[ 981/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.Editor.dll
+[ 982/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.SpatialTracking.pdb
+[ 983/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll
+[ 984/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Win-x86_64-Linux-x86_64.pdb
+[ 985/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll
+[ 986/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll
+[ 987/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Sprite.Editor.pdb
+[ 988/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
+[ 989/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+[ 990/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Mathematics.Editor.pdb
+[ 991/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Mathematics.Editor.dll
+[ 992/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Advertisements.pdb
+[ 993/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.pdb
+[ 994/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Telemetry.pdb
+[ 995/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.WinRTStub.pdb
+[ 996/1047  0s] CopyFiles Library/ScriptAssemblies/Purchasing.Common.pdb
+[ 997/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Registration.pdb
+[ 998/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
+[ 999/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.Stores.pdb
+[1000/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.WinRTCore.pdb
+[1001/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.pdb
+[1002/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Scheduler.pdb
+[1003/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.pdb
+[1004/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonRealtime.pdb
+[1005/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.pdb
+[1006/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.pdb
+[1007/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.AI.Navigation.pdb
+[1008/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.pdb
+[1009/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.Codeless.pdb
+[1010/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.pdb
+[1011/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Mathematics.pdb
+[1012/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
+[1013/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
+[1014/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.pdb
+[1015/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.pdb
+[1016/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Analytics.pdb
+[1017/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.pdb
+[1018/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Internal.pdb
+[1019/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.SpatialTracking.pdb
+[1020/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
+[1021/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.pdb
+[1022/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.pdb
+[1023/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
+[1024/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleMacosStub.pdb
+[1025/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Device.pdb
+[1026/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
+[1027/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.pdb
+[1028/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Environments.Internal.pdb
+[1029/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityCore.pdb
+[1030/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleCore.pdb
+[1031/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
+[1032/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Threading.pdb
+[1033/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.pdb
+[1034/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEngine.Purchasing.AppleStub.pdb
+[1035/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Networking.pdb
+[1036/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Configuration.pdb
+[1037/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Services.Core.Analytics.pdb
+[1038/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonQuantum.pdb
+[1039/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.VSCode.Editor.pdb
+[1040/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
+[1041/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.VSCode.Editor.dll
+[1042/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
+[1043/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
+[1044/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
+[1045/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.CodeGen.dll
+[1046/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.CodeGen.pdb
+[1047/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.ShaderGraph.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.ShaderGraph.Editor.dll, with 123 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1048/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.ShaderGraph.Editor.pdb
+[1049/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.Editor.dll
+[1050/1047  0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
+[1051/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Unity.Burst.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Unity.Burst.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1052/1047  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/PhotonQuantumEditor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/PhotonQuantumEditor.dll, with 127 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1053/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.Editor.pdb
+[1054/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonQuantumEditor.pdb
+[1055/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll
+[1056/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+[1057/1047  0s] CopyFiles Library/ScriptAssemblies/Unity.Burst.Editor.dll
+[1058/1047  0s] CopyFiles Library/ScriptAssemblies/PhotonQuantumEditor.dll
+*** Tundra build success (23.95 seconds), 505 items updated, 1047 evaluated
+Assets\Photon\Quantum\Editor\QuantumStateInspector.cs(687,11): warning CS0162: Unreachable code detected
+Assets\Photon\Quantum\Editor\QuantumStateInspector.cs(710,13): warning CS0162: Unreachable code detected
+Assets\Scripts\CE1Countdown.cs(7,40): warning CS0108: 'CE1Countdown.animation' hides inherited member 'Component.animation'. Use the new keyword if hiding was intended.
+Assets\Scripts\PointUpdater.cs(19,40): warning CS0108: 'PointUpdater.animation' hides inherited member 'Component.animation'. Use the new keyword if hiding was intended.
+Assets\Scripts\PacmanAnimator.cs(29,38): warning CS0108: 'PacmanAnimator.light' hides inherited member 'Component.light'. Use the new keyword if hiding was intended.
+AssetDatabase: script compilation time: 26.081770s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  8.711 seconds
+Refreshing native plugins compatible for Editor in 12.01 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Refreshing native plugins compatible for Editor in 11.05 ms, found 2 plugins.
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.923 seconds
+Domain Reload Profiling: 12630ms
+	BeginReloadAssembly (193ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (6ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (27ms)
+	RebuildCommonClasses (42ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (70ms)
+	LoadAllAssembliesAndSetupDomain (8388ms)
+		LoadAssemblies (8220ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (266ms)
+			TypeCache.Refresh (198ms)
+				TypeCache.ScanAssembly (178ms)
+			ScanForSourceGeneratedMonoScriptInfo (36ms)
+			ResolveRequiredComponents (31ms)
+	FinalizeReload (3924ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3735ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (14ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (87ms)
+			ProcessInitializeOnLoadAttributes (3339ms)
+			ProcessInitializeOnLoadMethodAttributes (283ms)
+			AfterProcessingInitializeOnLoad (7ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Asset Pipeline Refresh (id=f483f2183cb087049a9df4d1b984bcbe): Total: 40.439 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=10 (actual=0, local cache=10, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1536 ms
+		Asset DB Callback time: managed=17 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=12739 ms, compile time=26082 ms, other=62 ms
+		Project Asset Count: scripts=6299, non-scripts=2184
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.720ms
+	ApplyChangesToAssetFolders: 0.123ms
+	Scan: 78.918ms
+	OnSourceAssetsModified: 0.004ms
+	GetAllGuidsForCategorization: 1.284ms
+	CategorizeAssets: 160.214ms
+	ImportOutOfDateAssets: 3994.406ms (-22122.451ms without children)
+		CompileScripts: 26081.865ms
+		ReloadNativeAssets: 0.018ms
+		UnloadImportedAssets: 30.955ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.624ms
+		InitializingProgressBar: 0.005ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 1.388ms
+	PostProcessAllAssets: 17.731ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.003ms
+	UnloadStreamsBegin: 1.754ms
+	PersistCurrentRevisions: 0.439ms
+	UnloadStreamsEnd: 0.075ms
+	GenerateScriptTypeHashes: 3.406ms
+	Untracked: 36183.228ms
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Scanning for USB devices : 54.730ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-quantum.unity
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ProgressiveSceneManager::Cancel()
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 129 unused Assets / (0.8 MB). Loaded Objects now: 5657.
+Memory consumption went from 155.6 MB to 154.9 MB.
+Total: 9.008800 ms (FindLiveObjects: 0.401000 ms CreateObjectMapping: 0.394700 ms MarkObjects: 7.826600 ms  DeleteObjects: 0.383800 ms)
+
+[Quantum Migration Preparation] Exporting to C:\Users\Danny\Documents\Projects\QuantumDemo\Quantum3MigrationAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+QuantumMigrationPreparation:Log (string) (at Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs:211)
+QuantumMigrationPreparation:ExportAssets () (at Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs:58)
+
+(Filename: Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs Line: 211)
+
+[Quantum Migration Preparation] Exported 16 assets
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+QuantumMigrationPreparation:Log (string) (at Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs:211)
+QuantumMigrationPreparation:ExportAssets () (at Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs:60)
+
+(Filename: Assets/Photon/QuantumMigration2.1.xTo3.0/Editor/QuantumMigrationPreparation.cs Line: 211)
+
+Batchmode quit successfully invoked - shutting down!
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Curl error 42: Callback aborted
+[Licensing::IpcConnector] License Notification channel disconnected successfully.
+[Licensing::IpcConnector] License Client channel disconnected successfully.
+Cleanup mono
+[Performance] WinEditorMain                                                                                                  :        1 samples, Peak.  2.59 s (1.0x), Avg.  2.59 s, Total. 2.593 s (5.2%)
+[Performance] WinEditorMain.ConfigureCrashHandler                                                                            :        1 samples, Peak.  21.6 us (1.0x), Avg.  21.6 us, Total. 21.60 us (0.0%)
+[Performance] WinEditorMain.CurlRequestInitialize                                                                            :        1 samples, Peak.   422 us (1.0x), Avg.   422 us, Total. 421.6 us (0.0%)
+[Performance] WinEditorMain.SetupLogFile                                                                                     :        1 samples, Peak.   521 us (1.0x), Avg.   521 us, Total. 520.8 us (0.0%)
+[Performance] WinEditorMain.RunNativeTestsIfRequiredAndExit                                                                  :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] WinEditorMain.Licensing                                                                                        :        1 samples, Peak.  2.56 s (1.0x), Avg.  2.56 s, Total. 2.558 s (5.1%)
+[Performance] WinEditorMain.InitializeCrashHandler                                                                           :        1 samples, Peak.  31.1 ms (1.0x), Avg.  31.1 ms, Total. 31.12 ms (0.1%)
+[Performance] WinEditorMain.CreateApplication                                                                                :        1 samples, Peak.   318 us (1.0x), Avg.   318 us, Total. 317.7 us (0.0%)
+[Performance] Application.InitializeProject                                                                                  :        1 samples, Peak.  43.0 s (1.0x), Avg.  43.0 s, Total. 43.00 s (86.1%)
+[Performance] Application.PackageManager.StartServer                                                                         :        1 samples, Peak.  3.06 ms (1.0x), Avg.  3.06 ms, Total. 3.057 ms (0.0%)
+[Performance] Application.AcquireProjectLock                                                                                 :        1 samples, Peak.  5.81 ms (1.0x), Avg.  5.81 ms, Total. 5.814 ms (0.0%)
+[Performance] Application.InitializeEngineNoGraphics                                                                         :        1 samples, Peak.  73.9 ms (1.0x), Avg.  73.9 ms, Total. 73.89 ms (0.1%)
+[Performance] Application.PackageManager.Initialize                                                                          :        1 samples, Peak.   450 ms (1.0x), Avg.   450 ms, Total. 450.1 ms (0.9%)
+[Performance] Connecting to Package Manager                                                                                  :       46 samples, Peak.  51.0 us (20.8x), Avg.  2.45 us, Total. 112.8 us (0.0%)
+[Performance] Application.EngineGraphics.Initialize                                                                          :        1 samples, Peak.   288 ms (1.0x), Avg.   288 ms, Total. 288.4 ms (0.6%)
+[Performance] Application.GI.Initialize                                                                                      :        1 samples, Peak.  4.11 ms (1.0x), Avg.  4.11 ms, Total. 4.113 ms (0.0%)
+[Performance] Application.LoadAllDefaultResourcesFromEditor                                                                  :        1 samples, Peak.  2.76 ms (1.0x), Avg.  2.76 ms, Total. 2.756 ms (0.0%)
+[Performance] Application.LoadMonoAssemblies                                                                                 :        1 samples, Peak.   697 ms (1.0x), Avg.   697 ms, Total. 697.0 ms (1.4%)
+[Performance] RestoreManagedReferences                                                                                       :        2 samples, Peak.  79.5 ms (2.0x), Avg.  39.8 ms, Total. 79.53 ms (0.2%)
+[Performance] InitializeOnLoad MixerEffectDefinitionReloader                                                                 :        2 samples, Peak.  3.72 ms (1.2x), Avg.  3.19 ms, Total. 6.376 ms (0.0%)
+[Performance] InitializeOnLoad SettingsService                                                                               :        2 samples, Peak.  14.4 us (1.1x), Avg.  13.3 us, Total. 26.70 us (0.0%)
+[Performance] InitializeOnLoad AssetStoreContext                                                                             :        2 samples, Peak.  30.9 ms (1.7x), Avg.  18.4 ms, Total. 36.70 ms (0.1%)
+[Performance] InitializeOnLoad ObjectSelectorSearch                                                                          :        2 samples, Peak.   232 us (1.3x), Avg.   178 us, Total. 355.2 us (0.0%)
+[Performance] InitializeOnLoad SceneSearch                                                                                   :        2 samples, Peak.   246 us (1.0x), Avg.   243 us, Total. 485.3 us (0.0%)
+[Performance] InitializeOnLoad ProjectSearch                                                                                 :        2 samples, Peak.  59.6 us (1.2x), Avg.  51.5 us, Total. 103.0 us (0.0%)
+[Performance] InitializeOnLoad WindowLayout                                                                                  :        2 samples, Peak.   615 us (1.1x), Avg.   568 us, Total. 1.137 ms (0.0%)
+[Performance] InitializeOnLoad CacheServerWindow                                                                             :        2 samples, Peak.  19.8 us (1.3x), Avg.  14.8 us, Total. 29.70 us (0.0%)
+[Performance] InitializeOnLoad NativeFormatImporterUtility                                                                   :        2 samples, Peak.  3.24 ms (1.1x), Avg.  2.84 ms, Total. 5.680 ms (0.0%)
+[Performance] InitializeOnLoad DrivenRectTransformUndo                                                                       :        2 samples, Peak.   246 us (1.0x), Avg.   237 us, Total. 473.0 us (0.0%)
+[Performance] InitializeOnLoad CloudBuild                                                                                    :        2 samples, Peak.  7.80 us (1.2x), Avg.  6.60 us, Total. 13.20 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebuggerWindow                                                                         :        2 samples, Peak.   849 us (1.5x), Avg.   573 us, Total. 1.146 ms (0.0%)
+[Performance] InitializeOnLoad PrefabInstanceChangedListener                                                                 :        2 samples, Peak.   214 us (1.2x), Avg.   178 us, Total. 355.1 us (0.0%)
+[Performance] InitializeOnLoad AddComponentWindow                                                                            :        2 samples, Peak.   140 us (1.1x), Avg.   129 us, Total. 257.7 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebugger                                                                               :        2 samples, Peak.   700 ns (1.3x), Avg.   550 ns, Total. 1.100 us (0.0%)
+[Performance] InitializeOnLoad MenuItems                                                                                     :        2 samples, Peak.  84.0 us (1.0x), Avg.  80.4 us, Total. 160.8 us (0.0%)
+[Performance] InitializeOnLoad EditMode                                                                                      :        2 samples, Peak.   587 us (1.1x), Avg.   520 us, Total. 1.040 ms (0.0%)
+[Performance] InitializeOnLoad UISystemProfilerRenderService                                                                 :        2 samples, Peak.  10.8 us (1.2x), Avg.  8.95 us, Total. 17.90 us (0.0%)
+[Performance] InitializeOnLoad PlayModeDownload                                                                              :        2 samples, Peak.  5.07 ms (1.9x), Avg.  2.66 ms, Total. 5.312 ms (0.0%)
+[Performance] InitializeOnLoad ShortcutIntegration                                                                           :        2 samples, Peak.   102 us (1.3x), Avg.  81.6 us, Total. 163.3 us (0.0%)
+[Performance] InitializeOnLoad UnityConnect                                                                                  :        2 samples, Peak.  69.3 us (1.2x), Avg.  58.4 us, Total. 116.8 us (0.0%)
+[Performance] InitializeOnLoad SearchService                                                                                 :        2 samples, Peak.   117 us (1.1x), Avg.   110 us, Total. 219.9 us (0.0%)
+[Performance] InitializeOnLoad EditorMonitor                                                                                 :        2 samples, Peak.  1.06 ms (1.4x), Avg.   758 us, Total. 1.515 ms (0.0%)
+[Performance] InitializeOnLoad RetainedMode                                                                                  :        2 samples, Peak.  2.85 ms (1.0x), Avg.  2.73 ms, Total. 5.457 ms (0.0%)
+[Performance] InitializeOnLoad EditorShaderLoader                                                                            :        2 samples, Peak.   696 us (1.0x), Avg.   674 us, Total. 1.348 ms (0.0%)
+[Performance] InitializeOnLoad EditorDelegateRegistration                                                                    :        2 samples, Peak.   571 us (1.1x), Avg.   503 us, Total. 1.006 ms (0.0%)
+[Performance] InitializeOnLoad UIDocumentHierarchyWatcher                                                                    :        2 samples, Peak.  90.4 us (1.0x), Avg.  88.1 us, Total. 176.2 us (0.0%)
+[Performance] InitializeOnLoad LiveReloadTrackerCreator                                                                      :        2 samples, Peak.   241 us (1.3x), Avg.   189 us, Total. 378.0 us (0.0%)
+[Performance] InitializeOnLoad UxmlObjectEditorFactories                                                                     :        2 samples, Peak.   603 us (1.1x), Avg.   542 us, Total. 1.085 ms (0.0%)
+[Performance] InitializeOnLoad UXMLEditorFactories                                                                           :        2 samples, Peak.  72.5 ms (1.0x), Avg.  71.3 ms, Total. 142.6 ms (0.3%)
+[Performance] InitializeOnLoad CloudBuildPoller                                                                              :        2 samples, Peak.   462 us (1.3x), Avg.   363 us, Total. 726.1 us (0.0%)
+[Performance] InitializeOnLoad AdsService                                                                                    :        2 samples, Peak.  2.88 ms (1.1x), Avg.  2.69 ms, Total. 5.376 ms (0.0%)
+[Performance] InitializeOnLoad EditorGameServicesAnalytics                                                                   :        2 samples, Peak.  3.62 ms (1.8x), Avg.  2.02 ms, Total. 4.040 ms (0.0%)
+[Performance] InitializeOnLoad UDPService                                                                                    :        2 samples, Peak.   188 us (1.0x), Avg.   188 us, Total. 375.0 us (0.0%)
+[Performance] InitializeOnLoad BuildService                                                                                  :        2 samples, Peak.   202 us (1.1x), Avg.   185 us, Total. 371.0 us (0.0%)
+[Performance] InitializeOnLoad ServicesRepository                                                                            :        2 samples, Peak.   600 ns (1.0x), Avg.   600 ns, Total. 1.200 us (0.0%)
+[Performance] InitializeOnLoad PurchasingService                                                                             :        2 samples, Peak.  6.34 ms (1.0x), Avg.  6.19 ms, Total. 12.38 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsService                                                                              :        2 samples, Peak.   237 us (1.0x), Avg.   231 us, Total. 461.7 us (0.0%)
+[Performance] InitializeOnLoad CrashService                                                                                  :        2 samples, Peak.   168 us (1.0x), Avg.   165 us, Total. 330.4 us (0.0%)
+[Performance] InitializeOnLoad SearchWindow                                                                                  :        2 samples, Peak.   152 us (1.1x), Avg.   134 us, Total. 268.0 us (0.0%)
+[Performance] InitializeOnLoad CustomIndexers                                                                                :        2 samples, Peak.  21.8 ms (1.2x), Avg.  18.7 ms, Total. 37.47 ms (0.1%)
+[Performance] InitializeOnLoad SearchMonitor                                                                                 :        2 samples, Peak.  1.11 ms (1.1x), Avg.  1.00 ms, Total. 2.009 ms (0.0%)
+[Performance] InitializeOnLoad ParameterControllerEditor                                                                     :        2 samples, Peak.  22.1 us (1.0x), Avg.  21.6 us, Total. 43.30 us (0.0%)
+[Performance] InitializeOnLoad LayerSettingsWindow                                                                           :        2 samples, Peak.  40.4 us (1.8x), Avg.  22.5 us, Total. 45.00 us (0.0%)
+[Performance] InitializeOnLoad PackageManagerHookGUIDConverter.RegisterPackagesEventHandler                                  :        2 samples, Peak.   826 us (1.8x), Avg.   449 us, Total. 898.2 us (0.0%)
+[Performance] InitializeOnLoad EditorDragAndDrop.RegisterEditorClient                                                        :        2 samples, Peak.   247 us (1.1x), Avg.   216 us, Total. 431.1 us (0.0%)
+[Performance] InitializeOnLoad EditorEventCallbacks.InitializeFontAssetResourceChangeCallBacks                               :        2 samples, Peak.  1.51 ms (1.0x), Avg.  1.46 ms, Total. 2.913 ms (0.0%)
+[Performance] InitializeOnLoad SceneTemplateService.Init                                                                     :        2 samples, Peak.  1.22 ms (1.1x), Avg.  1.13 ms, Total. 2.260 ms (0.0%)
+[Performance] InitializeOnLoad DiagnosticSwitchesConsoleMessage.Init                                                         :        2 samples, Peak.  7.18 ms (1.9x), Avg.  3.85 ms, Total. 7.695 ms (0.0%)
+[Performance] InitializeOnLoad RectSelection.RegisterShortcutContext                                                         :        2 samples, Peak.   254 us (1.1x), Avg.   226 us, Total. 451.8 us (0.0%)
+[Performance] InitializeOnLoad SceneVisibilityManager.Initialize                                                             :        2 samples, Peak.  5.28 ms (1.7x), Avg.  3.10 ms, Total. 6.203 ms (0.0%)
+[Performance] InitializeOnLoad PackageManagerWindow.EditorInitializedInSafeMode                                              :        2 samples, Peak.  28.4 ms (2.0x), Avg.  14.3 ms, Total. 28.61 ms (0.1%)
+[Performance] InitializeOnLoad AssetPostprocessingInternal.RefreshCustomDependencies                                         :        2 samples, Peak.  3.42 ms (1.2x), Avg.  2.74 ms, Total. 5.474 ms (0.0%)
+[Performance] InitializeOnLoad SceneViewMotion.RegisterShortcutContexts                                                      :        2 samples, Peak.   197 us (1.1x), Avg.   174 us, Total. 348.1 us (0.0%)
+[Performance] InitializeOnLoad ToolShortcutContext.Init                                                                      :        2 samples, Peak.   180 us (1.2x), Avg.   152 us, Total. 303.5 us (0.0%)
+[Performance] InitializeOnLoad EditorWindow.Initialize                                                                       :        2 samples, Peak.   402 us (1.3x), Avg.   307 us, Total. 614.9 us (0.0%)
+[Performance] InitializeOnLoad MemoryProfilerCompilationGuard.InjectCompileGuard                                             :        2 samples, Peak.   169 us (1.3x), Avg.   126 us, Total. 251.3 us (0.0%)
+[Performance] InitializeOnLoad ScopedRegistryAddedPopup.SubscribeToRegistriesAdded                                           :        2 samples, Peak.  9.17 ms (2.0x), Avg.  4.63 ms, Total. 9.266 ms (0.0%)
+[Performance] InitializeOnLoad SysrootManager.Initialize                                                                     :        2 samples, Peak.  14.3 us (1.3x), Avg.  11.4 us, Total. 22.80 us (0.0%)
+[Performance] AssemblyReloadEvents.afterAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.AfterAssemblyReload   :        2 samples, Peak.  5.28 ms (1.9x), Avg.  2.80 ms, Total. 5.594 ms (0.0%)
+[Performance] ProcessService.EditorAfterLoadAllAssemblies                                                                    :        2 samples, Peak.   380 us (1.1x), Avg.   335 us, Total. 669.1 us (0.0%)
+[Performance] Application.ReadLicenseInfo                                                                                    :        1 samples, Peak.  14.0 ms (1.0x), Avg.  14.0 ms, Total. 14.01 ms (0.0%)
+[Performance] Application.InitialRefresh                                                                                     :        1 samples, Peak.  40.4 s (1.0x), Avg.  40.4 s, Total. 40.44 s (81.0%)
+[Performance] Compiling Scripts                                                                                              :        1 samples, Peak.  26.1 s (1.0x), Avg.  26.1 s, Total. 26.08 s (52.2%)
+[Performance] AssemblyReloadEvents.beforeAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.BeforeAssemblyReload :        1 samples, Peak.   533 us (1.0x), Avg.   533 us, Total. 533.3 us (0.0%)
+[Performance] InitializeOnLoad InputSystem                                                                                   :        1 samples, Peak.  58.8 ms (1.0x), Avg.  58.8 ms, Total. 58.78 ms (0.1%)
+[Performance] InitializeOnLoad TouchSimulation                                                                               :        1 samples, Peak.   143 us (1.0x), Avg.   143 us, Total. 143.2 us (0.0%)
+[Performance] InitializeOnLoad BurstLoader                                                                                   :        1 samples, Peak.  2.07 s (1.0x), Avg.  2.07 s, Total. 2.068 s (4.1%)
+[Performance] InitializeOnLoad ShadowCasterGroup2DManager                                                                    :        1 samples, Peak.   125 us (1.0x), Avg.   125 us, Total. 124.8 us (0.0%)
+[Performance] InitializeOnLoad ScriptAttributeUtility                                                                        :        1 samples, Peak.   129 ms (1.0x), Avg.   129 ms, Total. 129.3 ms (0.3%)
+[Performance] InitializeOnLoad QuantumCodeIntegrationDllWatcher                                                              :        1 samples, Peak.   238 us (1.0x), Avg.   238 us, Total. 237.8 us (0.0%)
+[Performance] InitializeOnLoad QuantumToolbarUtilities                                                                       :        1 samples, Peak.   182 us (1.0x), Avg.   182 us, Total. 181.7 us (0.0%)
+[Performance] InitializeOnLoad ReorderableListWrapper                                                                        :        1 samples, Peak.  1.50 us (1.0x), Avg.  1.50 us, Total. 1.500 us (0.0%)
+[Performance] InitializeOnLoad PropertyDrawer                                                                                :        1 samples, Peak.   401 us (1.0x), Avg.   401 us, Total. 400.9 us (0.0%)
+[Performance] InitializeOnLoad SplitterGUILayout                                                                             :        1 samples, Peak.   990 us (1.0x), Avg.   990 us, Total. 989.9 us (0.0%)
+[Performance] InitializeOnLoad EditorUtility                                                                                 :        1 samples, Peak.   209 us (1.0x), Avg.   209 us, Total. 209.3 us (0.0%)
+[Performance] InitializeOnLoad EditorGUIUtility                                                                              :        1 samples, Peak.   577 us (1.0x), Avg.   577 us, Total. 576.9 us (0.0%)
+[Performance] InitializeOnLoad QuantumCodeIntegrationQtnWatcher                                                              :        1 samples, Peak.   179 us (1.0x), Avg.   179 us, Total. 178.8 us (0.0%)
+[Performance] InitializeOnLoad ReorderableList                                                                               :        1 samples, Peak.   241 us (1.0x), Avg.   241 us, Total. 241.1 us (0.0%)
+[Performance] InitializeOnLoad QuantumEditorSessionShutdown                                                                  :        1 samples, Peak.  95.8 us (1.0x), Avg.  95.8 us, Total. 95.80 us (0.0%)
+[Performance] InitializeOnLoad LayerMatrixGUI                                                                                :        1 samples, Peak.  2.70 ms (1.0x), Avg.  2.70 ms, Total. 2.704 ms (0.0%)
+[Performance] InitializeOnLoad SplitterState                                                                                 :        1 samples, Peak.  1.50 us (1.0x), Avg.  1.50 us, Total. 1.500 us (0.0%)
+[Performance] InitializeOnLoad EditorGUI                                                                                     :        1 samples, Peak.  1.59 ms (1.0x), Avg.  1.59 ms, Total. 1.595 ms (0.0%)
+[Performance] InitializeOnLoad HandleUtility                                                                                 :        1 samples, Peak.   159 us (1.0x), Avg.   159 us, Total. 159.3 us (0.0%)
+[Performance] InitializeOnLoad Editor                                                                                        :        1 samples, Peak.   130 us (1.0x), Avg.   130 us, Total. 130.2 us (0.0%)
+[Performance] InitializeOnLoad QuantumAutoBaker                                                                              :        1 samples, Peak.   505 us (1.0x), Avg.   505 us, Total. 504.8 us (0.0%)
+[Performance] InitializeOnLoad CoreStatsIntegration                                                                          :        1 samples, Peak.   301 us (1.0x), Avg.   301 us, Total. 300.8 us (0.0%)
+[Performance] InitializeOnLoad BackgroundWatcher                                                                             :        1 samples, Peak.   203 us (1.0x), Avg.   203 us, Total. 202.6 us (0.0%)
+[Performance] InitializeOnLoad UnityTestProtocolStarter                                                                      :        1 samples, Peak.   326 us (1.0x), Avg.   326 us, Total. 326.0 us (0.0%)
+[Performance] InitializeOnLoad TestStarter                                                                                   :        1 samples, Peak.  1.03 ms (1.0x), Avg.  1.03 ms, Total. 1.026 ms (0.0%)
+[Performance] InitializeOnLoad RerunCallbackInitializer                                                                      :        1 samples, Peak.  3.82 ms (1.0x), Avg.  3.82 ms, Total. 3.815 ms (0.0%)
+[Performance] InitializeOnLoad RiderScriptEditor                                                                             :        1 samples, Peak.  14.2 ms (1.0x), Avg.  14.2 ms, Total. 14.21 ms (0.0%)
+[Performance] InitializeOnLoad CallbackInitializer                                                                           :        1 samples, Peak.  1.78 ms (1.0x), Avg.  1.78 ms, Total. 1.784 ms (0.0%)
+[Performance] InitializeOnLoad SpriteEditorWindow                                                                            :        1 samples, Peak.   649 us (1.0x), Avg.   649 us, Total. 649.1 us (0.0%)
+[Performance] InitializeOnLoad ProbeGIBaking                                                                                 :        1 samples, Peak.  4.58 ms (1.0x), Avg.  4.58 ms, Total. 4.578 ms (0.0%)
+[Performance] InitializeOnLoad FilterWindow                                                                                  :        1 samples, Peak.  61.6 us (1.0x), Avg.  61.6 us, Total. 61.60 us (0.0%)
+[Performance] InitializeOnLoad RealtimeProbeSubdivisionDebug                                                                 :        1 samples, Peak.   656 us (1.0x), Avg.   656 us, Total. 655.8 us (0.0%)
+[Performance] InitializeOnLoad PurchasingServiceAnalyticsSender                                                              :        1 samples, Peak.  1.53 ms (1.0x), Avg.  1.53 ms, Total. 1.527 ms (0.0%)
+[Performance] InitializeOnLoad UnityPurchasingEditor                                                                         :        1 samples, Peak.  1.92 ms (1.0x), Avg.  1.92 ms, Total. 1.918 ms (0.0%)
+[Performance] InitializeOnLoad PurchasingImporter                                                                            :        1 samples, Peak.   571 us (1.0x), Avg.   571 us, Total. 570.8 us (0.0%)
+[Performance] InitializeOnLoad VSCodeScriptEditor                                                                            :        1 samples, Peak.  7.12 ms (1.0x), Avg.  7.12 ms, Total. 7.119 ms (0.0%)
+[Performance] InitializeOnLoad NodeClassCache                                                                                :        1 samples, Peak.  11.6 us (1.0x), Avg.  11.6 us, Total. 11.60 us (0.0%)
+[Performance] InitializeOnLoad ShaderGraphMaterialsUpdater                                                                   :        2 samples, Peak.   614 us (1.7x), Avg.   356 us, Total. 712.0 us (0.0%)
+[Performance] InitializeOnLoad EditorToolManager                                                                             :        1 samples, Peak.  3.09 ms (1.0x), Avg.  3.09 ms, Total. 3.087 ms (0.0%)
+[Performance] InitializeOnLoad Renderer2DAnalytics                                                                           :        1 samples, Peak.   120 us (1.0x), Avg.   120 us, Total. 120.3 us (0.0%)
+[Performance] InitializeOnLoad PlasticPlugin                                                                                 :        1 samples, Peak.   131 ms (1.0x), Avg.   131 ms, Total. 131.0 ms (0.3%)
+[Performance] InitializeOnLoad ToolbarBootstrap                                                                              :        1 samples, Peak.   751 ms (1.0x), Avg.   751 ms, Total. 751.3 ms (1.5%)
+[Performance] Package.AsyncRequest                                                                                           :        7 samples, Peak.  1.53 ms (7.0x), Avg.   220 us, Total. 1.541 ms (0.0%)
+[Performance] InitializeOnLoad VisualStudioEditor                                                                            :        1 samples, Peak.  12.5 ms (1.0x), Avg.  12.5 ms, Total. 12.51 ms (0.0%)
+[Performance] InitializeOnLoad TestRunnerApiListener                                                                         :        1 samples, Peak.  1.26 ms (1.0x), Avg.  1.26 ms, Total. 1.265 ms (0.0%)
+[Performance] InitializeOnLoad VisualStudioIntegration                                                                       :        1 samples, Peak.  3.17 ms (1.0x), Avg.  3.17 ms, Total. 3.170 ms (0.0%)
+[Performance] InitializeOnLoad PrefabLayoutRebuilder                                                                         :        1 samples, Peak.   411 us (1.0x), Avg.   411 us, Total. 411.0 us (0.0%)
+[Performance] InitializeOnLoad AnalyticsImporter                                                                             :        1 samples, Peak.  1.92 ms (1.0x), Avg.  1.92 ms, Total. 1.923 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsEventTrackerEditorCallbacks                                                          :        1 samples, Peak.   452 us (1.0x), Avg.   452 us, Total. 451.6 us (0.0%)
+[Performance] InitializeOnLoad NavigationWindow                                                                              :        1 samples, Peak.   864 us (1.0x), Avg.   864 us, Total. 864.4 us (0.0%)
+[Performance] InitializeOnLoad SceneViewGridManager.Initialize                                                               :        1 samples, Peak.  6.73 ms (1.0x), Avg.  6.73 ms, Total. 6.735 ms (0.0%)
+[Performance] InitializeOnLoad TilemapPrefabStageHelper.Initialize                                                           :        1 samples, Peak.  2.94 ms (1.0x), Avg.  2.94 ms, Total. 2.938 ms (0.0%)
+[Performance] InitializeOnLoad SceneViewOpenTilePaletteHelper.Initialize                                                     :        1 samples, Peak.  2.12 ms (1.0x), Avg.  2.12 ms, Total. 2.121 ms (0.0%)
+[Performance] InitializeOnLoad TileDragAndDropManager.Initialize                                                             :        1 samples, Peak.  1.72 ms (1.0x), Avg.  1.72 ms, Total. 1.717 ms (0.0%)
+[Performance] InitializeOnLoad SysrootPackage.IssueWarningIfLinuxIL2CPPNotPresent                                            :        1 samples, Peak.   311 us (1.0x), Avg.   311 us, Total. 310.8 us (0.0%)
+[Performance] InitializeOnLoad VisualStudioEditor.LegacyVisualStudioCodePackageDisabler                                      :        1 samples, Peak.  2.76 ms (1.0x), Avg.  2.76 ms, Total. 2.761 ms (0.0%)
+[Performance] InitializeOnLoad MaterialReimporter.RegisterUpgraderReimport                                                   :        2 samples, Peak.   329 us (1.7x), Avg.   195 us, Total. 389.3 us (0.0%)
+[Performance] InitializeOnLoad EditorGameServiceRegistry.RegisterAllServices                                                 :        1 samples, Peak.  16.4 ms (1.0x), Avg.  16.4 ms, Total. 16.40 ms (0.0%)
+[Performance] InitializeOnLoad ActionSchedulerCleaner.RegisterSchedulerCleaner                                               :        1 samples, Peak.   725 us (1.0x), Avg.   725 us, Total. 724.9 us (0.0%)
+[Performance] InitializeOnLoad ServiceInstallationListener.RegisterToEvents                                                  :        1 samples, Peak.  1.24 ms (1.0x), Avg.  1.24 ms, Total. 1.244 ms (0.0%)
+[Performance] InitializeOnLoad FPPropertyContextMenu.Init                                                                    :        1 samples, Peak.   217 us (1.0x), Avg.   217 us, Total. 217.0 us (0.0%)
+[Performance] InitializeOnLoad AssetBasePostprocessor.SetupVariantPrefabWorkarounds                                          :        1 samples, Peak.   233 us (1.0x), Avg.   233 us, Total. 232.7 us (0.0%)
+[Performance] InitializeOnLoad ObfuscationMigration.MigrateObfuscations                                                      :        1 samples, Peak.   413 us (1.0x), Avg.   413 us, Total. 413.2 us (0.0%)
+[Performance] InitializeOnLoad UnityPurchasingEditor.MigrateBillingMode                                                      :        1 samples, Peak.  1.53 ms (1.0x), Avg.  1.53 ms, Total. 1.525 ms (0.0%)
+[Performance] InitializeOnLoad UnityPurchasingEditor.CheckUdpUpmPackageInstalled                                             :        1 samples, Peak.  1.91 ms (1.0x), Avg.  1.91 ms, Total. 1.905 ms (0.0%)
+[Performance] InitializeOnLoad ProductCatalogEditor.MigrateProductCatalog                                                    :        1 samples, Peak.   202 ms (1.0x), Avg.   202 ms, Total. 201.6 ms (0.4%)
+[Performance] InitializeOnLoad EngineStateHelper.Init                                                                        :        1 samples, Peak.   332 us (1.0x), Avg.   332 us, Total. 331.8 us (0.0%)
+[Performance] InitializeOnLoad ThreadHelper.Init                                                                             :        1 samples, Peak.   519 us (1.0x), Avg.   519 us, Total. 519.3 us (0.0%)
+[Performance] InitializeOnLoad TestJobDataHolder.ResumeRunningJobs                                                           :        1 samples, Peak.  1.36 ms (1.0x), Avg.  1.36 ms, Total. 1.363 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsReporter.RegisterCallbacks                                                           :        1 samples, Peak.   437 us (1.0x), Avg.   437 us, Total. 436.6 us (0.0%)
+[Performance] InitializeOnLoad CoreRenderPipelinePreferences.InitPreferenceProviders                                         :        1 samples, Peak.  18.4 ms (1.0x), Avg.  18.4 ms, Total. 18.45 ms (0.0%)
+[Performance] InitializeOnLoad VolumeGizmoDrawer.InitVolumeGizmoCallbacks                                                    :        1 samples, Peak.   416 us (1.0x), Avg.   416 us, Total. 415.8 us (0.0%)
+[Performance] InitializeOnLoad DebugManagerWindowLifetimeAnalytic.SubscribeToDebugManagerOpenCloseWindows                    :        1 samples, Peak.   642 us (1.0x), Avg.   642 us, Total. 641.5 us (0.0%)
+[Performance] InitializeOnLoad UnityThreadUtils.CaptureUnityThreadInfo                                                       :        1 samples, Peak.   187 us (1.0x), Avg.   187 us, Total. 186.6 us (0.0%)
+[Performance] DidReloadScriptsAdvancedDropdownWindow.OnScriptReload                                                          :        2 samples, Peak.   282 us (1.1x), Avg.   260 us, Total. 519.5 us (0.0%)
+[Performance] DidReloadScriptsTestRunnerWindow.CompilationCallback                                                           :        1 samples, Peak.   202 us (1.0x), Avg.   202 us, Total. 201.7 us (0.0%)
+[Performance] DidReloadScriptsTestListCache.ScriptReloaded                                                                   :        1 samples, Peak.  1.68 ms (1.0x), Avg.  1.68 ms, Total. 1.684 ms (0.0%)
+[Performance] DidReloadScriptsVolumeComponentEditor.OnEditorReload                                                           :        1 samples, Peak.  11.2 ms (1.0x), Avg.  11.2 ms, Total. 11.20 ms (0.0%)
+[Performance] DidReloadScriptsDebugWindow.OnEditorReload                                                                     :        1 samples, Peak.  6.83 ms (1.0x), Avg.  6.83 ms, Total. 6.831 ms (0.0%)
+[Performance] DidReloadScriptsLookDev.OnEditorReload                                                                         :        1 samples, Peak.   242 us (1.0x), Avg.   242 us, Total. 242.0 us (0.0%)
+[Performance] UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets                                      :        2 samples, Peak.  1.39 ms (1.1x), Avg.  1.32 ms, Total. 2.641 ms (0.0%)
+[Performance] SyncVS.PostprocessSyncProject                                                                                  :        1 samples, Peak.  3.64 ms (1.0x), Avg.  3.64 ms, Total. 3.635 ms (0.0%)
+[Performance] Application.ImportPackagesAndSetTemplateWhenCreatingProject                                                    :        1 samples, Peak.  17.4 ms (1.0x), Avg.  17.4 ms, Total. 17.36 ms (0.0%)
+[Performance] Application.SyncCurrentColorSpace                                                                              :        1 samples, Peak.   158 ms (1.0x), Avg.   158 ms, Total. 157.8 ms (0.3%)
+[Performance] Application.OnUsbDevicesChanged                                                                                :        1 samples, Peak.  54.8 ms (1.0x), Avg.  54.8 ms, Total. 54.80 ms (0.1%)
+[Performance] Application.AssetInstanceCacheUpdate                                                                           :        1 samples, Peak.   300 ns (1.0x), Avg.   300 ns, Total. 300.0 ns (0.0%)
+[Performance] Application.UnityExtensions.Initialize                                                                         :        1 samples, Peak.  6.09 ms (1.0x), Avg.  6.09 ms, Total. 6.087 ms (0.0%)
+[Performance] CodeEditorProjectSync.SyncEditorProject                                                                        :        1 samples, Peak.   205 ms (1.0x), Avg.   205 ms, Total. 205.4 ms (0.4%)
+[Performance] Application.ExecuteStartups                                                                                    :        1 samples, Peak.  88.1 ms (1.0x), Avg.  88.1 ms, Total. 88.10 ms (0.2%)
+[Performance] Menu.RegisterMenuInterface                                                                                     :       26 samples, Peak.  2.00 us (9.8x), Avg.   204 ns, Total. 5.300 us (0.0%)
+[Performance] Gizmo.RebuildRenderers                                                                                         :        1 samples, Peak.  86.8 ms (1.0x), Avg.  86.8 ms, Total. 86.85 ms (0.2%)
+[Performance] Gizmo.AddGizmoRenderers                                                                                        :      131 samples, Peak.  1.81 ms (19.8x), Avg.  91.1 us, Total. 11.93 ms (0.0%)
+[Performance] Application.editorInitializingProject                                                                          :        1 samples, Peak.  82.9 ms (1.0x), Avg.  82.9 ms, Total. 82.92 ms (0.2%)
+[Performance] Application.InitializeMenu                                                                                     :        1 samples, Peak.   424 ms (1.0x), Avg.   424 ms, Total. 424.0 ms (0.8%)
+[Performance] Menu.RebuildAll                                                                                                :        1 samples, Peak.   424 ms (1.0x), Avg.   424 ms, Total. 424.0 ms (0.8%)
+[Performance] Menu.BuildRegisteredMenuInterfaces                                                                             :        1 samples, Peak.   419 ms (1.0x), Avg.   419 ms, Total. 418.9 ms (0.8%)
+[Performance] Menu.FilterMenuItem                                                                                            :      906 samples, Peak.  82.9 ms (897.7x), Avg.  92.4 us, Total. 83.68 ms (0.2%)
+[Performance] UpdateAllMenus                                                                                                 :        1 samples, Peak.  1.03 ms (1.0x), Avg.  1.03 ms, Total. 1.025 ms (0.0%)
+[Performance] Menu.RebuildOSMainMenu                                                                                         :        1 samples, Peak.  3.83 ms (1.0x), Avg.  3.83 ms, Total. 3.827 ms (0.0%)
+[Performance] EditorSceneManager.sceneClosing: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneClosing           :        1 samples, Peak.   298 us (1.0x), Avg.   298 us, Total. 297.7 us (0.0%)
+[Performance] GUIView.RepaintAll.PlayerLoopController                                                                        :        1 samples, Peak.   800 ns (1.0x), Avg.   800 ns, Total. 800.0 ns (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneTemplate.SceneTemplateService.OnNewSceneCreated           :        1 samples, Peak.   253 us (1.0x), Avg.   253 us, Total. 253.0 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnNewSceneCreated     :        1 samples, Peak.   230 us (1.0x), Avg.   230 us, Total. 230.3 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneManagement.StageNavigationManager.OnNewSceneCreated       :        1 samples, Peak.  58.1 us (1.0x), Avg.  58.1 us, Total. 58.10 us (0.0%)
+[Performance] Application.InvokeFinishedLoadingProject                                                                       :        1 samples, Peak.  11.5 ms (1.0x), Avg.  11.5 ms, Total. 11.54 ms (0.0%)
+[Performance] ProcessService.OnProjectLoaded                                                                                 :        1 samples, Peak.  59.4 us (1.0x), Avg.  59.4 us, Total. 59.40 us (0.0%)
+[Performance] VersionControl.Task.Wait                                                                                       :        1 samples, Peak.  14.3 us (1.0x), Avg.  14.3 us, Total. 14.30 us (0.0%)
+[Performance] EditorApplication.quitting: Unity.Burst.Editor.BurstLoader.OnEditorApplicationQuitting                         :        1 samples, Peak.  41.0 us (1.0x), Avg.  41.0 us, Total. 41.00 us (0.0%)
+[Performance] EditorApplication.quitting: UnityEditor.Tilemaps.SceneViewGridManager.EditorQuitting                           :        1 samples, Peak.   109 us (1.0x), Avg.   109 us, Total. 109.3 us (0.0%)
+[Performance] EditorApplication.quitting: callback in UnityEditor.TextCore.Text.EditorEventCallbacks                         :        1 samples, Peak.  10.1 ms (1.0x), Avg.  10.1 ms, Total. 10.10 ms (0.0%)
+[Performance] Application.Shutdown.PauseProfilerSession                                                                      :        1 samples, Peak.  30.1 us (1.0x), Avg.  30.1 us, Total. 30.10 us (0.0%)
+[Performance] Application.Shutdown.PauseAssetImportWorkers                                                                   :        1 samples, Peak.   267 us (1.0x), Avg.   267 us, Total. 267.0 us (0.0%)
+[Performance] Application.Shutdown.SaveAssets                                                                                :        1 samples, Peak.  23.9 ms (1.0x), Avg.  23.9 ms, Total. 23.87 ms (0.0%)
+[Performance] PaletteAssetModificationProcessor.OnWillSaveAssets                                                             :        1 samples, Peak.  3.20 ms (1.0x), Avg.  3.20 ms, Total. 3.198 ms (0.0%)
+[Performance] AssetModificationProcessor.OnWillSaveAssets                                                                    :        1 samples, Peak.   585 us (1.0x), Avg.   585 us, Total. 585.2 us (0.0%)
+[Performance] BuilderAssetModificationProcessor.OnWillSaveAssets                                                             :        1 samples, Peak.   518 us (1.0x), Avg.   518 us, Total. 517.8 us (0.0%)
+[Performance] TerrainModificationProcessor.OnWillSaveAssets                                                                  :        1 samples, Peak.  5.87 ms (1.0x), Avg.  5.87 ms, Total. 5.873 ms (0.0%)
+[Performance] AssetDatabase.ImportAssets                                                                                     :        2 samples, Peak.   800 ns (1.8x), Avg.   450 ns, Total. 900.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupRenderPipeline                                                                     :        1 samples, Peak.  7.50 us (1.0x), Avg.  7.50 us, Total. 7.500 us (0.0%)
+[Performance] Application.Shutdown.StopPreloadManager                                                                        :        1 samples, Peak.  9.70 ms (1.0x), Avg.  9.70 ms, Total. 9.705 ms (0.0%)
+[Performance] Application.Shutdown.DestroyWorld                                                                              :        1 samples, Peak.   641 us (1.0x), Avg.   641 us, Total. 640.9 us (0.0%)
+[Performance] Application.Shutdown.CleanupAfterLoad                                                                          :        1 samples, Peak.   452 ms (1.0x), Avg.   452 ms, Total. 451.6 ms (0.9%)
+[Performance] Application.Shutdown.Progress                                                                                  :        1 samples, Peak.  16.5 us (1.0x), Avg.  16.5 us, Total. 16.50 us (0.0%)
+[Performance] Application.Shutdown.GICleanupManagers                                                                         :        1 samples, Peak.   900 us (1.0x), Avg.   900 us, Total. 900.4 us (0.0%)
+[Performance] Application.Shutdown.MenuCleanupClass                                                                          :        1 samples, Peak.   465 us (1.0x), Avg.   465 us, Total. 464.7 us (0.0%)
+[Performance] Application.Shutdown.ADBSaveStateBeforeShutdown                                                                :        1 samples, Peak.  9.60 us (1.0x), Avg.  9.60 us, Total. 9.600 us (0.0%)
+[Performance] Application.Shutdown.RemoteShutdown                                                                            :        1 samples, Peak.   500 ns (1.0x), Avg.   500 ns, Total. 500.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupVCProvider                                                                         :        1 samples, Peak.  8.30 us (1.0x), Avg.  8.30 us, Total. 8.300 us (0.0%)
+[Performance] Application.Shutdown.InputShutdown                                                                             :        1 samples, Peak.  2.60 us (1.0x), Avg.  2.60 us, Total. 2.600 us (0.0%)
+[Performance] Application.Shutdown.GizmoManagerDestroy                                                                       :        1 samples, Peak.   832 us (1.0x), Avg.   832 us, Total. 832.4 us (0.0%)
+[Performance] Application.Shutdown.ProfilerSession                                                                           :        1 samples, Peak.   202 us (1.0x), Avg.   202 us, Total. 202.3 us (0.0%)
+[Performance] Application.Shutdown.ReleaseGfxWindowOnAllGUIViews                                                             :        1 samples, Peak.   300 ns (1.0x), Avg.   300 ns, Total. 300.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupEngine                                                                             :        1 samples, Peak.  77.9 ms (1.0x), Avg.  77.9 ms, Total. 77.87 ms (0.2%)
+[Performance] Application.Shutdown.CleanupAssetDatabase                                                                      :        1 samples, Peak.  16.5 ms (1.0x), Avg.  16.5 ms, Total. 16.50 ms (0.0%)
+[Performance] Application.Shutdown.ScriptCompilationCleanUp                                                                  :        1 samples, Peak.  16.5 ms (1.0x), Avg.  16.5 ms, Total. 16.53 ms (0.0%)
+[Performance] Application.Shutdown.DestroyJobSystem                                                                          :        1 samples, Peak.   112 us (1.0x), Avg.   112 us, Total. 112.0 us (0.0%)
+[Performance] Application.Shutdown.CleanupPersistentManager                                                                  :        1 samples, Peak.   584 us (1.0x), Avg.   584 us, Total. 583.7 us (0.0%)
+[Performance] Application.Shutdown.CleanupAsyncReadManager                                                                   :        1 samples, Peak.   227 us (1.0x), Avg.   227 us, Total. 227.3 us (0.0%)
+[Performance] Application.Shutdown.CleanupProgressBar                                                                        :        1 samples, Peak.   300 ns (1.0x), Avg.   300 ns, Total. 300.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupMono                                                                               :        1 samples, Peak.  3.06 s (1.0x), Avg.  3.06 s, Total. 3.058 s (6.1%)
+[Performance] Application.Shutdown.CleanupStdConverters                                                                      :        1 samples, Peak.  8.60 us (1.0x), Avg.  8.60 us, Total. 8.600 us (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportModuleNativeDlls                                                  :        1 samples, Peak.   400 ns (1.0x), Avg.   400 ns, Total. 400.0 ns (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportNativeLibraries                                                   :        1 samples, Peak. 100.0 ns (1.0x), Avg. 100.0 ns, Total. 100.00 ns (0.0%)
+[Performance] Application.Shutdown.CleanupAutoDocumentation                                                                  :        1 samples, Peak.   429 us (1.0x), Avg.   429 us, Total. 429.3 us (0.0%)
+[Performance] Application.Shutdown.ShaderNameManagerDestroy                                                                  :        1 samples, Peak.  49.6 us (1.0x), Avg.  49.6 us, Total. 49.60 us (0.0%)
+[Performance] Application.Shutdown.CleanupCacheServer                                                                        :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] Application.Shutdown.Virtualization_Shutdown                                                                   :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] Application.Shutdown.DevConnections                                                                            :        1 samples, Peak.  62.7 us (1.0x), Avg.  62.7 us, Total. 62.70 us (0.0%)
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

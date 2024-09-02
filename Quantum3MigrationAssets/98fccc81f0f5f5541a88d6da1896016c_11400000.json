@@ -1,0 +1,19 @@
+{
+    "Identifier": {
+        "Path": "Resources/DB/Configs/DefaultPhysicsMaterial",
+        "Guid": {
+            "Value": 1
+        }
+    },
+    "Restitution": {
+        "RawValue": 0
+    },
+    "RestitutionCombineFunction": 1,
+    "FrictionStatic": {
+        "RawValue": 26214
+    },
+    "FrictionDynamic": {
+        "RawValue": 26214
+    },
+    "FrictionCombineFunction": 1
+}
