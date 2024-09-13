@@ -1,6 +1,0 @@
-component PlayerLink {
-	player_ref Player;
-	bool ReadyToPlay;
-}
-
-signal OnPlayerReady(player_ref player);

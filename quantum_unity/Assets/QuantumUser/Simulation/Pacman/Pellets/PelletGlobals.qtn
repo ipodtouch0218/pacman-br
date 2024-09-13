@@ -1,7 +1,0 @@
-global {
-	int TotalPellets;
-	dictionary<FPVector2, byte> PelletData;
-	FP PowerPelletRemainingTime;
-
-	int CurrentLayout;
-}
