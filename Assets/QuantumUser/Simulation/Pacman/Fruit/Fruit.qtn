@@ -4,12 +4,12 @@ component Fruit {
 }
 
 synced event FruitEaten {
-	entity_ref Pacman;
-	entity_ref Fruit;
+	EntityRef Pacman;
+	EntityRef Fruit;
 	int Points;
 }
 
 global {
-	entity_ref CurrentFruit;
+	EntityRef CurrentFruit;
 	int FruitsSpawned;
 }

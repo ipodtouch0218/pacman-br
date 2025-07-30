@@ -1,42 +1,41 @@
 ﻿using System.Collections.Generic;
 using Photon.Deterministic;
 
-namespace Quantum.Pacman.Ghost {
+namespace Quantum.Pacman.Ghosts {
     public unsafe class PacmanSystem : SystemMainThreadFilter<PacmanSystem.Filter>, ISignalOnPacmanScored, ISignalOnCharacterEaten, ISignalOnPacmanKilled, ISignalOnPacmanRespawned, ISignalOnPowerPelletStart, ISignalOnPowerPelletEnd {
-
 
         public static readonly FP BombBaseTravelTime = FP.FromString("0.225");
         public static readonly FP BombDistanceTravelTime = FP.FromString("0.0075");
 
         public struct Filter {
             public EntityRef Entity;
+            public PacmanPlayer* Pacman;
+            public GridMover* Mover;
             public Transform2D* Transform;
             public PhysicsCollider2D* Collider;
-            public GridMover* Mover;
-            public PacmanPlayer* Pacman;
         }
 
         public override void Update(Frame f, ref Filter filter) {
-            PacmanPlayer* pac = filter.Pacman;
+            var pacman = filter.Pacman;
 
-            if (pac->IsDead) {
-                if (pac->RespawnTimer > 0) {
-                    if ((pac->RespawnTimer -= f.DeltaTime) <= 0) {
-                        pac->RespawnTimer = 0;
+            if (pacman->IsDead) {
+                if (pacman->RespawnTimer > 0) {
+                    if ((pacman->RespawnTimer -= f.DeltaTime) <= 0) {
+                        pacman->RespawnTimer = 0;
                         f.Signals.OnPacmanRespawned(filter.Entity);
                     }
                 }
             }
 
             // Full Invincibility
-            if (pac->Invincibility > 0) {
-                if ((pac->Invincibility -= f.DeltaTime) <= 0) {
-                    pac->Invincibility = 0;
+            if (pacman->Invincibility > 0) {
+                if ((pacman->Invincibility -= f.DeltaTime) <= 0) {
+                    pacman->Invincibility = 0;
                     f.Events.PacmanVulnerable(filter.Entity);
                 }
             }
 
-            if (pac->IsDead) {
+            if (pacman->IsDead) {
                 return;
             }
 
@@ -48,41 +47,41 @@ namespace Quantum.Pacman.Ghost {
             }
 
             // Bombs
-            if (pac->BombTravelTimer > 0) {
+            if (pacman->BombTravelTimer > 0) {
                 // Flying through the air. Gracefully.
-                if ((pac->BombTravelTimer -= f.DeltaTime) <= 0) {
-                    pac->BombTravelTimer = 0;
-                    filter.Transform->Position = pac->BombEndPosition;
+                if ((pacman->BombTravelTimer -= f.DeltaTime) <= 0) {
+                    pacman->BombTravelTimer = 0;
+                    filter.Transform->Position = pacman->BombEndPosition;
                     f.Events.PacmanLandBombJump(filter.Entity);
 
                 } else {
-                    FP alpha = 1 - (pac->BombTravelTimer / pac->BombTravelTime);
+                    FP alpha = 1 - (pacman->BombTravelTimer / pacman->BombTravelTime);
 
-                    FPVector2 newPos = FPVector2.Lerp(pac->BombStartPosition, pac->BombEndPosition, alpha);
+                    FPVector2 newPos = FPVector2.Lerp(pacman->BombStartPosition, pacman->BombEndPosition, alpha);
 
-                    var map = MapCustomData.Current(f);
+                    var map = PacmanStageMapData.Current(f);
                     newPos += FPVector2.Up * map.BombHeightCurve.Evaluate(alpha);
 
                     filter.Transform->Position = newPos;
                     return;
                 }
-            } else if (pac->Bombs > 0 && filter.Mover->FreezeTime <= 0) {
+            } else if (pacman->Bombs > 0 && filter.Mover->FreezeTime <= 0) {
                 // Check for bomb input
                 if (input.Bomb.WasPressed) {
-                    pac->Bombs--;
+                    pacman->Bombs--;
 
-                    var maze = MapCustomData.Current(f).CurrentMazeData(f);
+                    var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
                     FPVector2 target = maze.GhostHouse + FPVector2.Down * 6;
                     FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, filter.Transform->Position);
                     filter.Mover->FreezeTime = travelTime;
                     filter.Mover->Direction = -1;
-                    pac->TemporaryInvincibility = travelTime;
-                    pac->BombStartPosition = filter.Transform->Position;
-                    pac->BombEndPosition = target;
+                    pacman->TemporaryInvincibility = travelTime;
+                    pacman->BombStartPosition = filter.Transform->Position;
+                    pacman->BombEndPosition = target;
 
                     f.Events.PacmanUseBomb(filter.Entity, target);
-                    pac->BombTravelTimer = travelTime;
-                    pac->BombTravelTime = travelTime;
+                    pacman->BombTravelTimer = travelTime;
+                    pacman->BombTravelTime = travelTime;
                     return;
                 }
             }
@@ -92,14 +91,14 @@ namespace Quantum.Pacman.Ghost {
             }
 
             // Temporary Invincibility
-            if (pac->TemporaryInvincibility > 0) {
-                if ((pac->TemporaryInvincibility -= f.DeltaTime) <= 0) {
-                    pac->TemporaryInvincibility = 0;
+            if (pacman->TemporaryInvincibility > 0) {
+                if ((pacman->TemporaryInvincibility -= f.DeltaTime) <= 0) {
+                    pacman->TemporaryInvincibility = 0;
                 }
             }
 
             // Power Pellet
-            if (pac->HasPowerPellet) {
+            if (pacman->HasPowerPellet) {
                 var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
                 for (int i = 0; i < hits.Count; i++) {
                     var hit = hits[i];
@@ -205,7 +204,7 @@ namespace Quantum.Pacman.Ghost {
             }
 
             f.Signals.OnPacmanScored(pacmanEntity, points);
-            f.Events.CharacterEaten(f, pacmanEntity, other, pacman->GhostCombo, points);
+            f.Events.CharacterEaten(pacmanEntity, other, pacman->GhostCombo, points);
         }
 
         public void OnPacmanScored(Frame f, EntityRef pacmanEntity, int points) {
@@ -235,19 +234,19 @@ namespace Quantum.Pacman.Ghost {
             // TODO: is this slow? :(
 
             Dictionary<EntityRef, Ranking> rankings = new(4);
-            List<EntityComponentPair<PacmanPlayer>> players = new(4);
+            List<EntityComponentPointerPair<PacmanPlayer>> players = new(4);
 
-            foreach (var ecp in f.GetComponentIterator<PacmanPlayer>()) {
+            foreach (var ecp in f.Unsafe.GetComponentBlockIterator<PacmanPlayer>()) {
                 players.Add(ecp);
             }
 
-            players.Sort((a, b) => b.Component.GetScore(thisRoundOnly) - a.Component.GetScore(thisRoundOnly));
+            players.Sort((a, b) => b.Component->GetScore(thisRoundOnly) - a.Component->GetScore(thisRoundOnly));
 
             byte sharedRanking = 0;
             byte uniqueRanking = 0;
-            int previousScore = players[0].Component.GetScore(thisRoundOnly);
+            int previousScore = players[0].Component->GetScore(thisRoundOnly);
             foreach (var player in players) {
-                int score = player.Component.GetScore(thisRoundOnly);
+                int score = player.Component->GetScore(thisRoundOnly);
                 if (previousScore != score) {
                     // Different score, increment the ranking.
                     sharedRanking = uniqueRanking;

@@ -2,7 +2,7 @@
 using Quantum.Util;
 using System.Collections.Generic;
 
-namespace Quantum.Pacman.Ghost {
+namespace Quantum.Pacman.Ghosts {
     public unsafe class GridMovementSystem : SystemMainThreadFilter<GridMovementSystem.Filter> {
 
         public struct Filter {
@@ -122,7 +122,7 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public static bool CanMoveInDirection(Frame f, ref Filter filter, int direction) {
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
             FPVector2 tilePosition = FPVectorUtils.WorldToCell(filter.Transform->Position, f);
             tilePosition += GridMover.DirectionToVector(direction);
@@ -183,7 +183,7 @@ namespace Quantum.Pacman.Ghost {
         }
 
         private static MovementResult MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
             FPVector2 newPosition = position + GridMover.DirectionToVector(direction) * amount;
             FPVector2 wrappedPosition = default;

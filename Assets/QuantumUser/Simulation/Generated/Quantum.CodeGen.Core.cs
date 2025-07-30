@@ -49,6 +49,27 @@ namespace Quantum {
   using RuntimeInitializeOnLoadMethodAttribute = UnityEngine.RuntimeInitializeOnLoadMethodAttribute;
   #endif //;
   
+  public enum GhostHouseState : byte {
+    NotInGhostHouse,
+    ReturningToEntrance,
+    MovingToCenter,
+    MovingToSide,
+    Waiting,
+    AlignVertical,
+    AlignHorizontal,
+    Leaving,
+  }
+  public enum GhostState : byte {
+    Chase,
+    Scared,
+    Eaten,
+  }
+  public enum GhostTargetMode : byte {
+    Blinky,
+    Pinky,
+    Inky,
+    Clyde,
+  }
   [System.FlagsAttribute()]
   public enum InputButtons : int {
     Bomb = 1 << 0,
@@ -617,30 +638,30 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Ghost : Quantum.IComponent {
-    public const Int32 SIZE = 48;
+    public const Int32 SIZE = 40;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(32)]
+    [FieldOffset(24)]
     public FPVector2 TargetPosition;
-    [FieldOffset(12)]
-    public QBoolean ForceRandomMovement;
-    [FieldOffset(8)]
-    public GhostTargetMode Mode;
     [FieldOffset(4)]
+    public QBoolean ForceRandomMovement;
+    [FieldOffset(2)]
+    public GhostTargetMode Mode;
+    [FieldOffset(1)]
     public GhostState State;
     [FieldOffset(0)]
     public GhostHouseState GhostHouseState;
-    [FieldOffset(16)]
+    [FieldOffset(8)]
     public FP GhostHouseWaitTime;
-    [FieldOffset(24)]
+    [FieldOffset(16)]
     public FP TimeSinceEaten;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 733;
         hash = hash * 31 + TargetPosition.GetHashCode();
         hash = hash * 31 + ForceRandomMovement.GetHashCode();
-        hash = hash * 31 + (byte)Mode;
-        hash = hash * 31 + (byte)State;
-        hash = hash * 31 + (byte)GhostHouseState;
+        hash = hash * 31 + (Byte)Mode;
+        hash = hash * 31 + (Byte)State;
+        hash = hash * 31 + (Byte)GhostHouseState;
         hash = hash * 31 + GhostHouseWaitTime.GetHashCode();
         hash = hash * 31 + TimeSinceEaten.GetHashCode();
         return hash;
@@ -648,9 +669,9 @@ namespace Quantum {
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Ghost*)ptr;
-        serializer.Stream.Serialize((byte*)&p->GhostHouseState);
-        serializer.Stream.Serialize((byte*)&p->State);
-        serializer.Stream.Serialize((byte*)&p->Mode);
+        serializer.Stream.Serialize((Byte*)&p->GhostHouseState);
+        serializer.Stream.Serialize((Byte*)&p->State);
+        serializer.Stream.Serialize((Byte*)&p->Mode);
         QBoolean.Serialize(&p->ForceRandomMovement, serializer);
         FP.Serialize(&p->GhostHouseWaitTime, serializer);
         FP.Serialize(&p->TimeSinceEaten, serializer);
@@ -1083,9 +1104,9 @@ namespace Quantum {
       typeRegistry.Register(typeof(FrameTimer), FrameTimer.SIZE);
       typeRegistry.Register(typeof(Quantum.Fruit), Quantum.Fruit.SIZE);
       typeRegistry.Register(typeof(Quantum.Ghost), Quantum.Ghost.SIZE);
-      typeRegistry.Register(typeof(GhostHouseState), 1);
-      typeRegistry.Register(typeof(GhostState), 1);
-      typeRegistry.Register(typeof(GhostTargetMode), 1);
+      typeRegistry.Register(typeof(Quantum.GhostHouseState), 1);
+      typeRegistry.Register(typeof(Quantum.GhostState), 1);
+      typeRegistry.Register(typeof(Quantum.GhostTargetMode), 1);
       typeRegistry.Register(typeof(Quantum.GridMover), Quantum.GridMover.SIZE);
       typeRegistry.Register(typeof(HingeJoint), HingeJoint.SIZE);
       typeRegistry.Register(typeof(HingeJoint3D), HingeJoint3D.SIZE);
@@ -1151,9 +1172,9 @@ namespace Quantum {
     public static void EnsureNotStrippedGen() {
       FramePrinter.EnsureNotStripped();
       FramePrinter.EnsurePrimitiveNotStripped<CallbackFlags>();
-      FramePrinter.EnsurePrimitiveNotStripped<GhostHouseState>();
-      FramePrinter.EnsurePrimitiveNotStripped<GhostState>();
-      FramePrinter.EnsurePrimitiveNotStripped<GhostTargetMode>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostHouseState>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostState>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostTargetMode>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.InputButtons>();
       FramePrinter.EnsurePrimitiveNotStripped<QueryOptions>();
     }

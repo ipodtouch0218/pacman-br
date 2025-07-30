@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class CE1Countdown : MonoBehaviour {
 
+    //---Serialized Variables
     [SerializeField] private Animation animation;
     [SerializeField] private Image image;
 

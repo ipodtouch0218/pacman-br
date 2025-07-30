@@ -13,7 +13,7 @@ public class CustomMapDataGizmos : MonoBehaviour {
 
     public void OnDrawGizmos() {
         
-        MapCustomData customData = QuantumUnityDB.GetGlobalAssetEditorInstance<MapCustomData>(data.Asset.UserAsset);
+        PacmanStageMapData customData = QuantumUnityDB.GetGlobalAssetEditorInstance<PacmanStageMapData>(data.Asset.UserAsset);
         GameObject obj = GameObject.FindGameObjectWithTag("Maze");
 
         Gizmos.color = Color.yellow;
@@ -21,10 +21,10 @@ public class CustomMapDataGizmos : MonoBehaviour {
             if (!obj.transform.GetChild(i).gameObject.activeInHierarchy) {
                 continue;
             }
-            MapCustomData.MazeData maze = customData.Mazes[i];
+            PacmanStageMapData.MazeData maze = customData.Mazes[i];
             Gizmos.DrawWireCube(
-                (maze.Origin + (maze.Size / 2)).XOY.ToUnityVector3() - new Vector3(0.5f, 0, 0.5f),
-                maze.Size.XOY.ToUnityVector3());
+                (maze.Origin + (maze.Size / 2)).ToUnityVector3() - new Vector3(0.5f, 0, 0.5f),
+                maze.Size.ToUnityVector3());
         }
 
         foreach (var spawnpoint in GameObject.FindGameObjectsWithTag("Spawnpoint")) {

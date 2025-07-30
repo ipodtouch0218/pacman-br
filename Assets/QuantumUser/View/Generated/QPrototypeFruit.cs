@@ -29,9 +29,6 @@ namespace Quantum {
       return Prototype;
     }
   }
-  [System.ObsoleteAttribute("Use QPrototypeFruit instead")]
-  public abstract unsafe partial class EntityComponentFruit : QPrototypeFruit {
-  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

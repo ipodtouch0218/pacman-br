@@ -3,11 +3,9 @@ using Quantum.Util;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public unsafe class GhostAnimator : QuantumCallbacks {
+public unsafe class GhostAnimator : QuantumEntityViewComponent {
 
     //---Serialized Variables
-    [SerializeField] private QuantumEntityView entity;
-
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] movementSprites, scaredSprites, eatenSprites;
     [SerializeField] private float animationSpeed = 4, flashTimeRemaining = 5, flashesPerSecond = 1;
@@ -27,9 +25,6 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     private MaterialPropertyBlock trailMpb;
 
     public void OnValidate() {
-        if (!entity) {
-            entity = GetComponentInChildren<QuantumEntityView>();
-        }
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
@@ -50,37 +45,37 @@ public unsafe class GhostAnimator : QuantumCallbacks {
         trailRenderer.GetPropertyBlock(trailMpb = new());
     }
 
-    public void Initialized(QuantumGame game) {
-        Ghost ghost = game.Frames.Predicted.Get<Ghost>(entity.EntityRef);
+    public override void OnActivate(Frame frame) {
+        var ghost = PredictedFrame.Unsafe.GetPointer<Ghost>(EntityRef);
         OnGhostStateChanged(new EventGhostStateChanged() {
-            Frame = game.Frames.Predicted,
-            Entity = entity.EntityRef,
-            Game = game,
-            State = ghost.State,
-            Tick = game.Frames.Predicted.Number
+            Entity = EntityRef,
+            Game = Game,
+            State = ghost->State,
+            Tick = PredictedFrame.Number
         });
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        if (!game.Frames.Predicted.TryGet(entity.EntityRef, out GridMover mover)) {
+    public override void OnUpdateView() {
+        Frame f = PredictedFrame;
+        if (!f.Unsafe.TryGetPointer(EntityRef, out GridMover* mover)) {
             return;
         }
 
         if (currentSprites == scaredSprites) {
-            float scaredTimeRemaining = game.Frames.Predicted.Global->PowerPelletRemainingTime.AsFloat;
+            float scaredTimeRemaining = f.Global->PowerPelletRemainingTime.AsFloat;
             float flashPeriod = 1f / (flashesPerSecond * (scaredTimeRemaining < 1 ? 2 : 1));
             int offset = ((scaredTimeRemaining < flashTimeRemaining) && (scaredTimeRemaining % flashPeriod) < (flashPeriod / 2)) ? 2 : 0;
-            int index = (int) ((mover.DistanceMoved.AsFloat * animationSpeed) % (currentSprites.Length / 2)) + offset;
+            int index = (int) ((mover->DistanceMoved.AsFloat * animationSpeed) % (currentSprites.Length / 2)) + offset;
             spriteRenderer.sprite = currentSprites[index];
         } else {
             int spritesPerDirection = currentSprites.Length / 4;
-            int index = (int) ((mover.DistanceMoved.AsFloat * animationSpeed) % spritesPerDirection) + mover.Direction * spritesPerDirection;
+            int index = (int) ((mover->DistanceMoved.AsFloat * animationSpeed) % spritesPerDirection) + mover->Direction * spritesPerDirection;
             spriteRenderer.sprite = currentSprites[index];
         }
     }
 
     public void OnGhostStateChanged(EventGhostStateChanged e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -109,16 +104,17 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     }
 
     public void OnGridMoverReachedCenterOfTile(EventGridMoverReachedCenterOfTile e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
-        Ghost ghost = e.Game.Frames.Predicted.Get<Ghost>(e.Entity);
-        if (ghost.GhostHouseState != GhostHouseState.NotInGhostHouse) {
+        Frame f = PredictedFrame;
+        var ghost = PredictedFrame.Unsafe.GetPointer<Ghost>(EntityRef);
+        if (ghost->GhostHouseState != GhostHouseState.NotInGhostHouse) {
             return;
         }
 
-        Vector3 worldPosition = FPVectorUtils.CellToWorld(e.Tile, e.Game.Frames.Predicted).XOY.ToUnityVector3();
+        Vector3 worldPosition = FPVectorUtils.CellToWorld(e.Tile, f).ToUnityVector3();
         trailParticle.transform.position = worldPosition;
         trailParticle.Emit(1);
     }
@@ -132,18 +128,17 @@ public unsafe class GhostAnimator : QuantumCallbacks {
     }
 
     public void OnGameStarting(EventGameStarting e) {
-        Ghost ghost = e.Game.Frames.Predicted.Get<Ghost>(entity.EntityRef);
-        spriteRenderer.sprite = ghost.Mode switch {
+        var ghost = PredictedFrame.Unsafe.GetPointer<Ghost>(EntityRef);
+        spriteRenderer.sprite = ghost->Mode switch {
             GhostTargetMode.Pinky => movementSprites[2],
             GhostTargetMode.Inky or GhostTargetMode.Clyde => movementSprites[6],
             _ => movementSprites[0],
         };
         OnGhostStateChanged(new EventGhostStateChanged() {
             Game = e.Game,
-            State = ghost.State,
-            Entity = entity.EntityRef,
-            Frame = e.Game.Frames.Predicted,
-            Tick = e.Game.Frames.Predicted.Number,
+            State = ghost->State,
+            Entity = EntityRef,
+            Tick = PredictedFrame.Number,
         });
     }
 }

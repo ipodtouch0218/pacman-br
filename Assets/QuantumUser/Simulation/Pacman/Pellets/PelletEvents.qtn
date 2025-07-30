@@ -6,23 +6,23 @@ synced event PelletRespawn {
 
 synced event PelletEat {
 	Frame Frame;
-	entity_ref Entity;
+	EntityRef Entity;
 	FPVector2 Tile;
 	int Chain;
 }
 
 synced event PowerPelletEat {
-	entity_ref Entity;
+	EntityRef Entity;
 }
 
 synced event PowerPelletEnd {
-	entity_ref Entity;
+	EntityRef Entity;
 }
 
 signal OnPelletRespawn();
 
 signal OnPelletEat();
 
-signal OnPowerPelletStart(entity_ref entity);
+signal OnPowerPelletStart(EntityRef entity);
 
-signal OnPowerPelletEnd(entity_ref entity);
+signal OnPowerPelletEnd(EntityRef entity);

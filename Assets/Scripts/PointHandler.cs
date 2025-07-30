@@ -4,7 +4,7 @@ using Quantum.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointHandler : MonoBehaviour {
+public unsafe class PointHandler : QuantumSceneViewComponent {
 
     //---Serialized Variables
     [SerializeField] private PointIndicator ghostPrefab;
@@ -24,11 +24,11 @@ public class PointHandler : MonoBehaviour {
     }
 
     public void OnCharacterEaten(EventCharacterEaten e) {
-        if (!e.Frame.TryGet(e.Pacman, out Transform2D t)) {
+        if (!VerifiedFrame.Unsafe.TryGetPointer(e.Pacman, out Transform2D* t)) {
             return;
         }
 
-        PointIndicator indicator = Instantiate(ghostPrefab, t.Position.ToUnityVector3() + offset, ghostPrefab.transform.rotation);
+        PointIndicator indicator = Instantiate(ghostPrefab, t->Position.ToUnityVector3() + offset, ghostPrefab.transform.rotation);
         indicator.Initialize(e.GainedPoints);
     }
 
@@ -43,11 +43,11 @@ public class PointHandler : MonoBehaviour {
     }
 
     public void OnFruitEaten(EventFruitEaten e) {
-        if (!e.Game.Frames.Verified.TryGet(e.Pacman, out Transform2D t)) {
+        if (!VerifiedFrame.Unsafe.TryGetPointer(e.Pacman, out Transform2D* t)) {
             return;
         }
 
-        PointIndicator indicator = Instantiate(fruitPrefab, t.Position.ToUnityVector3() + offset, fruitPrefab.transform.rotation);
+        PointIndicator indicator = Instantiate(fruitPrefab, t->Position.ToUnityVector3() + offset, fruitPrefab.transform.rotation);
         indicator.Initialize(e.Points);
     }
 }

@@ -14,7 +14,7 @@ namespace Quantum {
                 SetSpeedMultiplier(mover);
             }
 
-            f.Events.GhostStateChanged(f, entity, state);
+            f.Events.GhostStateChanged(entity, state);
         }
 
         public void SetSpeedMultiplier(GridMover* mover) {
@@ -38,29 +38,5 @@ namespace Quantum {
                 break;
             }
         }
-    }
-
-    public enum GhostTargetMode : byte {
-        Blinky,
-        Pinky,
-        Inky,
-        Clyde,
-    }
-
-    public enum GhostState : byte {
-        Chase,
-        Scared,
-        Eaten,
-    }
-
-    public enum GhostHouseState : byte {
-        NotInGhostHouse,
-        ReturningToEntrance,
-        MovingToCenter,
-        MovingToSide,
-        Waiting,
-        AlignVertical,
-        AlignHorizontal,
-        Leaving
     }
 }

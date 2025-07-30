@@ -29,9 +29,6 @@ namespace Quantum {
       return Prototype;
     }
   }
-  [System.ObsoleteAttribute("Use QPrototypeGhost instead")]
-  public abstract unsafe partial class EntityComponentGhost : QPrototypeGhost {
-  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

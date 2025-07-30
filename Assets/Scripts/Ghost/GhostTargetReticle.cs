@@ -1,11 +1,10 @@
 using UnityEngine;
 using Quantum;
 
-public class GhostTargetReticle : QuantumCallbacks {
+public unsafe class GhostTargetReticle : QuantumEntityViewComponent {
 
     //---Serialized Variables
     [SerializeField] private Transform imageTransform;
-    [SerializeField] private EntityView entity;
 
     //---Private Variables
     private Vector3 target;
@@ -14,11 +13,10 @@ public class GhostTargetReticle : QuantumCallbacks {
         imageTransform.position = target;
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        var frame = game.Frames.Predicted;
-        var ghost = frame.Get<Ghost>(entity.EntityRef);
-
-        target = ghost.TargetPosition.ToUnityVector3();
+    public override void OnUpdateView() {
+        Frame f = PredictedFrame;
+        var ghost = f.Unsafe.GetPointer<Ghost>(EntityRef);
+        target = ghost->TargetPosition.ToUnityVector3();
         Update();
     }
 }

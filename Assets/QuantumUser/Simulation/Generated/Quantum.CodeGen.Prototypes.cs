@@ -71,9 +71,9 @@ namespace Quantum.Prototypes {
   public unsafe partial class GhostPrototype : ComponentPrototype<Quantum.Ghost> {
     public FPVector2 TargetPosition;
     public QBoolean ForceRandomMovement;
-    public GhostTargetMode Mode;
-    public GhostState State;
-    public GhostHouseState GhostHouseState;
+    public Quantum.QEnum8<GhostTargetMode> Mode;
+    public Quantum.QEnum8<GhostState> State;
+    public Quantum.QEnum8<GhostHouseState> GhostHouseState;
     public FP GhostHouseWaitTime;
     public FP TimeSinceEaten;
     partial void MaterializeUser(Frame frame, ref Quantum.Ghost result, in PrototypeMaterializationContext context);

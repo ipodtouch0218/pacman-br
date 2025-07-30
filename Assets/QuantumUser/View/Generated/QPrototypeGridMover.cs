@@ -29,9 +29,6 @@ namespace Quantum {
       return Prototype;
     }
   }
-  [System.ObsoleteAttribute("Use QPrototypeGridMover instead")]
-  public abstract unsafe partial class EntityComponentGridMover : QPrototypeGridMover {
-  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

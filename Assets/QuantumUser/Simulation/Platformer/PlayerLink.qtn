@@ -1,6 +1,6 @@
 component PlayerLink {
-	player_ref Player;
+	PlayerRef Player;
 	bool ReadyToPlay;
 }
 
-signal OnPlayerReady(player_ref player);
+signal OnPlayerReady(PlayerRef player);

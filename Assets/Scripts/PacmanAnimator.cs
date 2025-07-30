@@ -1,19 +1,19 @@
 using Quantum;
-using Quantum.Pacman.Ghost;
+using Quantum.Pacman.Ghosts;
 using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Input = Quantum.Input;
 
-public unsafe class PacmanAnimator : QuantumCallbacks {
+public unsafe class PacmanAnimator : QuantumEntityViewComponent {
 
     public static event Action<QuantumGame, PacmanAnimator> OnPacmanCreated;
 
     public Color PlayerColor { get; private set; }
 
     //---Serialized Variables
-    [SerializeField] public QuantumEntityView entity;
     [SerializeField] private float blinkSpeedPerSecond = 30, moveAnimationSpeed = 5f, deathAnimationSpeed = 8f, deathDelay = 0.5f, scaredBlinkStart = 3, scaredBlinkSpeedPerSecond = 2;
     [SerializeField] private SpriteRenderer spriteRenderer, arrowRenderer;
     [SerializeField] private ParticleSystem respawnParticles, sparkleParticles, eatParticles, sparkParticles, bombParticles;
@@ -42,9 +42,6 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
 
     public void OnValidate() {
-        if (!entity) {
-            entity = GetComponent<QuantumEntityView>();
-        }
         if (!spriteRenderer) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
@@ -74,13 +71,13 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         spriteRenderer.GetPropertyBlock(mpb);
     }
 
-    public void Initialize(QuantumGame game) {
-        PlayerColor = Utils.GetPlayerColor(game.Frames.Predicted, entity.EntityRef);
+    public override void OnActivate(Frame f) {
+        PlayerColor = Utils.GetPlayerColor(f, EntityRef);
 
         var main = respawnParticles.main;
         main.startColor = PlayerColor;
         arrowRenderer.color = PlayerColor;
-        OnPacmanCreated?.Invoke(game, this);
+        OnPacmanCreated?.Invoke(Game, this);
 
         Color c = bombText.color;
         c.a = 0;
@@ -115,38 +112,38 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         }
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        var f = game.Frames.Predicted;
-        if (!f.TryGet(entity.EntityRef, out PacmanPlayer pac)
-            || !f.TryGet(entity.EntityRef, out GridMover mover)) {
+    public override void OnUpdateView() {
+        Frame f = PredictedFrame;
+        if (!f.Unsafe.TryGetPointer(EntityRef, out PacmanPlayer* pac)
+            || !f.Unsafe.TryGetPointer(EntityRef, out GridMover* mover)) {
             return;
         }
 
-        if (pac.Invincibility > 0) {
-            spriteRenderer.enabled = (pac.Invincibility.AsFloat % (blinkSpeedPeriod * 2)) < blinkSpeedPeriod;
+        if (pac->Invincibility > 0) {
+            spriteRenderer.enabled = (pac->Invincibility.AsFloat % (blinkSpeedPeriod * 2)) < blinkSpeedPeriod;
         } else {
             spriteRenderer.enabled = true;
         }
 
         float timeSinceStart = (f.Number * f.DeltaTime).AsFloat;
-        float pelletTimeRemaining = pac.PowerPelletTimer.AsFloat;
+        float pelletTimeRemaining = pac->PowerPelletTimer.AsFloat;
         float scaredBlinkPeriod = 1f / (scaredBlinkSpeedPerSecond * (pelletTimeRemaining < 1 ? 2 : 1));
         bool scaredFlash = (pelletTimeRemaining < scaredBlinkStart) && (timeSinceStart % scaredBlinkPeriod < (scaredBlinkPeriod / 2));
 
         bool otherPlayerHasPellet = false;
-        var filter = game.Frames.Predicted.Filter<PacmanPlayer>();
-        while (filter.Next(out EntityRef otherEntity, out PacmanPlayer otherPac)) {
-            if (otherEntity == entity.EntityRef) {
+        var filter = f.Filter<PacmanPlayer>();
+        while (filter.NextUnsafe(out EntityRef otherEntity, out PacmanPlayer* otherPac)) {
+            if (otherEntity == EntityRef) {
                 continue;
             }
 
-            if (otherPac.HasPowerPellet) {
+            if (otherPac->HasPowerPellet) {
                 otherPlayerHasPellet = true;
                 break;
             }
         }
 
-        if (otherPlayerHasPellet && (!pac.HasPowerPellet || scaredFlash)) {
+        if (otherPlayerHasPellet && (!pac->HasPowerPellet || scaredFlash)) {
             // Scared
             mpb.SetColor("_BaseColor", scaredColor);
             mpb.SetColor("_OutlineColor", PlayerColor);
@@ -161,17 +158,17 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
 
         if (!dead) {
             int spritesPerCycle = movementSprites.Length / 4;
-            int offset = spritesPerCycle * mover.Direction;
+            int offset = spritesPerCycle * mover->Direction;
             int index;
-            if (mover.IsStationary) {
+            if (mover->IsStationary) {
                 index = Mathf.FloorToInt(spritesPerCycle / 2) + offset;
             } else {
-                index = Mathf.FloorToInt(Mathf.PingPong(mover.DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle)) + offset;
+                index = Mathf.FloorToInt(Mathf.PingPong(mover->DistanceMoved.AsFloat * moveAnimationSpeed, spritesPerCycle)) + offset;
             }
             spriteRenderer.sprite = movementSprites[Mathf.Clamp(index, 0, movementSprites.Length - 1)];
         }
 
-        bombTrail.emitting = pac.BombTravelTimer > 0;
+        bombTrail.emitting = pac->BombTravelTimer > 0;
         UpdateSparks(f);
     }
 
@@ -180,20 +177,25 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
         var emission = sparkParticles.emission;
         var shape = sparkParticles.shape;
 
-        PacmanPlayer pacman = frame.Get<PacmanPlayer>(entity.EntityRef);
-        GridMover* mover = frame.Unsafe.GetPointer<GridMover>(entity.EntityRef);
+        PacmanPlayer* pacman = frame.Unsafe.GetPointer<PacmanPlayer>(EntityRef);
+        GridMover* mover = frame.Unsafe.GetPointer<GridMover>(EntityRef);
 
-        if (!frame.SystemIsEnabledInHierarchy<GridMovementSystem>() || pacman.IsDead || mover->IsLocked || mover->IsStationary || mover->FreezeTime > 0) {
+        if (!frame.SystemIsEnabledInHierarchy<GridMovementSystem>() || pacman->IsDead || mover->IsLocked || mover->IsStationary || mover->FreezeTime > 0) {
             emission.enabled = false;
             return;
         }
 
-        if (!frame.TryGet(entity.EntityRef, out PlayerLink pl)) {
+        if (!frame.Unsafe.TryGetPointer(EntityRef, out PlayerLink* pl)) {
             emission.enabled = false;
             return;
         }
 
-        Quantum.Input input = *frame.GetPlayerInput(pl.Player);
+        Input input = default;
+        Input* inputPtr = frame.GetPlayerInput(pl->Player);
+        if (inputPtr != null) {
+            input = *inputPtr;
+        }
+        
         bool left = input.TargetDirection == 0;
         bool up = input.TargetDirection == 1;
         bool right = input.TargetDirection == 2;
@@ -244,7 +246,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void ShowBombCount(Frame f, bool addOne) {
-        int bombs = f.Get<PacmanPlayer>(entity.EntityRef).Bombs;
+        int bombs = f.Unsafe.GetPointer<PacmanPlayer>(EntityRef)->Bombs;
         if (addOne && bombs > 0) {
             bombText.text = "<sprite=0>X" + (bombs - 1) + " + 1";
         } else {
@@ -287,7 +289,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnPacmanKilled(EventPacmanKilled e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -297,7 +299,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnPacmanRespawned(EventPacmanRespawned e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -306,7 +308,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnPacmanVulnerable(EventPacmanVulnerable e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -316,12 +318,12 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnCharacterEaten(EventCharacterEaten e) {
-        if (e.Pacman != entity.EntityRef) {
+        if (e.Pacman != EntityRef) {
             return;
         }
 
-        int direction = e.Frame.Get<GridMover>(e.Pacman).Direction;
-        Vector3 newForward = GridMover.DirectionToVector(direction).XOY.ToUnityVector3();
+        int direction = PredictedFrame.Unsafe.GetPointer<GridMover>(e.Pacman)->Direction;
+        Vector3 newForward = GridMover.DirectionToVector(direction).ToUnityVector3();
         eatParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
         eatParticles.Play();
 
@@ -329,7 +331,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnPelletEat(EventPelletEat e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -338,7 +340,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnFruitEaten(EventFruitEaten e) {
-        if (e.Pacman != entity.EntityRef) {
+        if (e.Pacman != EntityRef) {
             return;
         }
 
@@ -346,7 +348,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnCollectBomb(EventPacmanCollectBomb e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -355,7 +357,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnUseBomb(EventPacmanUseBomb e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 
@@ -364,7 +366,7 @@ public unsafe class PacmanAnimator : QuantumCallbacks {
     }
 
     public void OnLandBombJump(EventPacmanLandBombJump e) {
-        if (e.Entity != entity.EntityRef) {
+        if (e.Entity != EntityRef) {
             return;
         }
 

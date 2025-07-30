@@ -35,52 +35,51 @@ component PacmanPlayer {
 	FP TemporaryInvincibility;
 }
 
-signal OnCharacterEaten(entity_ref entity, entity_ref other);
+signal OnCharacterEaten(EntityRef entity, EntityRef other);
 
 synced event CharacterEaten {
-	Frame Frame;
-	entity_ref Pacman;
-	entity_ref Other;
+	EntityRef Pacman;
+	EntityRef Other;
 	int Combo;
 	int GainedPoints;
 }
 
-signal OnPacmanScored(entity_ref entity, int points);
+signal OnPacmanScored(EntityRef entity, int points);
 
-signal OnPacmanKilled(entity_ref entity);
+signal OnPacmanKilled(EntityRef entity);
 
-signal OnPacmanRespawned(entity_ref entity);
+signal OnPacmanRespawned(EntityRef entity);
 
 synced event PacmanKilled {
-	entity_ref Entity;
+	EntityRef Entity;
 	FP RespawnInSeconds;
 }
 
 synced event PacmanScored {
-	entity_ref Entity;
+	EntityRef Entity;
 	PacmanPlayer Pacman;
 	int GainedPoints;
 	int TotalPoints;
 }
 
 event PacmanRespawned {
-	entity_ref Entity;
+	EntityRef Entity;
 }
 
 event PacmanVulnerable {
-	entity_ref Entity;
+	EntityRef Entity;
 }
 
 synced event PacmanCollectBomb {
-	entity_ref Entity;
+	EntityRef Entity;
 	int NewCount;
 }
 
 synced event PacmanUseBomb {
-	entity_ref Entity;
+	EntityRef Entity;
 	FPVector2 Target;
 }
 
 synced event PacmanLandBombJump {
-	entity_ref Entity;
+	EntityRef Entity;
 }

@@ -1,18 +1,21 @@
 using Quantum;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeRefreshWave : MonoBehaviour {
 
-    [SerializeField] private AudioSource[] audioSources;
+    //---Serialized Variables
+    [SerializeField] private List<AudioSource> audioSources;
     [SerializeField] private float minX = -10, maxX = 10;
     [SerializeField] private float speed = 10;
 
+    //---Private Variables
     private bool fromLeft;
     private bool active;
 
     public void OnValidate() {
-        if (audioSources == null || audioSources.Length == 0) {
-            audioSources = GetComponents<AudioSource>();
+        if (audioSources?.Count == 0) {
+            GetComponents(audioSources);
         }
     }
 
@@ -39,7 +42,6 @@ public class MazeRefreshWave : MonoBehaviour {
     }
 
     public void OnPelletRespawn(EventPelletRespawn e) {
-
         if (!e.PlayEffect) {
             return;
         }

@@ -31,6 +31,6 @@ public class GiveBomb : MonoBehaviour {
 
         float alpha = timer / time;
         alpha = 1 - (alpha * alpha * alpha);
-        transform.position = Vector3.Lerp(origin, target.transform.position + new Vector3(0, 0, 0.6f), alpha);
+        transform.position = Vector3.Lerp(origin, target.transform.position + new Vector3(0, 0.6f, 0), alpha);
     }
 }

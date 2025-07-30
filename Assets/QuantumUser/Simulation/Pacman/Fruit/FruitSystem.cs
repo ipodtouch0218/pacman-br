@@ -11,8 +11,8 @@ namespace Quantum.Pacman.Fruit {
                 return;
             }
 
-            MapCustomData map = MapCustomData.Current(f);
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData map = PacmanStageMapData.Current(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
             FPVector2 spawnpoint = maze.GhostHouse + FPVector2.Down * 3; // Default to below the ghost house
 
@@ -73,7 +73,7 @@ namespace Quantum.Pacman.Fruit {
             f.Signals.OnPacmanScored(info.Entity, fruit.Points);
             f.Destroy(info.Other);
 
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             PelletSystem.SpawnNextPellets(f, transform.Position.X < maze.GhostHouse.X);
         }
     }

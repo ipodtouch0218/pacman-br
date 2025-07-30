@@ -43,7 +43,7 @@ namespace Quantum.Pacman.Logic {
 
                 } else {
                     // Mid-game
-                    var maze = MapCustomData.Current(f).CurrentMazeData(f);
+                    var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
                     FP timeSinceStart = (f.Number - f.Global->GameStartTick) * f.DeltaTime;
                     for (int i = maze.Phases.Length - 1; i >= 0; i--) {
                         var phase = maze.Phases[i];
@@ -86,7 +86,7 @@ namespace Quantum.Pacman.Logic {
 
         public static void SpawnPacman(Frame f, PlayerRef player) {
 
-            var entity = f.Create(MapCustomData.Current(f).PacmanPrototype);
+            var entity = f.Create(PacmanStageMapData.Current(f).PacmanPrototype);
 
             var playerlink = new PlayerLink() {
                 Player = player
@@ -104,7 +104,7 @@ namespace Quantum.Pacman.Logic {
         public static void ChangeRound(Frame f, int newRound) {
 
             f.Global->CurrentMazeIndex = newRound;
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
             // Reset pellets
             f.Global->CurrentLayout = 0;

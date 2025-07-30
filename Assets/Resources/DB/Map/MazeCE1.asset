@@ -22,8 +22,8 @@ MonoBehaviour:
   Scene: MazeCE1
   ScenePath: Assets/Scenes/MazeCE1.unity
   SceneGuid: 03bd5ba32b9950244a08f22579187d8b
-  WorldSize: 256
-  BucketsCount: 16
+  WorldSize: 32
+  BucketsCount: 8
   BucketsSubdivisions: 8
   BucketingAxis: 0
   SortingAxis: 1
@@ -132,9 +132,12 @@ MonoBehaviour:
             RawValue: 720896
         ForceRandomMovement:
           Value: 0
-        Mode: 1
-        State: 0
-        GhostHouseState: 4
+        Mode:
+          Value: 0
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
         GhostHouseWaitTime:
           RawValue: 655360
         TimeSinceEaten:
@@ -161,7 +164,7 @@ MonoBehaviour:
           X:
             RawValue: 983040
           Y:
-            RawValue: 704512
+            RawValue: 720896
         Rotation:
           RawValue: 0
     - rid: 2506220031189188609
@@ -216,9 +219,12 @@ MonoBehaviour:
             RawValue: 786432
         ForceRandomMovement:
           Value: 0
-        Mode: 0
-        State: 0
-        GhostHouseState: 0
+        Mode:
+          Value: 0
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
         GhostHouseWaitTime:
           RawValue: 0
         TimeSinceEaten:
@@ -300,9 +306,12 @@ MonoBehaviour:
             RawValue: 589824
         ForceRandomMovement:
           Value: 0
-        Mode: 2
-        State: 0
-        GhostHouseState: 4
+        Mode:
+          Value: 0
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
         GhostHouseWaitTime:
           RawValue: 983040
         TimeSinceEaten:
@@ -384,9 +393,12 @@ MonoBehaviour:
             RawValue: 589824
         ForceRandomMovement:
           Value: 0
-        Mode: 3
-        State: 0
-        GhostHouseState: 4
+        Mode:
+          Value: 0
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
         GhostHouseWaitTime:
           RawValue: 1310720
         TimeSinceEaten:

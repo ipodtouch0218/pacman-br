@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920720171939491894}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2925584976232420415}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2038928871954514536
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -49,6 +49,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -415,20 +418,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c37404f174494591b8ec9d24e5bc8e, type: 3}
+  m_Script: {fileID: 0}
   m_Name: FruitEntityPrototype
   m_EditorClassIdentifier: 
-  Identifier:
-    Path: Resources/DB/EntityPrototype/Fruit|EntityPrototype
-    Guid:
-      Value: 211565312298772629
-  Container:
-    Components: []
-  Parent: {fileID: 6775164959972514448}
-  SelfViewAsset: {fileID: 6337118755329342517}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &6337118755329342517
 MonoBehaviour:
   m_ObjectHideFlags: 0

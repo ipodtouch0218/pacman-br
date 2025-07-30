@@ -40,7 +40,7 @@ public class PointUpdater : QuantumCallbacks {
     }
 
     public void Initialize(Frame f, PacmanAnimator pacman) {
-        entity = pacman.entity.EntityRef;
+        entity = pacman.EntityRef;
         text.color = pacman.PlayerColor;
         bombs.color = pacman.PlayerColor;
         gameObject.SetActive(true);

@@ -29,9 +29,6 @@ namespace Quantum {
       return Prototype;
     }
   }
-  [System.ObsoleteAttribute("Use QPrototypePacmanPlayer instead")]
-  public abstract unsafe partial class EntityComponentPacmanPlayer : QPrototypePacmanPlayer {
-  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

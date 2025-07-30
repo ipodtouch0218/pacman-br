@@ -38,7 +38,7 @@ namespace Quantum.Pacman.Pellets {
             QDictionary<FPVector2, byte> pelletDict = f.ResolveDictionary(f.Global->PelletData);
             pelletDict.Clear();
 
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             var pellets = maze.PelletData;
 
             int designs = maze.PelletData.Length / (maze.Size.X.AsInt * maze.Size.Y.AsInt);
@@ -96,7 +96,7 @@ namespace Quantum.Pacman.Pellets {
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             if (tile.X < 0 || tile.X >= maze.Size.X) {
                 return;
             }

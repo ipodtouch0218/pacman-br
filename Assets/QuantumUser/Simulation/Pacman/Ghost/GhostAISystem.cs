@@ -2,13 +2,13 @@
 using Quantum.Physics2D;
 using Quantum.Util;
 
-namespace Quantum.Pacman.Ghost {
+namespace Quantum.Pacman.Ghosts {
     public unsafe class GhostAISystem : SystemMainThreadFilter<GhostAISystem.Filter>, ISignalOnPowerPelletStart, ISignalOnTrigger2D {
         public struct Filter {
             public EntityRef Entity;
             public Transform2D* Transform;
             public GridMover* Mover;
-            public Quantum.Ghost* Ghost;
+            public Ghost* Ghost;
         }
 
         public override void Update(Frame f, ref Filter filter) {
@@ -34,7 +34,7 @@ namespace Quantum.Pacman.Ghost {
                             // Higher wont slow down...
                             continue;
                         }
-                        if (f.Has<Quantum.Ghost>(overlapHit.Entity)) {
+                        if (f.Has<Ghost>(overlapHit.Entity)) {
                             // We are overlapping with a ghost. Slow our ass down
                             filter.Mover->SpeedMultiplier = FP.FromString("0.85");
                             break;
@@ -45,7 +45,7 @@ namespace Quantum.Pacman.Ghost {
                 }
             }
 
-            var maze = MapCustomData.Current(f).CurrentMazeData(f);
+            var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             if (f.Global->GhostsInScatterMode) {
                 filter.Ghost->TargetPosition = filter.Ghost->Mode switch {
                     GhostTargetMode.Blinky => maze.Origin + maze.Size + new FPVector2(-5, -5),
@@ -61,15 +61,15 @@ namespace Quantum.Pacman.Ghost {
 
             FPVector2 currentPosition = filter.Transform->Position;
             FP closestDistance = FP.UseableMax;
-            GridMover? closestPlayerMover = null;
-            Transform2D? closestPlayerTransform = null;
+            GridMover* closestPlayerMover = null;
+            Transform2D* closestPlayerTransform = null;
 
-            while (playerFilter.Next(out _, out var playerTransform, out var playerMover, out var pacman)) {
-                if (pacman.IsDead) {
+            while (playerFilter.NextUnsafe(out _, out var playerTransform, out var playerMover, out var pacman)) {
+                if (pacman->IsDead) {
                     continue;
                 }
 
-                FP distance = FPVector2.DistanceSquared(currentPosition, playerTransform.Position);
+                FP distance = FPVector2.DistanceSquared(currentPosition, playerTransform->Position);
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closestPlayerMover = playerMover;
@@ -84,7 +84,7 @@ namespace Quantum.Pacman.Ghost {
 
             // Target based on ghost rules.
             FPVector2 target;
-            FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform.Value.Position, FPMath.Round);
+            FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform->Position, FPMath.Round);
             switch (filter.Ghost->Mode) {
             default:
             case GhostTargetMode.Blinky:
@@ -93,7 +93,7 @@ namespace Quantum.Pacman.Ghost {
                 break;
             case GhostTargetMode.Pinky:
                 // 4 tiles in front of player
-                target = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 4;
+                target = playerTile + closestPlayerMover->DirectionAsVector2() * 4;
                 break;
             case GhostTargetMode.Inky:
                 // Blinky position + (vector between blinky and player position + 2 tiles in front) * 2
@@ -104,7 +104,7 @@ namespace Quantum.Pacman.Ghost {
                     }
 
                     FPVector2 ourTile = FPVectorUtils.Apply(ghostTransform.Position, FPMath.Round);
-                    FPVector2 effectivePlayerTile = playerTile + closestPlayerMover.Value.DirectionAsVector2() * 2;
+                    FPVector2 effectivePlayerTile = playerTile + closestPlayerMover->DirectionAsVector2() * 2;
                     FPVector2 vecFromGhostToPlayer = effectivePlayerTile - ourTile;
 
                     target = effectivePlayerTile + vecFromGhostToPlayer;
@@ -116,7 +116,7 @@ namespace Quantum.Pacman.Ghost {
                 break;
             case GhostTargetMode.Clyde:
                 // Bottom left if within 8 units (radius), direct player tile otherwise
-                if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform.Value.Position) > (8 * 8)) {
+                if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform->Position) > (8 * 8)) {
                     target = playerTile;
                 } else {
                     target = maze.Origin + new FPVector2(4, 4);
@@ -130,8 +130,8 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public void OnPowerPelletStart(Frame f, EntityRef pacman) {
-            var filtered = f.Filter<GridMover, Quantum.Ghost>();
-            while (filtered.NextUnsafe(out EntityRef entity, out GridMover* mover, out Quantum.Ghost* ghost)) {
+            var filtered = f.Filter<GridMover, Ghost>();
+            while (filtered.NextUnsafe(out EntityRef entity, out GridMover* mover, out Ghost* ghost)) {
                 if (ghost->State == GhostState.Chase) {
                     mover->Direction = (mover->Direction + 2) % 4;
                     ghost->ChangeState(f, entity, GhostState.Scared);
@@ -148,7 +148,7 @@ namespace Quantum.Pacman.Ghost {
                 return;
             }
 
-            if (!f.Unsafe.TryGetPointer(info.Other, out Quantum.Ghost* ghost)) {
+            if (!f.Unsafe.TryGetPointer(info.Other, out Ghost* ghost)) {
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace Quantum.Pacman.Ghost {
                 ghost->TimeSinceEaten = 0;
                 GhostHouseSystem.ChangeGhostHouseState(f, info.Other, ghost, GhostHouseState.ReturningToEntrance);
 
-                MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+                PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
                 ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
 
                 f.Signals.OnCharacterEaten(info.Entity, info.Other);

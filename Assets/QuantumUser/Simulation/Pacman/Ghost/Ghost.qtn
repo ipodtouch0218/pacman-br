@@ -1,9 +1,5 @@
-import enum GhostTargetMode(byte);
-import enum GhostState(byte);
-import enum GhostHouseState(byte);
-
 global {
-	list<entity_ref> GhostHouseQueue;
+	list<EntityRef> GhostHouseQueue;
 	bool GhostsInScatterMode;
 }
 
@@ -18,14 +14,36 @@ component Ghost {
 	FP TimeSinceEaten;
 }
 
+enum GhostTargetMode : Byte {
+    Blinky,
+    Pinky,
+    Inky,
+    Clyde,
+}
+
+enum GhostState : Byte {
+    Chase,
+    Scared,
+    Eaten,
+}
+
+enum GhostHouseState : Byte {
+    NotInGhostHouse,
+    ReturningToEntrance,
+    MovingToCenter,
+    MovingToSide,
+    Waiting,
+    AlignVertical,
+    AlignHorizontal,
+    Leaving
+}
+
 synced event GhostStateChanged {
-	Frame Frame;
-	entity_ref Entity;
+	EntityRef Entity;
 	GhostState State;
 }
 
 synced event GhostHouseStateChanged {
-	Frame Frame;
-	entity_ref Entity;
+	EntityRef Entity;
 	GhostHouseState State;
 }

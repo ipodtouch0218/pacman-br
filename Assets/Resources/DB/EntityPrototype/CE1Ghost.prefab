@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214007047552335506}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49,6 +49,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -337,19 +340,7 @@ MonoBehaviour:
   ErrorRotationTeleportDistance: 0.5
   OnEntityInstantiated:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4722616993313937797}
-        m_TargetAssemblyTypeName: GhostAnimator, Assembly-CSharp
-        m_MethodName: Initialized
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnEntityDestroyed:
     m_PersistentCalls:
       m_Calls: []
@@ -405,7 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf16d22ee6790d4f81ee32e47f9a50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 1666884037578476132}
   spriteRenderer: {fileID: 3620954875696181874}
   movementSprites:
   - {fileID: -1909779863, guid: 67637ca9f41ac024392782e6cd4d6dcf, type: 3}
@@ -456,9 +446,12 @@ MonoBehaviour:
         RawValue: 0
     ForceRandomMovement:
       Value: 0
-    Mode: 0
-    State: 0
-    GhostHouseState: 0
+    Mode:
+      Value: 0
+    State:
+      Value: 0
+    GhostHouseState:
+      Value: 0
     GhostHouseWaitTime:
       RawValue: 0
     TimeSinceEaten:
@@ -5238,6 +5231,9 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5344,6 +5340,9 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5516,14 +5515,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
+  m_ComponentVersion: 2
   m_LightType: 3
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.375
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 0.33
   m_LightVolumeIntensity: 1
-  m_LightVolumeIntensityEnabled: 0
+  m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
@@ -5533,8 +5532,10 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
+  m_ShadowsEnabled: 0
   m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0
+  m_ShadowSoftnessFalloffIntensity: 0.5
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
@@ -5604,6 +5605,9 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5708,20 +5712,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c37404f174494591b8ec9d24e5bc8e, type: 3}
+  m_Script: {fileID: 0}
   m_Name: CE1GhostEntityPrototype
   m_EditorClassIdentifier: 
-  Identifier:
-    Path: Resources/DB/EntityPrototype/CE1Ghost|EntityPrototype
-    Guid:
-      Value: 1585148932474666226
-  Container:
-    Components: []
-  Parent: {fileID: 6774725943263295269}
-  SelfViewAsset: {fileID: 7809610989774545860}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &7809610989774545860
 MonoBehaviour:
   m_ObjectHideFlags: 0

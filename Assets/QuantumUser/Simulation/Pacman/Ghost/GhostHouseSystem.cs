@@ -2,12 +2,12 @@
 using Quantum.Collections;
 using Quantum.Util;
 
-namespace Quantum.Pacman.Ghost {
+namespace Quantum.Pacman.Ghosts {
     public unsafe class GhostHouseSystem : SystemMainThreadFilter<GhostHouseSystem.Filter>, ISignalOnGridMoverChangeTile {
 
         public struct Filter {
             public EntityRef Entity;
-            public Quantum.Ghost* Ghost;
+            public Ghost* Ghost;
         }
 
         public override void OnInit(Frame f) {
@@ -24,7 +24,7 @@ namespace Quantum.Pacman.Ghost {
         }
 
         public void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile) {
-            if (!f.Unsafe.TryGetPointer(entity, out Quantum.Ghost* ghost)) {
+            if (!f.Unsafe.TryGetPointer(entity, out Ghost* ghost)) {
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace Quantum.Pacman.Ghost {
             }
 
             // Ghosts only.
-            MapCustomData.MazeData maze = MapCustomData.Current(f).CurrentMazeData(f);
+            PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             int ghostIndex = FPVectorUtils.CellToIndex(tile, f);
 
             if (ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
@@ -112,9 +112,9 @@ namespace Quantum.Pacman.Ghost {
             }
         }
 
-        public static void ChangeGhostHouseState(Frame f, EntityRef entity, Quantum.Ghost* ghost, GhostHouseState state) {
+        public static void ChangeGhostHouseState(Frame f, EntityRef entity, Ghost* ghost, GhostHouseState state) {
             ghost->GhostHouseState = state;
-            f.Events.GhostHouseStateChanged(f, entity, state);
+            f.Events.GhostHouseStateChanged(entity, state);
         }
     }
 }

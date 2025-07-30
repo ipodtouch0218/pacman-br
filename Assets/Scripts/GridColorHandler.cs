@@ -2,8 +2,9 @@ using Quantum;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GridColorHandler : QuantumCallbacks {
+public unsafe class GridColorHandler : QuantumSceneViewComponent {
 
+    //---Serialized Variables
     [SerializeField] private TilemapRenderer tilemapRenderer;
     [SerializeField] private Gradient gradient;
 
@@ -35,10 +36,10 @@ public class GridColorHandler : QuantumCallbacks {
         }
     }
 
-    public override unsafe void OnUpdateView(QuantumGame game) {
-        var globals = game.Frames.Predicted.Global;
+    public override unsafe void OnUpdateView() {
+        Frame f = PredictedFrame;
 
-        float remainingTime = globals->PowerPelletRemainingTime.AsFloat;
+        float remainingTime = f.Global->PowerPelletRemainingTime.AsFloat;
         float percentage;
         if (remainingTime > 0) {
             if (remainingTime < gradientStartSeconds) {
@@ -56,7 +57,7 @@ public class GridColorHandler : QuantumCallbacks {
     }
 
     public void OnCharacterEaten(EventCharacterEaten e) {
-        if (!e.Frame.TryGet(e.Pacman, out GridMover mover)) {
+        if (!VerifiedFrame.Unsafe.TryGetPointer(e.Pacman, out GridMover* mover)) {
             return;
         }
 
@@ -67,7 +68,7 @@ public class GridColorHandler : QuantumCallbacks {
         */
 
         screenshakeTimer = screenshakeDuration;
-        screenshakeDirection = mover.DirectionAsVector2().ToUnityVector2();
+        screenshakeDirection = mover->DirectionAsVector2().ToUnityVector2();
     }
 
     public void OnPacmanUseBomb(EventPacmanUseBomb e) {

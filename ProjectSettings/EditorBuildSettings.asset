@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/QuantumUser/Scenes/QuantumGameScene.unity
     guid: c3423417d31906a47955ad42dfdc84aa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Photon/QuantumDemo/Menu/Menu.unity
     guid: cc502d8c93eb40943b652c72000036d6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Photon/QuantumDemo/Menu/MenuAuto.unity
     guid: 45efb823fdbe27d4490138c728a24ba8
   - enabled: 1
@@ -20,3 +20,4 @@ EditorBuildSettings:
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8012c229df5d8f84683449de40029a6b,
       type: 2}
+  m_UseUCBPForAssetBundles: 0

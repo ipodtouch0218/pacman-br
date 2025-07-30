@@ -29,9 +29,6 @@ namespace Quantum {
       return Prototype;
     }
   }
-  [System.ObsoleteAttribute("Use QPrototypePlayerLink instead")]
-  public abstract unsafe partial class EntityComponentPlayerLink : QPrototypePlayerLink {
-  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

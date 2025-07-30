@@ -5,7 +5,7 @@ using Quantum.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PelletHandler : MonoBehaviour {
+public class PelletHandler : QuantumSceneViewComponent {
 
     //---Serialized Variables
     [SerializeField] private AudioSource audioSource;
@@ -25,22 +25,20 @@ public class PelletHandler : MonoBehaviour {
         }
     }
 
-    public void Awake() {
+    public void Start() {
         QuantumEvent.Subscribe<EventPelletRespawn>(this, OnEventPelletRespawn);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnEventPelletEat);
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnEventPowerPelletEat);
     }
 
-    public void Start() {
-        if (QuantumRunner.Default != null) {
-            OnEventPelletRespawn(new() {
-                Game = QuantumRunner.Default.Game
-            });
-        }
+    public override void OnActivate(Frame frame) {
+        OnEventPelletRespawn(new() {
+            Game = QuantumRunner.Default.Game
+        });
     }
 
     public void OnEventPelletEat(EventPelletEat e) {
-        var map = QuantumUnityDB.GetGlobalAsset<MapCustomData>(e.Game.Frames.Predicted.Map.UserAsset.Id);
+        var map = (PacmanStageMapData) QuantumUnityDB.GetGlobalAsset(PredictedFrame.Map.UserAsset);
         int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * map.CurrentMazeData(e.Frame).Size.X.AsInt);
 
         if (!pelletGOs.TryGetValue(index, out GameObject pellet)) {
@@ -54,7 +52,7 @@ public class PelletHandler : MonoBehaviour {
     public unsafe void OnEventPelletRespawn(EventPelletRespawn e) {
         DestroyPellets();
 
-        var frame = e.Game.Frames.Predicted;
+        var frame = PredictedFrame;
         QDictionary<FPVector2, byte> pellets = frame.ResolveDictionary(frame.Global->PelletData);
 
         foreach ((FPVector2 cell, byte value) in pellets) {
@@ -70,7 +68,7 @@ public class PelletHandler : MonoBehaviour {
             }
 
             GameObject newPellet = Instantiate(prefab, transform, true);
-            newPellet.transform.position = FPVectorUtils.CellToWorld(cell, frame).XOY.ToUnityVector3();
+            newPellet.transform.position = FPVectorUtils.CellToWorld(cell, frame).ToUnityVector3();
             pelletGOs.Add(FPVectorUtils.CellToIndex(cell, frame), newPellet);
         }
     }
@@ -78,9 +76,9 @@ public class PelletHandler : MonoBehaviour {
     public void OnEventPowerPelletEat(EventPowerPelletEat e) {
         audioSource.PlayOneShot(powerPelletClip);
 
-        if (e.Game.Frames.Verified.TryGet(e.Entity, out Transform2D transform)) {
+        if (VerifiedFrame.TryGet(e.Entity, out Transform2D transform)) {
             GameObject newPrefab = Instantiate(powerPelletCollectPrefab);
-            newPrefab.transform.position = transform.Position.XOY.ToUnityVector3();
+            newPrefab.transform.position = transform.Position.ToUnityVector3();
         }
     }
 

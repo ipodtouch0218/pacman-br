@@ -62,7 +62,7 @@ namespace Quantum {
       /// <summary>
       /// The physics material to be set on the collider component.
       /// </summary>
-      public AssetRef<PhysicsMaterial> Material;
+      public AssetRef<Quantum.PhysicsMaterial> Material;
       /// <summary>
       /// The source collider to be used for the shape.
       /// </summary>

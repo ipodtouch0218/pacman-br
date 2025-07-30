@@ -120,19 +120,17 @@ namespace Quantum {
         _f.AddEvent(ev);
         return ev;
       }
-      public EventGhostStateChanged GhostStateChanged(Frame Frame, EntityRef Entity, GhostState State) {
+      public EventGhostStateChanged GhostStateChanged(EntityRef Entity, GhostState State) {
         if (_f.IsPredicted) return null;
         var ev = _f.Context.AcquireEvent<EventGhostStateChanged>(EventGhostStateChanged.ID);
-        ev.Frame = Frame;
         ev.Entity = Entity;
         ev.State = State;
         _f.AddEvent(ev);
         return ev;
       }
-      public EventGhostHouseStateChanged GhostHouseStateChanged(Frame Frame, EntityRef Entity, GhostHouseState State) {
+      public EventGhostHouseStateChanged GhostHouseStateChanged(EntityRef Entity, GhostHouseState State) {
         if (_f.IsPredicted) return null;
         var ev = _f.Context.AcquireEvent<EventGhostHouseStateChanged>(EventGhostHouseStateChanged.ID);
-        ev.Frame = Frame;
         ev.Entity = Entity;
         ev.State = State;
         _f.AddEvent(ev);
@@ -159,10 +157,9 @@ namespace Quantum {
         _f.AddEvent(ev);
         return ev;
       }
-      public EventCharacterEaten CharacterEaten(Frame Frame, EntityRef Pacman, EntityRef Other, Int32 Combo, Int32 GainedPoints) {
+      public EventCharacterEaten CharacterEaten(EntityRef Pacman, EntityRef Other, Int32 Combo, Int32 GainedPoints) {
         if (_f.IsPredicted) return null;
         var ev = _f.Context.AcquireEvent<EventCharacterEaten>(EventCharacterEaten.ID);
-        ev.Frame = Frame;
         ev.Pacman = Pacman;
         ev.Other = Other;
         ev.Combo = Combo;
@@ -385,7 +382,6 @@ namespace Quantum {
   }
   public unsafe partial class EventGhostStateChanged : EventBase {
     public new const Int32 ID = 6;
-    public Frame Frame;
     public EntityRef Entity;
     public GhostState State;
     protected EventGhostStateChanged(Int32 id, EventFlags flags) : 
@@ -405,7 +401,6 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked {
         var hash = 61;
-        hash = hash * 31 + Frame.GetHashCode();
         hash = hash * 31 + Entity.GetHashCode();
         hash = hash * 31 + State.GetHashCode();
         return hash;
@@ -414,7 +409,6 @@ namespace Quantum {
   }
   public unsafe partial class EventGhostHouseStateChanged : EventBase {
     public new const Int32 ID = 7;
-    public Frame Frame;
     public EntityRef Entity;
     public GhostHouseState State;
     protected EventGhostHouseStateChanged(Int32 id, EventFlags flags) : 
@@ -434,7 +428,6 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked {
         var hash = 67;
-        hash = hash * 31 + Frame.GetHashCode();
         hash = hash * 31 + Entity.GetHashCode();
         hash = hash * 31 + State.GetHashCode();
         return hash;
@@ -524,7 +517,6 @@ namespace Quantum {
   }
   public unsafe partial class EventCharacterEaten : EventBase {
     public new const Int32 ID = 11;
-    public Frame Frame;
     public EntityRef Pacman;
     public EntityRef Other;
     public Int32 Combo;
@@ -546,7 +538,6 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked {
         var hash = 83;
-        hash = hash * 31 + Frame.GetHashCode();
         hash = hash * 31 + Pacman.GetHashCode();
         hash = hash * 31 + Other.GetHashCode();
         hash = hash * 31 + Combo.GetHashCode();
