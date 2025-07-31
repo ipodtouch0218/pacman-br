@@ -133,7 +133,7 @@ MonoBehaviour:
         ForceRandomMovement:
           Value: 0
         Mode:
-          Value: 0
+          Value: 1
         State:
           Value: 0
         GhostHouseState:
@@ -307,7 +307,7 @@ MonoBehaviour:
         ForceRandomMovement:
           Value: 0
         Mode:
-          Value: 0
+          Value: 2
         State:
           Value: 0
         GhostHouseState:
@@ -394,7 +394,7 @@ MonoBehaviour:
         ForceRandomMovement:
           Value: 0
         Mode:
-          Value: 0
+          Value: 3
         State:
           Value: 0
         GhostHouseState:

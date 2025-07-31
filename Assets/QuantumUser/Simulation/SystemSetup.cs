@@ -1,5 +1,5 @@
 ﻿using Quantum.Pacman;
-using Quantum.Pacman.Fruit;
+using Quantum.Pacman.Fruits;
 using Quantum.Pacman.Ghosts;
 using Quantum.Pacman.Logic;
 using Quantum.Pacman.Pellets;

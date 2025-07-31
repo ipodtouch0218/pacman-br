@@ -9,45 +9,49 @@ namespace Quantum.Pacman.Ghosts {
             public Transform2D* Transform;
             public GridMover* Mover;
             public Ghost* Ghost;
+            public PhysicsCollider2D* Collider;
         }
 
         public override void Update(Frame f, ref Filter filter) {
+            var entity = filter.Entity;
+            var ghost = filter.Ghost;
+            var mover = filter.Mover;
 
-            filter.Ghost->TimeSinceEaten += f.DeltaTime;
-            filter.Ghost->SetSpeedMultiplier(filter.Mover);
+            ghost->TimeSinceEaten += f.DeltaTime;
+            ghost->SetSpeedMultiplier(mover);
 
-            if (filter.Ghost->GhostHouseState != GhostHouseState.NotInGhostHouse) {
+            if (ghost->GhostHouseState != GhostHouseState.NotInGhostHouse) {
                 // Don't handle ghost house movement.
                 return;
             }
 
-            if (filter.Ghost->State == GhostState.Chase) {
+            if (ghost->State == GhostState.Chase) {
                 // Slow down if directly behind another ghost or player
-                Hit? raycastHit = f.Physics2D.Raycast(filter.Transform->Position, filter.Mover->DirectionAsVector2(), FP._1_50);
+                Hit? raycastHit = f.Physics2D.Raycast(filter.Transform->Position, mover->DirectionAsVector2(), FP._1_50, options: QueryOptions.DetectOverlapsAtCastOrigin | QueryOptions.HitTriggers);
                 if (raycastHit.HasValue) {
-                    filter.Mover->SpeedMultiplier = FP.FromString("0.85");
+                    mover->SpeedMultiplier = FP.FromString("0.85");
                 } else {
-                    HitCollection overlapHits = f.Physics2D.OverlapShape(filter.Transform->Position, 0, f.Get<PhysicsCollider2D>(filter.Entity).Shape);
+                    HitCollection overlapHits = f.Physics2D.OverlapShape(filter.Transform->Position, 0, filter.Collider->Shape, options: QueryOptions.DetectOverlapsAtCastOrigin | QueryOptions.HitTriggers);
                     for (int i = 0; i < overlapHits.Count; i++) {
                         Hit overlapHit = overlapHits.HitsBuffer[i];
-                        if (filter.Entity == overlapHit.Entity || filter.Entity.Index < overlapHit.Entity.Index) {
+                        if (entity == overlapHit.Entity || entity.Index < overlapHit.Entity.Index) {
                             // Higher wont slow down...
                             continue;
                         }
                         if (f.Has<Ghost>(overlapHit.Entity)) {
                             // We are overlapping with a ghost. Slow our ass down
-                            filter.Mover->SpeedMultiplier = FP.FromString("0.85");
+                            mover->SpeedMultiplier = FP.FromString("0.85");
                             break;
                         }
                     }
 
-                    filter.Mover->SpeedMultiplier = 1;
+                    mover->SpeedMultiplier = 1;
                 }
             }
 
             var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
             if (f.Global->GhostsInScatterMode) {
-                filter.Ghost->TargetPosition = filter.Ghost->Mode switch {
+                ghost->TargetPosition = ghost->Mode switch {
                     GhostTargetMode.Blinky => maze.Origin + maze.Size + new FPVector2(-5, -5),
                     GhostTargetMode.Pinky => maze.Origin + FPVector2.Up * maze.Size.Y + new FPVector2(4, -5),
                     GhostTargetMode.Inky => maze.Origin + FPVector2.Right * maze.Size.X + new FPVector2(-5, 4),
@@ -77,7 +81,7 @@ namespace Quantum.Pacman.Ghosts {
                 }
             }
 
-            filter.Ghost->ForceRandomMovement = (closestPlayerMover == null);
+            ghost->ForceRandomMovement = (closestPlayerMover == null);
             if (closestPlayerMover == null) {
                 return;
             }
@@ -85,7 +89,7 @@ namespace Quantum.Pacman.Ghosts {
             // Target based on ghost rules.
             FPVector2 target;
             FPVector2 playerTile = FPVectorUtils.Apply(closestPlayerTransform->Position, FPMath.Round);
-            switch (filter.Ghost->Mode) {
+            switch (ghost->Mode) {
             default:
             case GhostTargetMode.Blinky:
                 // Direct player tile
@@ -97,13 +101,13 @@ namespace Quantum.Pacman.Ghosts {
                 break;
             case GhostTargetMode.Inky:
                 // Blinky position + (vector between blinky and player position + 2 tiles in front) * 2
-                var ghostFilter = f.Filter<Transform2D, Quantum.Ghost>();
-                while (ghostFilter.Next(out _, out var ghostTransform, out var ghost)) {
-                    if (ghost.Mode != GhostTargetMode.Blinky) {
+                var ghostFilter = f.Filter<Transform2D, Ghost>();
+                while (ghostFilter.NextUnsafe(out _, out var otherGhostTransform, out var otherGhost)) {
+                    if (otherGhost->Mode != GhostTargetMode.Blinky) {
                         continue;
                     }
 
-                    FPVector2 ourTile = FPVectorUtils.Apply(ghostTransform.Position, FPMath.Round);
+                    FPVector2 ourTile = FPVectorUtils.Apply(otherGhostTransform->Position, FPMath.Round);
                     FPVector2 effectivePlayerTile = playerTile + closestPlayerMover->DirectionAsVector2() * 2;
                     FPVector2 vecFromGhostToPlayer = effectivePlayerTile - ourTile;
 
@@ -126,12 +130,12 @@ namespace Quantum.Pacman.Ghosts {
 
         EarlyBreak:
             // Target the closest player('s tile).
-            filter.Ghost->TargetPosition = target;
+            ghost->TargetPosition = target;
         }
 
         public void OnPowerPelletStart(Frame f, EntityRef pacman) {
             var filtered = f.Filter<GridMover, Ghost>();
-            while (filtered.NextUnsafe(out EntityRef entity, out GridMover* mover, out Ghost* ghost)) {
+            while (filtered.NextUnsafe(out EntityRef entity, out var mover, out var ghost)) {
                 if (ghost->State == GhostState.Chase) {
                     mover->Direction = (mover->Direction + 2) % 4;
                     ghost->ChangeState(f, entity, GhostState.Scared);

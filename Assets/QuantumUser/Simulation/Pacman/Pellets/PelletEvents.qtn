@@ -5,7 +5,6 @@ synced event PelletRespawn {
 }
 
 synced event PelletEat {
-	Frame Frame;
 	EntityRef Entity;
 	FPVector2 Tile;
 	int Chain;

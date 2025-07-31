@@ -4441,7 +4441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f4fbaa846d2e14b8d37fdd6fa3f051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 196189326}
   pacmanSprite: {fileID: 862030723}
   rankingText: {fileID: 1394713910}
   totalScoreText: {fileID: 884155419}
@@ -15994,6 +15993,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
         type: 3}
+      propertyPath: Prototype.Mode.Value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
       propertyPath: Prototype.GhostHouseState
       value: 4
       objectReference: {fileID: 0}
@@ -16208,6 +16212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3c8b8672ad8244887e51c800f2b34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Updater: {fileID: 987400660}
+  UseFindUpdater: 0
   sfxSource: {fileID: 1549925261}
   musicSource: {fileID: 37989501}
   defaultSound:
@@ -26688,7 +26694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ac2b0273b302a4e90a309e6d059c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Updater: {fileID: 0}
+  Updater: {fileID: 987400660}
   UseFindUpdater: 0
   tilemapRenderer: {fileID: 868041857}
   gradient:
@@ -44720,7 +44726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ac2b0273b302a4e90a309e6d059c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Updater: {fileID: 0}
+  Updater: {fileID: 987400660}
   UseFindUpdater: 0
   tilemapRenderer: {fileID: 1071162706}
   gradient:
@@ -49731,6 +49737,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
         type: 3}
+      propertyPath: Prototype.Mode.Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
+        type: 3}
       propertyPath: Prototype.GhostHouseState
       value: 4
       objectReference: {fileID: 0}
@@ -51170,13 +51181,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
         type: 3}
-      propertyPath: Prototype.Mode
+      propertyPath: Prototype.Mode.Value
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
-        type: 3}
-      propertyPath: Prototype.GhostHouseState
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2764139848288584657, guid: 41fc26749af10154899add575258ebf4,
         type: 3}
@@ -61472,7 +61478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ac2b0273b302a4e90a309e6d059c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Updater: {fileID: 0}
+  Updater: {fileID: 987400660}
   UseFindUpdater: 0
   tilemapRenderer: {fileID: 1512194807}
   gradient:
@@ -68543,6 +68549,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177a5973a05f515499c87a161636a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Updater: {fileID: 987400660}
+  UseFindUpdater: 0
   text: {fileID: 65043673}
   bombs: {fileID: 478055371}
   addScore: {fileID: 2137356871}

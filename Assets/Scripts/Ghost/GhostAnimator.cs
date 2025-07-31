@@ -25,12 +25,8 @@ public unsafe class GhostAnimator : QuantumEntityViewComponent {
     private MaterialPropertyBlock trailMpb;
 
     public void OnValidate() {
-        if (!spriteRenderer) {
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-        if (!ghostLight) {
-            ghostLight = GetComponentInChildren<Light2D>();
-        }
+        this.SetIfNull(ref spriteRenderer, Utils.GetComponentType.Children);
+        this.SetIfNull(ref ghostLight, Utils.GetComponentType.Children);
     }
 
     public void Start() {

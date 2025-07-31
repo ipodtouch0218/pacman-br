@@ -14,9 +14,7 @@ public class MazeRefreshWave : MonoBehaviour {
     private bool active;
 
     public void OnValidate() {
-        if (audioSources?.Count == 0) {
-            GetComponents(audioSources);
-        }
+        this.SetIfNull(ref audioSources);
     }
 
     public void Start() {

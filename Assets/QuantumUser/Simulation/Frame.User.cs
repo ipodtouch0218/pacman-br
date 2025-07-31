@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 
 namespace Quantum {
-  unsafe partial class Frame {
+  public unsafe partial class Frame {
   }
 }

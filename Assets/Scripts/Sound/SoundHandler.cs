@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SoundHandler : QuantumCallbacks {
+public unsafe class SoundHandler : QuantumSceneViewComponent {
 
     //---Serialized Variables
     [SerializeField] private AudioSource sfxSource, musicSource;
@@ -27,8 +27,8 @@ public class SoundHandler : QuantumCallbacks {
         QuantumEvent.Subscribe<EventTimerSecondPassed>(this, OnTimerSecondPassed);
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        TryChangeAudioClip(game.Frames.Predicted);
+    public override void OnUpdateView() {
+        TryChangeAudioClip(PredictedFrame);
     }
 
     public void Update() {
@@ -79,7 +79,7 @@ public class SoundHandler : QuantumCallbacks {
 
     private void TryChangeAudioClip(Frame f) {
         LoopingAudioClip oldClip = currentClip;
-        bool scared = eatenGhosts.Any(g => f.Get<Ghost>(g).TimeSinceEaten >= FP._0_50);
+        bool scared = eatenGhosts.Any(g => f.Unsafe.GetPointer<Ghost>(g)->TimeSinceEaten >= FP._0_50);
         if (scared) {
             currentClip = eatenSound;
         } else if (poweredUpPacman.Count != 0) {

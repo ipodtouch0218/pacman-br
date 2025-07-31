@@ -6,24 +6,22 @@ public class CustomMapDataGizmos : MonoBehaviour {
     [SerializeField] private QuantumMapData data;
 
     public void OnValidate() {
-        if (!data) {
-            data = GetComponent<QuantumMapData>();
-        }
+        this.SetIfNull(ref data);
     }
 
     public void OnDrawGizmos() {
-        
         PacmanStageMapData customData = QuantumUnityDB.GetGlobalAssetEditorInstance<PacmanStageMapData>(data.Asset.UserAsset);
         GameObject obj = GameObject.FindGameObjectWithTag("Maze");
 
         Gizmos.color = Color.yellow;
         for (int i = 0; i < customData.Mazes.Length; i++) {
-            if (!obj.transform.GetChild(i).gameObject.activeInHierarchy) {
+            Transform mazeGameObject = obj.transform.GetChild(i);
+            if (!mazeGameObject.gameObject.activeInHierarchy) {
                 continue;
             }
             PacmanStageMapData.MazeData maze = customData.Mazes[i];
             Gizmos.DrawWireCube(
-                (maze.Origin + (maze.Size / 2)).ToUnityVector3() - new Vector3(0.5f, 0, 0.5f),
+                (maze.Origin + (maze.Size / 2)).ToUnityVector3() - mazeGameObject.position,
                 maze.Size.ToUnityVector3());
         }
 

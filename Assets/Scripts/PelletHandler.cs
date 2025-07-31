@@ -5,7 +5,7 @@ using Quantum.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PelletHandler : QuantumSceneViewComponent {
+public unsafe class PelletHandler : QuantumSceneViewComponent {
 
     //---Serialized Variables
     [SerializeField] private AudioSource audioSource;
@@ -20,9 +20,7 @@ public class PelletHandler : QuantumSceneViewComponent {
     private readonly Dictionary<int, GameObject> pelletGOs = new();
 
     public void OnValidate() {
-        if (!audioSource) {
-            audioSource = GetComponent<AudioSource>();
-        }
+        this.SetIfNull(ref audioSource);
     }
 
     public void Start() {
@@ -31,15 +29,16 @@ public class PelletHandler : QuantumSceneViewComponent {
         QuantumEvent.Subscribe<EventPowerPelletEat>(this, OnEventPowerPelletEat);
     }
 
-    public override void OnActivate(Frame frame) {
+    public override void OnActivate(Frame f) {
         OnEventPelletRespawn(new() {
-            Game = QuantumRunner.Default.Game
+            Game = Game
         });
     }
 
     public void OnEventPelletEat(EventPelletEat e) {
-        var map = (PacmanStageMapData) QuantumUnityDB.GetGlobalAsset(PredictedFrame.Map.UserAsset);
-        int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * map.CurrentMazeData(e.Frame).Size.X.AsInt);
+        Frame f = PredictedFrame;
+        var map = (PacmanStageMapData) QuantumUnityDB.GetGlobalAsset(f.Map.UserAsset);
+        int index = e.Tile.X.AsInt + (e.Tile.Y.AsInt * map.CurrentMazeData(f).Size.X.AsInt);
 
         if (!pelletGOs.TryGetValue(index, out GameObject pellet)) {
             return;
@@ -52,8 +51,8 @@ public class PelletHandler : QuantumSceneViewComponent {
     public unsafe void OnEventPelletRespawn(EventPelletRespawn e) {
         DestroyPellets();
 
-        var frame = PredictedFrame;
-        QDictionary<FPVector2, byte> pellets = frame.ResolveDictionary(frame.Global->PelletData);
+        var f = PredictedFrame;
+        QDictionary<FPVector2, byte> pellets = f.ResolveDictionary(f.Global->PelletData);
 
         foreach ((FPVector2 cell, byte value) in pellets) {
 
@@ -68,17 +67,17 @@ public class PelletHandler : QuantumSceneViewComponent {
             }
 
             GameObject newPellet = Instantiate(prefab, transform, true);
-            newPellet.transform.position = FPVectorUtils.CellToWorld(cell, frame).ToUnityVector3();
-            pelletGOs.Add(FPVectorUtils.CellToIndex(cell, frame), newPellet);
+            newPellet.transform.position = FPVectorUtils.CellToWorld(cell, f).ToUnityVector3();
+            pelletGOs.Add(FPVectorUtils.CellToIndex(cell, f), newPellet);
         }
     }
 
     public void OnEventPowerPelletEat(EventPowerPelletEat e) {
         audioSource.PlayOneShot(powerPelletClip);
 
-        if (VerifiedFrame.TryGet(e.Entity, out Transform2D transform)) {
+        if (VerifiedFrame.Unsafe.TryGetPointer(e.Entity, out Transform2D* transform)) {
             GameObject newPrefab = Instantiate(powerPelletCollectPrefab);
-            newPrefab.transform.position = transform.Position.ToUnityVector3();
+            newPrefab.transform.position = transform->Position.ToUnityVector3();
         }
     }
 

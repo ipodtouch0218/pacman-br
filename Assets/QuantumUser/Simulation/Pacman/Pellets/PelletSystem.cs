@@ -1,6 +1,6 @@
 ﻿using Photon.Deterministic;
 using Quantum.Collections;
-using Quantum.Pacman.Fruit;
+using Quantum.Pacman.Fruits;
 using Quantum.Util;
 
 namespace Quantum.Pacman.Pellets {
@@ -15,7 +15,7 @@ namespace Quantum.Pacman.Pellets {
             FP remainingPowerPelletTime = 0;
 
             var filtered = f.Filter<PacmanPlayer>();
-            while (filtered.NextUnsafe(out EntityRef entity, out PacmanPlayer* player)) {
+            while (filtered.NextUnsafe(out EntityRef entity, out var player)) {
                 if (player->PowerPelletTimer > 0) {
                     if ((player->PowerPelletTimer -= f.DeltaTime) <= 0) {
                         player->PowerPelletTimer = 0;
@@ -63,12 +63,12 @@ namespace Quantum.Pacman.Pellets {
             f.Events.PelletRespawn(pelletConfig, playEffect, fromLeft);
 
             var filter = f.Filter<PacmanPlayer, Transform2D>();
-            while (filter.Next(out EntityRef entity, out PacmanPlayer pac, out Transform2D transform)) {
-                if (pac.IsDead) {
+            while (filter.NextUnsafe(out EntityRef entity, out var pac, out var transform)) {
+                if (pac->IsDead) {
                     continue;
                 }
 
-                FPVector2 tile = FPVectorUtils.WorldToCell(transform.Position, f);
+                FPVector2 tile = FPVectorUtils.WorldToCell(transform->Position, f);
                 TryEatPellet(f, entity, tile, false);
             }
         }
@@ -82,7 +82,7 @@ namespace Quantum.Pacman.Pellets {
         }
 
         public void OnPacmanRespawned(Frame f, EntityRef entity) {
-            if (!f.TryGet(entity, out Transform2D transform)) {
+            if (!f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
                 return;
             }
 
@@ -91,22 +91,19 @@ namespace Quantum.Pacman.Pellets {
             }
 
             player->PelletChain = 0;
-            TryEatPellet(f, entity, FPVectorUtils.WorldToCell(transform.Position, f), true);
+            TryEatPellet(f, entity, FPVectorUtils.WorldToCell(transform->Position, f), true);
         }
 
         private static void TryEatPellet(Frame f, EntityRef entity, FPVector2 tile, bool breakChain) {
 
             PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
-            if (tile.X < 0 || tile.X >= maze.Size.X) {
-                return;
-            }
-            if (tile.Y < 0 || tile.Y >= maze.Size.Y) {
+            if (tile.X < 0 || tile.X >= maze.Size.X || tile.Y < 0 || tile.Y >= maze.Size.Y) {
                 return;
             }
 
             if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)
                 || !f.Unsafe.TryGetPointer(entity, out GridMover* mover)
-                || !f.TryGet(entity, out Transform2D transform)) {
+                || !f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
 
                 return;
             }
@@ -134,7 +131,7 @@ namespace Quantum.Pacman.Pellets {
             pelletDict.Remove(tile);
 
             f.Signals.OnPacmanScored(entity, player->PelletChain);
-            f.Events.PelletEat(f, entity, tile, player->PelletChain);
+            f.Events.PelletEat(entity, tile, player->PelletChain);
 
             if (pelletDict.Count == (f.Global->TotalPellets * FP._0_33).AsInt) {
                 FruitSystem.SpawnFruit(f);
@@ -146,24 +143,23 @@ namespace Quantum.Pacman.Pellets {
         }
 
         public void OnPowerPelletEnd(Frame f, EntityRef pacman) {
-
             bool playerHasPowerPellet = false;
-            var filtererdPacman = f.Filter<PacmanPlayer>();
-            while (filtererdPacman.Next(out _, out PacmanPlayer otherPacman)) {
-                playerHasPowerPellet |= otherPacman.HasPowerPellet;
+            var filteredPacman = f.Filter<PacmanPlayer>();
+            while (filteredPacman.NextUnsafe(out _, out var otherPacman)) {
+                playerHasPowerPellet |= otherPacman->HasPowerPellet;
             }
 
             if (!playerHasPowerPellet) {
                 // No longer power pellet
-                var filteredGhosts = f.Filter<Quantum.Ghost>();
-                while (filteredGhosts.NextUnsafe(out EntityRef entity, out Quantum.Ghost* ghost)) {
+                var filteredGhosts = f.Filter<Ghost>();
+                while (filteredGhosts.NextUnsafe(out EntityRef entity, out var ghost)) {
                     if (ghost->State == GhostState.Scared) {
                         ghost->ChangeState(f, entity, GhostState.Chase);
                     }
                 }
 
                 var filteredPacman2 = f.Filter<PacmanPlayer, GridMover>();
-                while (filteredPacman2.NextUnsafe(out _, out _, out GridMover* mover)) {
+                while (filteredPacman2.NextUnsafe(out _, out _, out var mover)) {
                     mover->SpeedMultiplier = FP._1;
                 }
             }

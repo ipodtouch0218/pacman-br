@@ -5,7 +5,7 @@ using Quantum;
 using Quantum.Pacman;
 using UnityEngine;
 
-public class ScorecardManager : MonoBehaviour {
+public unsafe class ScorecardManager : MonoBehaviour {
 
     public static readonly List<Scorecard> Scorecards = new();
     public static bool AnyCounting => Scorecards.Any(sc => !sc.DoneCounting);
@@ -24,9 +24,7 @@ public class ScorecardManager : MonoBehaviour {
     private QuantumGame game;
 
     public void OnValidate() {
-        if (!resultsCanvas) {
-            resultsCanvas = GetComponent<Canvas>();
-        }
+        this.SetIfNull(ref resultsCanvas);
     }
 
     public void Start() {
@@ -45,10 +43,10 @@ public class ScorecardManager : MonoBehaviour {
     }
 
     public void OnGameEnd(EventGameEnd e) {
-        var players = e.Game.Frames.Predicted.Filter<PacmanPlayer>();
-        while (players.Next(out var entity, out var player)) {
+        var filter = e.Game.Frames.Predicted.Filter<PacmanPlayer>();
+        while (filter.NextUnsafe(out var entity, out var pacman)) {
             Scorecard newScorecard = Instantiate(templateScorecard, resultsCanvas.transform);
-            newScorecard.Initialize(e.Game.Frames.Verified, entity, player);
+            newScorecard.Initialize(e.Game.Frames.Verified, entity, pacman);
             Scorecards.Add(newScorecard);
         }
         StartCoroutine(ScorecardSequence());

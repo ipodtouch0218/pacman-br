@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PointUpdater : QuantumCallbacks {
+public unsafe class PointUpdater : QuantumSceneViewComponent {
 
     private static int StillCounting;
     private static float LastPlayedBombSound;
@@ -44,27 +44,27 @@ public class PointUpdater : QuantumCallbacks {
         text.color = pacman.PlayerColor;
         bombs.color = pacman.PlayerColor;
         gameObject.SetActive(true);
-        if (f.TryGet(entity, out PlayerLink pl)) {
-            player = pl.Player;
+
+        if (f.Unsafe.TryGetPointer(entity, out PlayerLink* pl)) {
+            player = pl->Player;
         }
     }
 
-    public override void OnUpdateView(QuantumGame game) {
-        var f = game.Frames.Predicted;
-        if (!f.TryGet(entity, out PacmanPlayer pacman)) {
+    public override void OnUpdateView() {
+        Frame f = PredictedFrame;
+        if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)) {
             return;
         }
 
         // TODO: change
-        if (pacman.HasPowerPellet) {
-            powerMeterImage.fillAmount = pacman.PowerPelletTimer.AsFloat / pacman.PowerPelletFullTimer.AsFloat;
+        if (pacman->HasPowerPellet) {
+            powerMeterImage.fillAmount = pacman->PowerPelletTimer.AsFloat / pacman->PowerPelletFullTimer.AsFloat;
         }
     }
 
-    private IEnumerator CountBombs(Frame f, float delay) {
-        int bombCount = f.Get<PacmanPlayer>(entity).Bombs;
-
+    private IEnumerator CountBombs(Frame f, int bombCount, float delay) {
         yield return new WaitForSeconds(delay);
+
         int count = 1;
         while (bombCount > 0) {
             bombCount--;
@@ -123,28 +123,27 @@ public class PointUpdater : QuantumCallbacks {
         }
 
         powerMeter.SetActive(false);
-        StartCoroutine(CountBombs(f, 0.5f));
+        StartCoroutine(CountBombs(f, f.Unsafe.GetPointer<PacmanPlayer>(entity)->Bombs, 0.5f));
     }
 
     public void OnGameStarting(EventGameStarting e) {
-
         RectTransform rt = text.GetComponent<RectTransform>();
         rt.SetParent(originalTextParent, true); // Parent right to canvas
         rt.position = originalTextPosition;
 
         SetScore(0);
 
-        int bombCount = e.Game.Frames.Predicted.Get<PacmanPlayer>(entity).Bombs;
+        int bombCount = PredictedFrame.Unsafe.GetPointer<PacmanPlayer>(entity)->Bombs;
         SetBombs(bombCount);
     }
 
     public void OnUseBomb(EventPacmanUseBomb e) {
-        int bombCount = e.Game.Frames.Predicted.Get<PacmanPlayer>(entity).Bombs;
+        int bombCount = PredictedFrame.Unsafe.GetPointer<PacmanPlayer>(entity)->Bombs;
         SetBombs(bombCount);
     }
 
     public void OnCollectBomb(EventPacmanCollectBomb e) {
-        int bombCount = e.Game.Frames.Predicted.Get<PacmanPlayer>(entity).Bombs;
+        int bombCount = PredictedFrame.Unsafe.GetPointer<PacmanPlayer>(entity)->Bombs;
         SetBombs(bombCount);
     }
 

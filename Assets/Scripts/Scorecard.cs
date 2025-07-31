@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Scorecard : MonoBehaviour {
+public unsafe class Scorecard : MonoBehaviour {
 
     //---Public
     public bool DoneCounting => toAddScore <= 0;
@@ -14,7 +14,6 @@ public class Scorecard : MonoBehaviour {
     public int Ranking { get; set; }
 
     //---Serialized Variables
-    [SerializeField] private RectTransform rt;
     [SerializeField] private Image pacmanSprite;
     [SerializeField] private TMP_Text rankingText, totalScoreText, toAddScoreText;
     [SerializeField] private Vector2 origin = new(0, 180);
@@ -26,21 +25,15 @@ public class Scorecard : MonoBehaviour {
     private Vector2 moveVelocity;
     private Coroutine moveCoroutine;
 
-    public void OnValidate() {
-        if (!rt) {
-            rt = GetComponent<RectTransform>();
-        }
-    }
-
-    public void Initialize(Frame f, EntityRef entityRef, PacmanPlayer player) {
-        totalScore = player.TotalScore;
-        toAddScore = player.RoundScore;
+    public void Initialize(Frame f, EntityRef entityRef, PacmanPlayer* player) {
+        totalScore = player->TotalScore;
+        toAddScore = player->RoundScore;
         UpdateText(true);
         gameObject.SetActive(true);
         pacmanSprite.color = Utils.GetPlayerColor(f, entityRef);
 
-        Ranking = player.PreviousRoundRanking.UniqueRanking;
-        rankingText.text = Utils.RankingToString(player.PreviousRoundRanking.SharedRanking + 1) + '.';
+        Ranking = player->PreviousRoundRanking.UniqueRanking;
+        rankingText.text = Utils.RankingToString(player->PreviousRoundRanking.SharedRanking + 1) + '.';
         MoveToPosition(0);
     }
 
@@ -56,6 +49,7 @@ public class Scorecard : MonoBehaviour {
     }
 
     public void MoveToPosition(float timeToTake) {
+        RectTransform rt = (RectTransform) transform;
         Vector2 position = origin - (Ranking * height * Vector2.up);
 
         if (timeToTake <= Time.deltaTime) {
@@ -69,6 +63,7 @@ public class Scorecard : MonoBehaviour {
     }
 
     private IEnumerator Move(Vector2 target, float time) {
+        RectTransform rt = (RectTransform) transform;
         while (Vector2.Distance(rt.anchoredPosition, target) > 0.01f) {
             rt.anchoredPosition = Vector2.SmoothDamp(rt.anchoredPosition, target, ref moveVelocity, time / 4);
             yield return null;

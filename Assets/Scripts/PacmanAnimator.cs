@@ -42,18 +42,12 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
 
 
     public void OnValidate() {
-        if (!spriteRenderer) {
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-        if (!audioSource) {
-            audioSource = GetComponent<AudioSource>();
-        }
-        if (!light) {
-            light = GetComponent<Light2D>();
-        }
+        this.SetIfNull(ref spriteRenderer, Utils.GetComponentType.Children);
+        this.SetIfNull(ref audioSource);
+        this.SetIfNull(ref light);
     }
 
-    public void Awake() {
+    public void Start() {
         QuantumEvent.Subscribe<EventPacmanKilled>(this, OnPacmanKilled);
         QuantumEvent.Subscribe<EventPacmanRespawned>(this, OnPacmanRespawned);
         QuantumEvent.Subscribe<EventPacmanVulnerable>(this, OnPacmanVulnerable);
@@ -207,9 +201,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             // Check for Up and Down
             emission.enabled = up ^ down;
             if (up) {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, 0.5f), Quaternion.Euler(90, 0, 45));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0.5f, 0), Quaternion.Euler(0, 0, 45));
             } else {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, -0.5f), Quaternion.Euler(90, 0, 90));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, -0.5f, 0), Quaternion.Euler(0, 0, 90));
             }
             break;
         case 1:
@@ -217,9 +211,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             // Check for Left and Right
             emission.enabled = left ^ right;
             if (left) {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(90, 0, 0));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(0, 0, 0));
             } else {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(90, 0, -45));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(0, 0, 45));
             }
             break;
         case 2:
@@ -227,9 +221,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             // Check for Up and Down
             emission.enabled = up ^ down;
             if (up) {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, 0.5f), Quaternion.Euler(90, 0, -90));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0.5f, 0), Quaternion.Euler(0, 0, -90));
             } else {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0, 0, -0.5f), Quaternion.Euler(90, 0, -135));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0, -0.5f, 0), Quaternion.Euler(0, 0, -135));
             }
             break;
         case 3:
@@ -237,9 +231,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             // Check for Left and Right
             emission.enabled = left ^ right;
             if (left) {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(90, 0, 135));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(0, 0, 135));
             } else {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(90, 0, 180));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(0, 0, 180));
             }
             break;
         }
@@ -324,7 +318,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
 
         int direction = PredictedFrame.Unsafe.GetPointer<GridMover>(e.Pacman)->Direction;
         Vector3 newForward = GridMover.DirectionToVector(direction).ToUnityVector3();
-        eatParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
+        eatParticles.transform.rotation = Quaternion.LookRotation(newForward, Vector3.forward);
         eatParticles.Play();
 
         audioSource.PlayOneShot(eatClips[Mathf.Min(e.Combo - 1, eatClips.Length - 1)]);

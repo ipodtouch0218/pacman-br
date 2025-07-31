@@ -1,7 +1,7 @@
 ﻿using Photon.Deterministic;
 using Quantum.Pacman.Pellets;
 
-namespace Quantum.Pacman.Fruit {
+namespace Quantum.Pacman.Fruits {
     public unsafe class FruitSystem : SystemSignalsOnly, ISignalOnTrigger2D, ISignalOnPelletRespawn {
 
         public static void SpawnFruit(Frame f) {
@@ -40,7 +40,7 @@ namespace Quantum.Pacman.Fruit {
             EntityRef newFruit = f.Create(fruitPrototype);
             f.Global->CurrentFruit = newFruit;
 
-            if (f.Unsafe.TryGetPointer(newFruit, out Transform2D* transform) && f.Unsafe.TryGetPointer(newFruit, out Quantum.Fruit* fruit)) {
+            if (f.Unsafe.TryGetPointer(newFruit, out Transform2D* transform) && f.Unsafe.TryGetPointer(newFruit, out Fruit* fruit)) {
                 transform->Position = spawnpoint;
 
                 var fruitData = map.FruitSpawnOrder[FPMath.Clamp(f.Global->FruitsSpawned, 0, map.FruitSpawnOrder.Length - 1)];
@@ -51,30 +51,33 @@ namespace Quantum.Pacman.Fruit {
         }
 
         public void OnPelletRespawn(Frame f) {
-            var fruit = f.Filter<Quantum.Fruit>();
-            while (fruit.Next(out EntityRef entity, out _)) {
+            var fruit = f.Filter<Fruit>();
+            while (fruit.NextUnsafe(out EntityRef entity, out _)) {
                 f.Destroy(entity);
             }
         }
 
         public void OnTrigger2D(Frame f, TriggerInfo2D info) {
-
-            if (!f.TryGet(info.Entity, out PacmanPlayer pac) || pac.IsDead) {
+            if (f.DestroyPending(info.Other)) {
                 return;
             }
 
-            if (!f.TryGet(info.Other, out Quantum.Fruit fruit) || f.DestroyPending(info.Other) || !f.TryGet(info.Other, out Transform2D transform)) {
+            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac) || pac->IsDead) {
+                return;
+            }
+
+            if (!f.Unsafe.TryGetPointer(info.Other, out Fruit* fruit) ||  !f.Unsafe.TryGetPointer(info.Other, out Transform2D* transform)) {
                 return;
             }
 
             // Pacman interacting with a fruit.
 
-            f.Events.FruitEaten(info.Entity, info.Other, fruit.Points);
-            f.Signals.OnPacmanScored(info.Entity, fruit.Points);
+            f.Events.FruitEaten(info.Entity, info.Other, fruit->Points);
+            f.Signals.OnPacmanScored(info.Entity, fruit->Points);
             f.Destroy(info.Other);
 
             PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
-            PelletSystem.SpawnNextPellets(f, transform.Position.X < maze.GhostHouse.X);
+            PelletSystem.SpawnNextPellets(f, transform->Position.X < maze.GhostHouse.X);
         }
     }
 }

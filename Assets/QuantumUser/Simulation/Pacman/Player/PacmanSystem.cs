@@ -16,13 +16,16 @@ namespace Quantum.Pacman.Ghosts {
         }
 
         public override void Update(Frame f, ref Filter filter) {
+            var entity = filter.Entity;
             var pacman = filter.Pacman;
-
+            var mover = filter.Mover;
+            var transform = filter.Transform;
+            
             if (pacman->IsDead) {
                 if (pacman->RespawnTimer > 0) {
                     if ((pacman->RespawnTimer -= f.DeltaTime) <= 0) {
                         pacman->RespawnTimer = 0;
-                        f.Signals.OnPacmanRespawned(filter.Entity);
+                        f.Signals.OnPacmanRespawned(entity);
                     }
                 }
             }
@@ -31,7 +34,7 @@ namespace Quantum.Pacman.Ghosts {
             if (pacman->Invincibility > 0) {
                 if ((pacman->Invincibility -= f.DeltaTime) <= 0) {
                     pacman->Invincibility = 0;
-                    f.Events.PacmanVulnerable(filter.Entity);
+                    f.Events.PacmanVulnerable(entity);
                 }
             }
 
@@ -40,8 +43,8 @@ namespace Quantum.Pacman.Ghosts {
             }
 
             Input input = default;
-            if (f.TryGet(filter.Entity, out PlayerLink pl)) {
-                input = *f.GetPlayerInput(pl.Player);
+            if (f.Unsafe.TryGetPointer(entity, out PlayerLink* pl)) {
+                input = *f.GetPlayerInput(pl->Player);
             } else {
                 // Bot input, potentially??
             }
@@ -51,8 +54,8 @@ namespace Quantum.Pacman.Ghosts {
                 // Flying through the air. Gracefully.
                 if ((pacman->BombTravelTimer -= f.DeltaTime) <= 0) {
                     pacman->BombTravelTimer = 0;
-                    filter.Transform->Position = pacman->BombEndPosition;
-                    f.Events.PacmanLandBombJump(filter.Entity);
+                    transform->Position = pacman->BombEndPosition;
+                    f.Events.PacmanLandBombJump(entity);
 
                 } else {
                     FP alpha = 1 - (pacman->BombTravelTimer / pacman->BombTravelTime);
@@ -62,31 +65,31 @@ namespace Quantum.Pacman.Ghosts {
                     var map = PacmanStageMapData.Current(f);
                     newPos += FPVector2.Up * map.BombHeightCurve.Evaluate(alpha);
 
-                    filter.Transform->Position = newPos;
+                    transform->Position = newPos;
                     return;
                 }
-            } else if (pacman->Bombs > 0 && filter.Mover->FreezeTime <= 0) {
+            } else if (pacman->Bombs > 0 && mover->FreezeTime <= 0) {
                 // Check for bomb input
                 if (input.Bomb.WasPressed) {
                     pacman->Bombs--;
 
                     var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
                     FPVector2 target = maze.GhostHouse + FPVector2.Down * 6;
-                    FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, filter.Transform->Position);
-                    filter.Mover->FreezeTime = travelTime;
-                    filter.Mover->Direction = -1;
+                    FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, transform->Position);
+                    mover->FreezeTime = travelTime;
+                    mover->Direction = -1;
                     pacman->TemporaryInvincibility = travelTime;
-                    pacman->BombStartPosition = filter.Transform->Position;
+                    pacman->BombStartPosition = transform->Position;
                     pacman->BombEndPosition = target;
 
-                    f.Events.PacmanUseBomb(filter.Entity, target);
+                    f.Events.PacmanUseBomb(entity, target);
                     pacman->BombTravelTimer = travelTime;
                     pacman->BombTravelTime = travelTime;
                     return;
                 }
             }
 
-            if (filter.Mover->FreezeTime > 0) {
+            if (mover->FreezeTime > 0) {
                 return;
             }
 
@@ -99,11 +102,11 @@ namespace Quantum.Pacman.Ghosts {
 
             // Power Pellet
             if (pacman->HasPowerPellet) {
-                var hits = f.Physics2D.OverlapShape(*filter.Transform, filter.Collider->Shape);
+                var hits = f.Physics2D.OverlapShape(*transform, filter.Collider->Shape);
                 for (int i = 0; i < hits.Count; i++) {
                     var hit = hits[i];
 
-                    if (!hit.Entity.IsValid || hit.Entity == filter.Entity) {
+                    if (hit.Entity == entity || !f.Exists(hit.Entity)) {
                         continue;
                     }
 
@@ -114,7 +117,7 @@ namespace Quantum.Pacman.Ghosts {
                     // We collided with a PacmanPlayer
                     if (!otherPac->HasPowerPellet && !otherPac->Invincible) {
                         // Pac1 eaten Pac2
-                        f.Signals.OnCharacterEaten(filter.Entity, hit.Entity);
+                        f.Signals.OnCharacterEaten(entity, hit.Entity);
                         f.Signals.OnPacmanKilled(hit.Entity);
                     }
                 }
@@ -126,11 +129,11 @@ namespace Quantum.Pacman.Ghosts {
             //    pacman->GhostCombo = 0;
             //}
             if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
-                mover->SpeedMultiplier = FP._1;
+                mover->SpeedMultiplier = 1;
             }
 
             var filter = f.Filter<PacmanPlayer, GridMover>();
-            while (filter.NextUnsafe(out _, out PacmanPlayer* pacman2, out GridMover* mover2)) {
+            while (filter.NextUnsafe(out _, out var pacman2, out var mover2)) {
                 if (!pacman2->HasPowerPellet) {
                     mover2->SpeedMultiplier = FP.FromString("0.85");
                 }

@@ -28,7 +28,6 @@ public class ScorePanel : MonoBehaviour {
         }
     }
 
-
     private void OnPacmanCreated(QuantumGame game, PacmanAnimator pacman) {
         PointUpdater newPointUpdater = Instantiate(template, transform);
         newPointUpdater.Initialize(game.Frames.Predicted, pacman);

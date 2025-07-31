@@ -106,20 +106,15 @@ namespace Quantum.Pacman.Logic {
             f.Global->CurrentMazeIndex = newRound;
             PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
-            // Reset pellets
-            f.Global->CurrentLayout = 0;
-            f.Global->PowerPelletRemainingTime = 0;
-            PelletSystem.SpawnNewPellets(f, 0, false, false);
-
             // Remove fruit
-            var fruitFilter = f.Filter<Quantum.Fruit>();
-            while (fruitFilter.Next(out EntityRef entity, out _)) {
+            var fruitFilter = f.Filter<Fruit>();
+            while (fruitFilter.NextUnsafe(out EntityRef entity, out _)) {
                 f.Destroy(entity);
             }
 
             // Reset movers
             var moverFilter = f.Filter<GridMover>();
-            while (moverFilter.NextUnsafe(out _, out GridMover* mover)) {
+            while (moverFilter.NextUnsafe(out _, out var mover)) {
                 mover->SpeedMultiplier = 1;
                 mover->TeleportFrames = 0;
                 mover->IsLocked = false;
@@ -130,7 +125,7 @@ namespace Quantum.Pacman.Logic {
 
             // Reset players
             var pacFilter = f.Filter<PacmanPlayer, GridMover, Transform2D, PlayerLink>();
-            while (pacFilter.NextUnsafe(out _, out PacmanPlayer* pac, out GridMover* mover, out Transform2D* transform, out PlayerLink* pl)) {
+            while (pacFilter.NextUnsafe(out _, out var pac, out var mover, out var transform, out var pl)) {
                 // Reset
                 pac->Reset();
 
@@ -151,8 +146,8 @@ namespace Quantum.Pacman.Logic {
             }
 
             // Reset ghosts
-            var ghostFilter = f.Filter<Quantum.Ghost, Transform2D, GridMover>();
-            while (ghostFilter.NextUnsafe(out _, out Quantum.Ghost* ghost, out Transform2D* transform, out GridMover* mover)) {
+            var ghostFilter = f.Filter<Ghost, Transform2D, GridMover>();
+            while (ghostFilter.NextUnsafe(out _, out var ghost, out var transform, out var mover)) {
 
                 ghost->State = GhostState.Chase;
                 ghost->TimeSinceEaten = 0;
@@ -198,13 +193,17 @@ namespace Quantum.Pacman.Logic {
 
                 f.ResolveList(f.Global->GhostHouseQueue).Clear();
             }
-        }
 
+            // Reset pellets
+            f.Global->CurrentLayout = 0;
+            f.Global->PowerPelletRemainingTime = 0;
+            PelletSystem.SpawnNewPellets(f, 0, false, false);
+        }
 
         public void OnPlayerReady(Frame f, PlayerRef player) {
             var playerLinks = f.Filter<PlayerLink>();
-            while (playerLinks.Next(out _, out PlayerLink playerLink)) {
-                if (!playerLink.ReadyToPlay) {
+            while (playerLinks.NextUnsafe(out _, out var playerLink)) {
+                if (!playerLink->ReadyToPlay) {
                     return;
                 }
             }

@@ -229,10 +229,9 @@ namespace Quantum {
         _f.AddEvent(ev);
         return ev;
       }
-      public EventPelletEat PelletEat(Frame Frame, EntityRef Entity, FPVector2 Tile, Int32 Chain) {
+      public EventPelletEat PelletEat(EntityRef Entity, FPVector2 Tile, Int32 Chain) {
         if (_f.IsPredicted) return null;
         var ev = _f.Context.AcquireEvent<EventPelletEat>(EventPelletEat.ID);
-        ev.Frame = Frame;
         ev.Entity = Entity;
         ev.Tile = Tile;
         ev.Chain = Chain;
@@ -764,7 +763,6 @@ namespace Quantum {
   }
   public unsafe partial class EventPelletEat : EventBase {
     public new const Int32 ID = 20;
-    public Frame Frame;
     public EntityRef Entity;
     public FPVector2 Tile;
     public Int32 Chain;
@@ -785,7 +783,6 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked {
         var hash = 131;
-        hash = hash * 31 + Frame.GetHashCode();
         hash = hash * 31 + Entity.GetHashCode();
         hash = hash * 31 + Tile.GetHashCode();
         hash = hash * 31 + Chain.GetHashCode();

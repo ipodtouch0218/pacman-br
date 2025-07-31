@@ -37,7 +37,8 @@ public unsafe class PointHandler : QuantumSceneViewComponent {
             Destroy(obj);
         }
 
-        PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, e.Frame).ToUnityVector3(), pelletPrefab.transform.rotation);
+        Frame f = PredictedFrame;
+        PelletPointIndicator indicator = Instantiate(pelletPrefab, FPVectorUtils.CellToWorld(e.Tile, f).ToUnityVector3(), pelletPrefab.transform.rotation);
         indicator.Initialize(e.Chain, colors[Mathf.Clamp(e.Chain / 10, 0, colors.Length - 1)]);
         pelletIndicators[e.Tile] = indicator.gameObject;
     }

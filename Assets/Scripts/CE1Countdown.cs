@@ -15,12 +15,8 @@ public class CE1Countdown : MonoBehaviour {
 
 
     public void OnValidate() {
-        if (!image) {
-            image = GetComponent<Image>();
-        }
-        if (!animation) {
-            animation = GetComponent<Animation>();
-        }
+        this.SetIfNull(ref image);
+        this.SetIfNull(ref animation);
     }
 
     public void Start() {
