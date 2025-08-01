@@ -34,6 +34,7 @@ namespace Quantum {
             public byte[] PelletData;
 
             public FPVector2[] FruitSpawnPoints;
+            public FPAnimationCurve LevelCurve ;
         }
 
 

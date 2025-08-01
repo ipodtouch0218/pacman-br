@@ -1,8 +1,24 @@
 global {
-	FP GameStartingTimer;
-	bool GameStarted;
+	GameRules GameRules;
+	GameState GameState;
+	FP StateTimeoutTimer;
 	int GameStartTick;
+	
 	FP Timer;
+}
+
+enum GameState {
+	PreGameLobby,
+	WaitingForPlayers,
+	Starting,
+	Playing,
+	Scoreboard,
+}
+
+struct GameRules {
+	int MinLevel;
+	int LevelRange;
+	int TimerSeconds;
 }
 
 synced event GameStarting {

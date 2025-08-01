@@ -214,6 +214,10 @@ MonoBehaviour:
   HeapPageShift: 15
   HeapPageCount: 256
   HeapExtraCount: 0
+  DefaultRules:
+    MinLevel: 20
+    LevelRange: 20
+    TimerSeconds: 180
 --- !u!114 &-7063383354177692116
 MonoBehaviour:
   m_ObjectHideFlags: 0

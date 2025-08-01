@@ -1,0 +1,14 @@
+global {
+	[AllocateOnComponentAdded] dictionary<PlayerRef, EntityRef> PlayerDatas;
+}
+
+component PlayerData {
+	PlayerRef PlayerRef;
+	int JoinTick;
+	bool IsRoomHost;
+	bool IsReady;
+	bool IsSpectator;
+}
+
+signal OnPlayerReady(PlayerRef player);
+signal OnAllPlayersReady();

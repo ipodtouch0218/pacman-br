@@ -2,45 +2,73 @@
 using Quantum.Pacman.Pellets;
 
 namespace Quantum.Pacman.Logic {
-    public unsafe class GameLogicSystem : SystemMainThread, ISignalOnPlayerReady {
+    public unsafe class GameLogicSystem : SystemMainThread, ISignalOnAllPlayersReady {
 
         public override void OnInit(Frame f) {
-            // Temporary...
-            f.Global->Timer = 180;
+            f.SimulationConfig.DefaultRules.Materialize(f, ref f.Global->GameRules);
 
-            for (int i = 0; i < f.PlayerCount; i++) {
-                SpawnPacman(f, i);
+            if (f.RuntimeConfig.IsRealGame) {
+
+            } else {
+                f.Global->GameState = GameState.WaitingForPlayers;
             }
         }
 
         public override void Update(Frame f) {
+            // Execute commands
+            var playerDataDict = f.ResolveDictionary(f.Global->PlayerDatas);
+            for (int sender = 0; sender < f.PlayerCount; sender++) {
+                if (playerDataDict.TryGetValue(sender, out EntityRef entity)
+                    && f.Unsafe.TryGetPointer(entity, out PlayerData* playerData)) {
+                    if (f.GetPlayerCommand(sender) is ILobbyCommand cmd) {
+                        cmd.Execute(f, sender, playerData);
+                    }
+                }
+            }
 
-            if (f.Global->GameStartingTimer > 0) {
-                // Start game!
-                if ((f.Global->GameStartingTimer -= f.DeltaTime) <= 0) {
-                    f.Global->GameStarted = true;
+            switch (f.Global->GameState) {
+            case GameState.WaitingForPlayers:
+                if (f.Global->StateTimeoutTimer == 0) {
+                    f.Global->StateTimeoutTimer = 30;
+                }
+
+                if ((f.Global->StateTimeoutTimer -= f.DeltaTime) <= 0) {
+                    // Start game
+                    StartGame(f);
+                }
+                break;
+            case GameState.Starting:
+                if (f.Global->StateTimeoutTimer == 0) {
+                    f.Global->StateTimeoutTimer = 5;
+                }
+
+                if ((f.Global->StateTimeoutTimer -= f.DeltaTime) <= 0) {
+                    // Start game
+                    f.Global->StateTimeoutTimer = 0;
                     f.Global->GameStartTick = f.Number;
+                    f.Global->GameState = GameState.Playing;
+                    f.Global->StateTimeoutTimer = 0;
 
-                    f.SystemEnable<PausableSystemGroup>();
+                    f.SystemEnable<GameplaySystemGroup>();
                     f.Events.GameStart();
                 }
-            } else if (f.Global->GameStarted) {
+                break;
+            case GameState.Playing:
                 FP previousTimer = f.Global->Timer;
                 FP newTimer = f.Global->Timer -= f.DeltaTime;
                 if (newTimer <= 0) {
                     // Game end!
-                    f.Global->GameStarted = false;
+                    f.Global->GameState = GameState.Scoreboard;
                     f.Global->Timer = 0;
 
                     var filter = f.Filter<PacmanPlayer>();
-                    while (filter.NextUnsafe(out _, out PacmanPlayer* pac)) {
+                    while (filter.NextUnsafe(out _, out var pac)) {
                         int bombScore = pac->Bombs * (pac->Bombs + 1) * 750 / 2; // equal to sum(750x)
                         pac->RoundScore += bombScore;
                     }
 
-                    f.SystemDisable<PausableSystemGroup>();
+                    f.SystemDisable<GameplaySystemGroup>();
                     f.Events.GameEnd();
-
                 } else {
                     // Mid-game
                     var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
@@ -48,7 +76,7 @@ namespace Quantum.Pacman.Logic {
                     for (int i = maze.Phases.Length - 1; i >= 0; i--) {
                         var phase = maze.Phases[i];
                         if (phase.Timer < timeSinceStart) {
-                            f.Global->GhostsInScatterMode = phase.IsScatter;
+                            //f.Global->GhostsInScatterMode = phase.IsScatter;
                             break;
                         }
                     }
@@ -57,35 +85,32 @@ namespace Quantum.Pacman.Logic {
                         // A second passed!
                         f.Events.TimerSecondPassed(FPMath.CeilToInt(newTimer));
                     }
+
+                    FP increasePercentage = maze.LevelCurve.Evaluate(newTimer / f.Global->GameRules.TimerSeconds);
+                    int newLevel = FPMath.FloorToInt(f.Global->GameRules.MinLevel + f.Global->GameRules.LevelRange * increasePercentage);
+                    SetGameSpeedLevel(f, newLevel);
+                }
+                break;
+            case GameState.Scoreboard:
+                if (f.Global->StateTimeoutTimer == 0) {
+                    f.Global->StateTimeoutTimer = 30;
                 }
 
-            } else {
-                // Host started
-                if (f.GetPlayerCommand(0) is StartNextRoundCommand) {
-                    StartRound(f);
+                if ((f.Global->StateTimeoutTimer -= f.DeltaTime) <= 0) {
+                    // Start game
+                    StartGame(f);
                 }
-
-                // Ready up
-                for (int i = 0; i < f.PlayerCount; i++) {
-                    if (f.GetPlayerCommand(i) is not PlayerReadyCommand) {
-                        continue;
-                    }
-
-                    var playerLinks = f.Filter<PlayerLink>();
-                    while (playerLinks.NextUnsafe(out _, out PlayerLink* playerLink)) {
-                        if (playerLink->Player != i || playerLink->ReadyToPlay) {
-                            continue;
-                        }
-
-                        playerLink->ReadyToPlay = true;
-                        f.Signals.OnPlayerReady(playerLink->Player);
-                    }
-                }
+                break;
             }
         }
 
-        public static void SpawnPacman(Frame f, PlayerRef player) {
+        public void OnAllPlayersReady(Frame f) {
+            if (f.Global->GameState is GameState.WaitingForPlayers or GameState.Scoreboard) {
+                StartGame(f);
+            }
+        }
 
+        public static void SpawnPacman(Frame f, PlayerRef player, int ranking) {
             var entity = f.Create(PacmanStageMapData.Current(f).PacmanPrototype);
 
             var playerlink = new PlayerLink() {
@@ -96,7 +121,7 @@ namespace Quantum.Pacman.Logic {
             if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pac)) {
                 pac->RoundRanking = pac->PreviousRoundRanking = new Ranking() {
                     SharedRanking = 0,
-                    UniqueRanking = (byte) player,
+                    UniqueRanking = (byte) ranking,
                 };
             }
         }
@@ -149,9 +174,10 @@ namespace Quantum.Pacman.Logic {
             var ghostFilter = f.Filter<Ghost, Transform2D, GridMover>();
             while (ghostFilter.NextUnsafe(out _, out var ghost, out var transform, out var mover)) {
 
-                ghost->State = GhostState.Chase;
+                ghost->State = GhostState.Scatter;
                 ghost->TimeSinceEaten = 0;
                 ghost->ForceRandomMovement = false;
+                ghost->ScatterTimer = 5;
 
                 FPVector2 offset = FPVector2.Zero;
                 FPVector2 targetOffset = FPVector2.Zero;
@@ -200,28 +226,32 @@ namespace Quantum.Pacman.Logic {
             PelletSystem.SpawnNewPellets(f, 0, false, false);
         }
 
-        public void OnPlayerReady(Frame f, PlayerRef player) {
-            var playerLinks = f.Filter<PlayerLink>();
-            while (playerLinks.NextUnsafe(out _, out var playerLink)) {
-                if (!playerLink->ReadyToPlay) {
-                    return;
+        public static void StartGame(Frame f) {
+            var filter = f.Filter<PlayerData>();
+            int i = 0;
+            while (filter.NextUnsafe(out _, out var playerData)) {
+                playerData->IsSpectator = !playerData->IsReady;
+
+                if (!playerData->IsSpectator) {
+                    SpawnPacman(f, playerData->PlayerRef, i++);
                 }
+                playerData->IsReady = false;
             }
 
-            // All players are ready!
-            StartRound(f, 0);
-        }
+            int index = 0;
+            if (f.Global->GameState != GameState.Scoreboard) {
+                f.Global->CurrentMazeIndex = -1;
+            }
+            index = ++f.Global->CurrentMazeIndex;
 
-        public static void StartRound(Frame f, int? round = null) {
-            int index = round.GetValueOrDefault(f.Global->CurrentMazeIndex + 1);
             ChangeRound(f, index);
-            f.Global->GameStartingTimer = 5;
-            f.Global->GameStarted = false;
+            f.Global->GameState = GameState.Starting;
+            f.Global->StateTimeoutTimer = 5;
             f.Global->GameStartTick = 0;
             f.Global->FruitsSpawned = 0;
-            f.Global->Timer = 180;
-            f.Global->GhostsInScatterMode = true;
-            SetGameSpeedLevel(f, 15);
+            f.Global->Timer = f.Global->GameRules.TimerSeconds;
+            //f.Global->GhostsInScatterMode = true;
+            SetGameSpeedLevel(f, f.Global->GameRules.MinLevel);
             f.Events.GameStarting(index);
         }
 

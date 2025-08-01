@@ -120,7 +120,9 @@ public unsafe class ScorecardManager : MonoBehaviour {
 
         // Tell the game we're ready
         yield return new WaitForSeconds(3);
-        game.SendCommand(new StartNextRoundCommand());
+        foreach (var i in game.GetLocalPlayerSlots()) {
+            game.SendCommand(i, new CommandPlayerReady());
+        }
     }
 
     private static IEnumerator FadeVolumeToValue(AudioSource source, float target, float time) {

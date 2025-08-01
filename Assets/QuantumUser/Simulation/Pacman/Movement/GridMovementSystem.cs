@@ -41,7 +41,7 @@ namespace Quantum.Pacman.Ghosts {
                 }
             } else if (f.Unsafe.TryGetPointer(entity, out Ghost* ghost)) {
                 // AI movement
-                if ((ghost->State == GhostState.Scared || (!f.Global->GhostsInScatterMode && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
+                if ((ghost->State == GhostState.Scared || (ghost->State != GhostState.Scatter && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                     // Random movement
                     int nextDirection = (mover->Direction + 2) % 4;
                     List<int> possibleDirections = new();

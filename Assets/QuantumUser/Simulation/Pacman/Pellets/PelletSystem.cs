@@ -74,7 +74,7 @@ namespace Quantum.Pacman.Pellets {
         }
 
         public void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile) {
-            if (!f.Global->GameStarted) {
+            if (f.Global->GameState != GameState.Playing) {
                 return;
             }
 

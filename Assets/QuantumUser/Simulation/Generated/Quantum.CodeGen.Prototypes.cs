@@ -67,6 +67,20 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.GameRules))]
+  public unsafe partial class GameRulesPrototype : StructPrototype {
+    public Int32 MinLevel;
+    public Int32 LevelRange;
+    public Int32 TimerSeconds;
+    partial void MaterializeUser(Frame frame, ref Quantum.GameRules result, in PrototypeMaterializationContext context);
+    public void Materialize(Frame frame, ref Quantum.GameRules result, in PrototypeMaterializationContext context = default) {
+        result.MinLevel = this.MinLevel;
+        result.LevelRange = this.LevelRange;
+        result.TimerSeconds = this.TimerSeconds;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.Ghost))]
   public unsafe partial class GhostPrototype : ComponentPrototype<Quantum.Ghost> {
     public FPVector2 TargetPosition;
@@ -76,6 +90,7 @@ namespace Quantum.Prototypes {
     public Quantum.QEnum8<GhostHouseState> GhostHouseState;
     public FP GhostHouseWaitTime;
     public FP TimeSinceEaten;
+    public FP ScatterTimer;
     partial void MaterializeUser(Frame frame, ref Quantum.Ghost result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.Ghost component = default;
@@ -90,6 +105,7 @@ namespace Quantum.Prototypes {
         result.GhostHouseState = this.GhostHouseState;
         result.GhostHouseWaitTime = this.GhostHouseWaitTime;
         result.TimeSinceEaten = this.TimeSinceEaten;
+        result.ScatterTimer = this.ScatterTimer;
         MaterializeUser(frame, ref result, in context);
     }
   }
@@ -184,10 +200,32 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerData))]
+  public unsafe partial class PlayerDataPrototype : ComponentPrototype<Quantum.PlayerData> {
+    public PlayerRef PlayerRef;
+    public Int32 JoinTick;
+    public QBoolean IsRoomHost;
+    public QBoolean IsReady;
+    public QBoolean IsSpectator;
+    partial void MaterializeUser(Frame frame, ref Quantum.PlayerData result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.PlayerData component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.PlayerData result, in PrototypeMaterializationContext context = default) {
+        result.PlayerRef = this.PlayerRef;
+        result.JoinTick = this.JoinTick;
+        result.IsRoomHost = this.IsRoomHost;
+        result.IsReady = this.IsReady;
+        result.IsSpectator = this.IsSpectator;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerLink))]
   public unsafe partial class PlayerLinkPrototype : ComponentPrototype<Quantum.PlayerLink> {
     public PlayerRef Player;
-    public QBoolean ReadyToPlay;
     partial void MaterializeUser(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.PlayerLink component = default;
@@ -196,7 +234,6 @@ namespace Quantum.Prototypes {
     }
     public void Materialize(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context = default) {
         result.Player = this.Player;
-        result.ReadyToPlay = this.ReadyToPlay;
         MaterializeUser(frame, ref result, in context);
     }
   }

@@ -22,19 +22,19 @@ MonoBehaviour:
   Mazes:
   - Phases:
     - Timer:
-        RawValue: 983040
+        RawValue: 1966080
       IsScatter: 0
     - Timer:
         RawValue: 3932160
       IsScatter: 1
     - Timer:
-        RawValue: 4587520
+        RawValue: 5898240
       IsScatter: 0
     - Timer:
         RawValue: 7864320
       IsScatter: 1
     - Timer:
-        RawValue: 8192000
+        RawValue: 9830400
       IsScatter: 0
     SpawnPoints:
     - Position:
@@ -95,6 +95,99 @@ MonoBehaviour:
         RawValue: 655360
       Y:
         RawValue: 851968
+    LevelCurve:
+      Samples:
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 0
+      - RawValue: 495
+      - RawValue: 2731
+      - RawValue: 5887
+      - RawValue: 9700
+      - RawValue: 13908
+      - RawValue: 18247
+      - RawValue: 22455
+      - RawValue: 26269
+      - RawValue: 29427
+      - RawValue: 31666
+      - RawValue: 32723
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 32768
+      - RawValue: 0
+      PreWrapMode: 0
+      PostWrapMode: 0
+      StartTime:
+        RawValue: 0
+      EndTime:
+        RawValue: 65536
+      Resolution: 32
+      OriginalPreWrapMode: 0
+      OriginalPostWrapMode: 0
+      Keys:
+      - Time:
+          RawValue: 0
+        Value:
+          RawValue: 0
+        InTangent:
+          RawValue: 0
+        OutTangent:
+          RawValue: 0
+        TangentMode: 0
+        TangentModeLeft: 4
+        TangentModeRight: 4
+        WeightedMode: 0
+      - Time:
+          RawValue: 21845
+        Value:
+          RawValue: 0
+        InTangent:
+          RawValue: 0
+        OutTangent:
+          RawValue: 40960
+        TangentMode: 0
+        TangentModeLeft: 2
+        TangentModeRight: 0
+        WeightedMode: 0
+      - Time:
+          RawValue: 43690
+        Value:
+          RawValue: 32768
+        InTangent:
+          RawValue: -3764
+        OutTangent:
+          RawValue: 0
+        TangentMode: 0
+        TangentModeLeft: 0
+        TangentModeRight: 2
+        WeightedMode: 0
+      - Time:
+          RawValue: 65536
+        Value:
+          RawValue: 32768
+        InTangent:
+          RawValue: 0
+        OutTangent:
+          RawValue: 0
+        TangentMode: 0
+        TangentModeLeft: 4
+        TangentModeRight: 4
+        WeightedMode: 0
   - Phases:
     - Timer:
         RawValue: 983040
@@ -170,6 +263,18 @@ MonoBehaviour:
         RawValue: 655360
       Y:
         RawValue: 851968
+    LevelCurve:
+      Samples: []
+      PreWrapMode: 0
+      PostWrapMode: 0
+      StartTime:
+        RawValue: 0
+      EndTime:
+        RawValue: 0
+      Resolution: 0
+      OriginalPreWrapMode: 0
+      OriginalPostWrapMode: 0
+      Keys: []
   - Phases:
     - Timer:
         RawValue: 983040
@@ -189,28 +294,28 @@ MonoBehaviour:
     SpawnPoints:
     - Position:
         X:
-          RawValue: 589824
+          RawValue: 458752
         Y:
           RawValue: 262144
-      Direction: 2
+      Direction: 1
     - Position:
         X:
-          RawValue: 1376215
-        Y:
-          RawValue: 1048618
-      Direction: 0
-    - Position:
-        X:
-          RawValue: 589824
+          RawValue: 1507328
         Y:
           RawValue: 1048576
-      Direction: 2
+      Direction: 3
     - Position:
         X:
-          RawValue: 1376256
+          RawValue: 458752
+        Y:
+          RawValue: 1048576
+      Direction: 3
+    - Position:
+        X:
+          RawValue: 1507328
         Y:
           RawValue: 262144
-      Direction: 0
+      Direction: 1
     Origin:
       X:
         RawValue: -458752
@@ -245,6 +350,18 @@ MonoBehaviour:
         RawValue: 655360
       Y:
         RawValue: 851968
+    LevelCurve:
+      Samples: []
+      PreWrapMode: 0
+      PostWrapMode: 0
+      StartTime:
+        RawValue: 0
+      EndTime:
+        RawValue: 0
+      Resolution: 0
+      OriginalPreWrapMode: 0
+      OriginalPostWrapMode: 0
+      Keys: []
   FruitSpawnOrder:
   - SpriteIndex: 0
     Points: 1000

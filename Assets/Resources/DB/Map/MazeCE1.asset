@@ -142,6 +142,8 @@ MonoBehaviour:
           RawValue: 655360
         TimeSinceEaten:
           RawValue: 0
+        ScatterTimer:
+          RawValue: 0
     - rid: 733680650103554052
       type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
       data:
@@ -228,6 +230,8 @@ MonoBehaviour:
         GhostHouseWaitTime:
           RawValue: 0
         TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
           RawValue: 0
     - rid: 2506220031189188612
       type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
@@ -316,6 +320,8 @@ MonoBehaviour:
           RawValue: 983040
         TimeSinceEaten:
           RawValue: 0
+        ScatterTimer:
+          RawValue: 0
     - rid: 3979605181942726660
       type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
       data:
@@ -402,6 +408,8 @@ MonoBehaviour:
         GhostHouseWaitTime:
           RawValue: 1310720
         TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
           RawValue: 0
     - rid: 5665489268504526852
       type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}

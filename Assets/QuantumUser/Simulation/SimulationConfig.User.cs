@@ -1,11 +1,14 @@
 ﻿using Photon.Deterministic;
+using Quantum.Prototypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Quantum {
-  partial class SimulationConfig : AssetObject {
+    partial class SimulationConfig : AssetObject {
 
-  }
+        public GameRulesPrototype DefaultRules;
+
+    }
 }

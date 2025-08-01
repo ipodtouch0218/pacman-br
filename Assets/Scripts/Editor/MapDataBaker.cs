@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEditor;
 using Quantum;
 
-//[assembly: QuantumMapBakeAssembly]
+[assembly: QuantumMapBakeAssembly]
 public class MazeDataBaker : MapDataBakerCallback {
 
     public override void OnBeforeBake(QuantumMapData data) {
@@ -82,7 +82,7 @@ public class MazeDataBaker : MapDataBakerCallback {
             // Ghost house
 
             // UNFINISHED: move object in unity to be a child
-            maze.GhostHouse = FindChildWithTag(tilemap.transform, "Ghost House", true).position.ToFPVector3().XZ;
+            maze.GhostHouse = FindChildWithTag(tilemap.transform, "Ghost House", true).position.ToFPVector2();
 
             // Spawn Data
 

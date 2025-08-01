@@ -25,38 +25,50 @@ namespace Quantum.Pacman.Ghosts {
                 return;
             }
 
-            if (ghost->State == GhostState.Chase) {
+            if (ghost->State is GhostState.Chase or GhostState.Scatter) {
                 // Slow down if directly behind another ghost or player
-                Hit? raycastHit = f.Physics2D.Raycast(filter.Transform->Position, mover->DirectionAsVector2(), FP._1_50, options: QueryOptions.DetectOverlapsAtCastOrigin | QueryOptions.HitTriggers);
-                if (raycastHit.HasValue) {
-                    mover->SpeedMultiplier = FP.FromString("0.85");
-                } else {
-                    HitCollection overlapHits = f.Physics2D.OverlapShape(filter.Transform->Position, 0, filter.Collider->Shape, options: QueryOptions.DetectOverlapsAtCastOrigin | QueryOptions.HitTriggers);
-                    for (int i = 0; i < overlapHits.Count; i++) {
-                        Hit overlapHit = overlapHits.HitsBuffer[i];
-                        if (entity == overlapHit.Entity || entity.Index < overlapHit.Entity.Index) {
-                            // Higher wont slow down...
-                            continue;
-                        }
-                        if (f.Has<Ghost>(overlapHit.Entity)) {
-                            // We are overlapping with a ghost. Slow our ass down
-                            mover->SpeedMultiplier = FP.FromString("0.85");
-                            break;
-                        }
+                bool validHit = false;
+                HitCollection overlapHits = f.Physics2D.OverlapShape(filter.Transform->Position, 0, filter.Collider->Shape);
+                for (int i = 0; i < overlapHits.Count; i++) {
+                    Hit overlapHit = overlapHits.HitsBuffer[i];
+                    if (entity == overlapHit.Entity || entity.Index < overlapHit.Entity.Index) {
+                        // Higher wont slow down...
+                        continue;
                     }
-
-                    mover->SpeedMultiplier = 1;
+                    if (f.Has<Ghost>(overlapHit.Entity)) {
+                        // We are overlapping with a ghost. Slow our ass down
+                        mover->SpeedMultiplier = FP.FromString("0.85");
+                        validHit = true;
+                        break;
+                    }
+                }
+                if (!validHit) {
+                    Hit? raycastHit = f.Physics2D.Raycast(filter.Transform->Position, mover->DirectionAsVector2(), FP._1_50);
+                    if (raycastHit.HasValue) {
+                        mover->SpeedMultiplier = FP.FromString("0.85");
+                    } else {
+                        mover->SpeedMultiplier = 1;
+                    }
                 }
             }
 
             var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
-            if (f.Global->GhostsInScatterMode) {
-                ghost->TargetPosition = ghost->Mode switch {
-                    GhostTargetMode.Blinky => maze.Origin + maze.Size + new FPVector2(-5, -5),
-                    GhostTargetMode.Pinky => maze.Origin + FPVector2.Up * maze.Size.Y + new FPVector2(4, -5),
-                    GhostTargetMode.Inky => maze.Origin + FPVector2.Right * maze.Size.X + new FPVector2(-5, 4),
-                    _ => maze.Origin + new FPVector2(4, 4),
-                };
+            if (ghost->State == GhostState.Scatter) {
+                ghost->TargetPosition = maze.GhostHouse;
+
+                if (FPVector2.DistanceSquared(filter.Transform->Position, maze.GhostHouse) < (10 * 10)) {
+                    if ((ghost->ScatterTimer -= f.DeltaTime) <= 0) {
+                        ghost->ScatterTimer = f.RNG->Next(10, 15);
+                        ghost->State = GhostState.Chase;
+                    }
+                }
+
+                // ghost->TargetPosition = ghost->Mode switch {
+                //     GhostTargetMode.Blinky => maze.Origin + maze.Size + new FPVector2(-5, -5),
+                //     GhostTargetMode.Pinky => maze.Origin + FPVector2.Up * maze.Size.Y + new FPVector2(4, -5),
+                //     GhostTargetMode.Inky => maze.Origin + FPVector2.Right * maze.Size.X + new FPVector2(-5, 4),
+                //     _ => maze.Origin + new FPVector2(4, 4),
+                // };
                 return;
             }
 
@@ -128,6 +140,15 @@ namespace Quantum.Pacman.Ghosts {
                 break;
             }
 
+            if (ghost->State == GhostState.Chase) {
+                if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform->Position) < (10 * 10)) {
+                    if ((ghost->ScatterTimer -= f.DeltaTime) <= 0) {
+                        ghost->ScatterTimer = f.RNG->Next(10, 15);
+                        ghost->State = GhostState.Scatter;
+                    }
+                }
+            }
+
         EarlyBreak:
             // Target the closest player('s tile).
             ghost->TargetPosition = target;
@@ -136,7 +157,7 @@ namespace Quantum.Pacman.Ghosts {
         public void OnPowerPelletStart(Frame f, EntityRef pacman) {
             var filtered = f.Filter<GridMover, Ghost>();
             while (filtered.NextUnsafe(out EntityRef entity, out var mover, out var ghost)) {
-                if (ghost->State == GhostState.Chase) {
+                if (ghost->State is GhostState.Chase or GhostState.Scatter) {
                     mover->Direction = (mover->Direction + 2) % 4;
                     ghost->ChangeState(f, entity, GhostState.Scared);
                 }
@@ -177,6 +198,7 @@ namespace Quantum.Pacman.Ghosts {
                 break;
 
             case GhostState.Chase:
+            case GhostState.Scatter:
                 if (!pac->Invincible && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                     f.Signals.OnPacmanKilled(info.Entity);
                 }

@@ -1,6 +1,6 @@
 global {
 	list<EntityRef> GhostHouseQueue;
-	bool GhostsInScatterMode;
+	//bool GhostsInScatterMode;
 }
 
 component Ghost {
@@ -12,6 +12,7 @@ component Ghost {
 	FP GhostHouseWaitTime;
 
 	FP TimeSinceEaten;
+    FP ScatterTimer;
 }
 
 enum GhostTargetMode : Byte {
@@ -23,6 +24,7 @@ enum GhostTargetMode : Byte {
 
 enum GhostState : Byte {
     Chase,
+    Scatter,
     Scared,
     Eaten,
 }

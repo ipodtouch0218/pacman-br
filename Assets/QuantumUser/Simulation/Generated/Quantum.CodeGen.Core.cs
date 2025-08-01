@@ -49,6 +49,13 @@ namespace Quantum {
   using RuntimeInitializeOnLoadMethodAttribute = UnityEngine.RuntimeInitializeOnLoadMethodAttribute;
   #endif //;
   
+  public enum GameState : int {
+    PreGameLobby,
+    WaitingForPlayers,
+    Starting,
+    Playing,
+    Scoreboard,
+  }
   public enum GhostHouseState : byte {
     NotInGhostHouse,
     ReturningToEntrance,
@@ -61,6 +68,7 @@ namespace Quantum {
   }
   public enum GhostState : byte {
     Chase,
+    Scatter,
     Scared,
     Eaten,
   }
@@ -422,6 +430,32 @@ namespace Quantum {
     }
   }
   [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct GameRules {
+    public const Int32 SIZE = 12;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(4)]
+    public Int32 MinLevel;
+    [FieldOffset(0)]
+    public Int32 LevelRange;
+    [FieldOffset(8)]
+    public Int32 TimerSeconds;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 443;
+        hash = hash * 31 + MinLevel.GetHashCode();
+        hash = hash * 31 + LevelRange.GetHashCode();
+        hash = hash * 31 + TimerSeconds.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (GameRules*)ptr;
+        serializer.Stream.Serialize(&p->LevelRange);
+        serializer.Stream.Serialize(&p->MinLevel);
+        serializer.Stream.Serialize(&p->TimerSeconds);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Input {
     public const Int32 SIZE = 16;
     public const Int32 ALIGNMENT = 4;
@@ -484,8 +518,10 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 736;
+    public const Int32 SIZE = 752;
     public const Int32 ALIGNMENT = 8;
+    [FieldOffset(748)]
+    private fixed Byte _alignment_padding_[4];
     [FieldOffset(0)]
     public AssetRef<Map> Map;
     [FieldOffset(8)]
@@ -513,34 +549,37 @@ namespace Quantum {
     public BitSet6 PlayerLastConnectionState;
     [FieldOffset(696)]
     public EntityRef CurrentFruit;
-    [FieldOffset(668)]
-    public Int32 FruitsSpawned;
-    [FieldOffset(712)]
-    public FP GameStartingTimer;
-    [FieldOffset(680)]
-    public QBoolean GameStarted;
     [FieldOffset(672)]
+    public Int32 FruitsSpawned;
+    [FieldOffset(736)]
+    public GameRules GameRules;
+    [FieldOffset(660)]
+    public GameState GameState;
+    [FieldOffset(720)]
+    public FP StateTimeoutTimer;
+    [FieldOffset(676)]
     public Int32 GameStartTick;
     [FieldOffset(728)]
     public FP Timer;
     [FieldOffset(692)]
     public QListPtr<EntityRef> GhostHouseQueue;
-    [FieldOffset(684)]
-    public QBoolean GhostsInScatterMode;
     [FieldOffset(704)]
     public FP GameSpeed;
-    [FieldOffset(664)]
+    [FieldOffset(668)]
     public Int32 CurrentMazeIndex;
     [FieldOffset(656)]
     public Byte PacmanCounter;
-    [FieldOffset(676)]
+    [FieldOffset(680)]
     public Int32 TotalPellets;
-    [FieldOffset(688)]
+    [FieldOffset(684)]
     public QDictionaryPtr<FPVector2, Byte> PelletData;
-    [FieldOffset(720)]
+    [FieldOffset(712)]
     public FP PowerPelletRemainingTime;
-    [FieldOffset(660)]
+    [FieldOffset(664)]
     public Int32 CurrentLayout;
+    [FieldOffset(688)]
+    [AllocateOnComponentAdded()]
+    public QDictionaryPtr<PlayerRef, EntityRef> PlayerDatas;
     public FixedArray<Input> input {
       get {
         fixed (byte* p = _input_) { return new FixedArray<Input>(p, 16, 6); }
@@ -563,12 +602,12 @@ namespace Quantum {
         hash = hash * 31 + PlayerLastConnectionState.GetHashCode();
         hash = hash * 31 + CurrentFruit.GetHashCode();
         hash = hash * 31 + FruitsSpawned.GetHashCode();
-        hash = hash * 31 + GameStartingTimer.GetHashCode();
-        hash = hash * 31 + GameStarted.GetHashCode();
+        hash = hash * 31 + GameRules.GetHashCode();
+        hash = hash * 31 + (Int32)GameState;
+        hash = hash * 31 + StateTimeoutTimer.GetHashCode();
         hash = hash * 31 + GameStartTick.GetHashCode();
         hash = hash * 31 + Timer.GetHashCode();
         hash = hash * 31 + GhostHouseQueue.GetHashCode();
-        hash = hash * 31 + GhostsInScatterMode.GetHashCode();
         hash = hash * 31 + GameSpeed.GetHashCode();
         hash = hash * 31 + CurrentMazeIndex.GetHashCode();
         hash = hash * 31 + PacmanCounter.GetHashCode();
@@ -576,12 +615,17 @@ namespace Quantum {
         hash = hash * 31 + PelletData.GetHashCode();
         hash = hash * 31 + PowerPelletRemainingTime.GetHashCode();
         hash = hash * 31 + CurrentLayout.GetHashCode();
+        hash = hash * 31 + PlayerDatas.GetHashCode();
         return hash;
       }
     }
     partial void ClearPointersPartial(FrameBase f, EntityRef entity) {
       GhostHouseQueue = default;
       PelletData = default;
+      PlayerDatas = default;
+    }
+    partial void AllocatePointersPartial(FrameBase f, EntityRef entity) {
+      f.TryAllocateDictionary(ref PlayerDatas);
     }
     static partial void SerializeCodeGen(void* ptr, FrameSerializer serializer) {
         var p = (_globals_*)ptr;
@@ -598,20 +642,21 @@ namespace Quantum {
         FixedArray.Serialize(p->input, serializer, Statics.SerializeInput);
         Quantum.BitSet6.Serialize(&p->PlayerLastConnectionState, serializer);
         serializer.Stream.Serialize(&p->PacmanCounter);
+        serializer.Stream.Serialize((Int32*)&p->GameState);
         serializer.Stream.Serialize(&p->CurrentLayout);
         serializer.Stream.Serialize(&p->CurrentMazeIndex);
         serializer.Stream.Serialize(&p->FruitsSpawned);
         serializer.Stream.Serialize(&p->GameStartTick);
         serializer.Stream.Serialize(&p->TotalPellets);
-        QBoolean.Serialize(&p->GameStarted, serializer);
-        QBoolean.Serialize(&p->GhostsInScatterMode, serializer);
         QDictionary.Serialize(&p->PelletData, serializer, Statics.SerializeFPVector2, Statics.SerializeByte);
+        QDictionary.Serialize(&p->PlayerDatas, serializer, Statics.SerializePlayerRef, Statics.SerializeEntityRef);
         QList.Serialize(&p->GhostHouseQueue, serializer, Statics.SerializeEntityRef);
         EntityRef.Serialize(&p->CurrentFruit, serializer);
         FP.Serialize(&p->GameSpeed, serializer);
-        FP.Serialize(&p->GameStartingTimer, serializer);
         FP.Serialize(&p->PowerPelletRemainingTime, serializer);
+        FP.Serialize(&p->StateTimeoutTimer, serializer);
         FP.Serialize(&p->Timer, serializer);
+        Quantum.GameRules.Serialize(&p->GameRules, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -638,9 +683,9 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Ghost : Quantum.IComponent {
-    public const Int32 SIZE = 40;
+    public const Int32 SIZE = 48;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(24)]
+    [FieldOffset(32)]
     public FPVector2 TargetPosition;
     [FieldOffset(4)]
     public QBoolean ForceRandomMovement;
@@ -652,8 +697,10 @@ namespace Quantum {
     public GhostHouseState GhostHouseState;
     [FieldOffset(8)]
     public FP GhostHouseWaitTime;
-    [FieldOffset(16)]
+    [FieldOffset(24)]
     public FP TimeSinceEaten;
+    [FieldOffset(16)]
+    public FP ScatterTimer;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 733;
@@ -664,6 +711,7 @@ namespace Quantum {
         hash = hash * 31 + (Byte)GhostHouseState;
         hash = hash * 31 + GhostHouseWaitTime.GetHashCode();
         hash = hash * 31 + TimeSinceEaten.GetHashCode();
+        hash = hash * 31 + ScatterTimer.GetHashCode();
         return hash;
       }
     }
@@ -674,6 +722,7 @@ namespace Quantum {
         serializer.Stream.Serialize((Byte*)&p->Mode);
         QBoolean.Serialize(&p->ForceRandomMovement, serializer);
         FP.Serialize(&p->GhostHouseWaitTime, serializer);
+        FP.Serialize(&p->ScatterTimer, serializer);
         FP.Serialize(&p->TimeSinceEaten, serializer);
         FPVector2.Serialize(&p->TargetPosition, serializer);
     }
@@ -811,25 +860,55 @@ namespace Quantum {
     }
   }
   [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct PlayerData : Quantum.IComponent {
+    public const Int32 SIZE = 20;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(4)]
+    public PlayerRef PlayerRef;
+    [FieldOffset(0)]
+    public Int32 JoinTick;
+    [FieldOffset(12)]
+    public QBoolean IsRoomHost;
+    [FieldOffset(8)]
+    public QBoolean IsReady;
+    [FieldOffset(16)]
+    public QBoolean IsSpectator;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 10271;
+        hash = hash * 31 + PlayerRef.GetHashCode();
+        hash = hash * 31 + JoinTick.GetHashCode();
+        hash = hash * 31 + IsRoomHost.GetHashCode();
+        hash = hash * 31 + IsReady.GetHashCode();
+        hash = hash * 31 + IsSpectator.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (PlayerData*)ptr;
+        serializer.Stream.Serialize(&p->JoinTick);
+        PlayerRef.Serialize(&p->PlayerRef, serializer);
+        QBoolean.Serialize(&p->IsReady, serializer);
+        QBoolean.Serialize(&p->IsRoomHost, serializer);
+        QBoolean.Serialize(&p->IsSpectator, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct PlayerLink : Quantum.IComponent {
-    public const Int32 SIZE = 8;
+    public const Int32 SIZE = 4;
     public const Int32 ALIGNMENT = 4;
     [FieldOffset(0)]
     public PlayerRef Player;
-    [FieldOffset(4)]
-    public QBoolean ReadyToPlay;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 21391;
         hash = hash * 31 + Player.GetHashCode();
-        hash = hash * 31 + ReadyToPlay.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (PlayerLink*)ptr;
         PlayerRef.Serialize(&p->Player, serializer);
-        QBoolean.Serialize(&p->ReadyToPlay, serializer);
     }
   }
   public unsafe partial interface ISignalOnGridMoverChangeTile : ISignal {
@@ -862,6 +941,9 @@ namespace Quantum {
   public unsafe partial interface ISignalOnPlayerReady : ISignal {
     void OnPlayerReady(Frame f, PlayerRef player);
   }
+  public unsafe partial interface ISignalOnAllPlayersReady : ISignal {
+    void OnAllPlayersReady(Frame f);
+  }
   public static unsafe partial class Constants {
   }
   public unsafe partial class Frame {
@@ -875,6 +957,7 @@ namespace Quantum {
     private ISignalOnPowerPelletStart[] _ISignalOnPowerPelletStartSystems;
     private ISignalOnPowerPelletEnd[] _ISignalOnPowerPelletEndSystems;
     private ISignalOnPlayerReady[] _ISignalOnPlayerReadySystems;
+    private ISignalOnAllPlayersReady[] _ISignalOnAllPlayersReadySystems;
     partial void AllocGen() {
       _globals = (_globals_*)Context.Allocator.AllocAndClear(sizeof(_globals_));
     }
@@ -896,6 +979,7 @@ namespace Quantum {
       _ISignalOnPowerPelletStartSystems = BuildSignalsArray<ISignalOnPowerPelletStart>();
       _ISignalOnPowerPelletEndSystems = BuildSignalsArray<ISignalOnPowerPelletEnd>();
       _ISignalOnPlayerReadySystems = BuildSignalsArray<ISignalOnPlayerReady>();
+      _ISignalOnAllPlayersReadySystems = BuildSignalsArray<ISignalOnAllPlayersReady>();
       _ComponentSignalsOnAdded = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       _ComponentSignalsOnRemoved = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       BuildSignalsArrayOnComponentAdded<CharacterController2D>();
@@ -936,6 +1020,8 @@ namespace Quantum {
       BuildSignalsArrayOnComponentRemoved<PhysicsJoints2D>();
       BuildSignalsArrayOnComponentAdded<PhysicsJoints3D>();
       BuildSignalsArrayOnComponentRemoved<PhysicsJoints3D>();
+      BuildSignalsArrayOnComponentAdded<Quantum.PlayerData>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.PlayerData>();
       BuildSignalsArrayOnComponentAdded<Quantum.PlayerLink>();
       BuildSignalsArrayOnComponentRemoved<Quantum.PlayerLink>();
       BuildSignalsArrayOnComponentAdded<Transform2D>();
@@ -1057,17 +1143,28 @@ namespace Quantum {
           }
         }
       }
+      public void OnAllPlayersReady() {
+        var array = _f._ISignalOnAllPlayersReadySystems;
+        for (Int32 i = 0; i < array.Length; ++i) {
+          var s = array[i];
+          if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
+            s.OnAllPlayersReady(_f);
+          }
+        }
+      }
     }
   }
   public unsafe partial class Statics {
     public static FrameSerializer.Delegate SerializeEntityRef;
     public static FrameSerializer.Delegate SerializeFPVector2;
     public static FrameSerializer.Delegate SerializeByte;
+    public static FrameSerializer.Delegate SerializePlayerRef;
     public static FrameSerializer.Delegate SerializeInput;
     static partial void InitStaticDelegatesGen() {
       SerializeEntityRef = EntityRef.Serialize;
       SerializeFPVector2 = FPVector2.Serialize;
       SerializeByte = (v, s) => {{ s.Stream.Serialize((Byte*)v); }};
+      SerializePlayerRef = PlayerRef.Serialize;
       SerializeInput = Quantum.Input.Serialize;
     }
     static partial void RegisterSimulationTypesGen(TypeRegistry typeRegistry) {
@@ -1103,6 +1200,8 @@ namespace Quantum {
       typeRegistry.Register(typeof(FrameMetaData), FrameMetaData.SIZE);
       typeRegistry.Register(typeof(FrameTimer), FrameTimer.SIZE);
       typeRegistry.Register(typeof(Quantum.Fruit), Quantum.Fruit.SIZE);
+      typeRegistry.Register(typeof(Quantum.GameRules), Quantum.GameRules.SIZE);
+      typeRegistry.Register(typeof(Quantum.GameState), 4);
       typeRegistry.Register(typeof(Quantum.Ghost), Quantum.Ghost.SIZE);
       typeRegistry.Register(typeof(Quantum.GhostHouseState), 1);
       typeRegistry.Register(typeof(Quantum.GhostState), 1);
@@ -1140,6 +1239,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(PhysicsJoints3D), PhysicsJoints3D.SIZE);
       typeRegistry.Register(typeof(PhysicsQueryRef), PhysicsQueryRef.SIZE);
       typeRegistry.Register(typeof(PhysicsSceneSettings), PhysicsSceneSettings.SIZE);
+      typeRegistry.Register(typeof(Quantum.PlayerData), Quantum.PlayerData.SIZE);
       typeRegistry.Register(typeof(Quantum.PlayerLink), Quantum.PlayerLink.SIZE);
       typeRegistry.Register(typeof(PlayerRef), PlayerRef.SIZE);
       typeRegistry.Register(typeof(Ptr), Ptr.SIZE);
@@ -1159,12 +1259,13 @@ namespace Quantum {
       typeRegistry.Register(typeof(Quantum._globals_), Quantum._globals_.SIZE);
     }
     static partial void InitComponentTypeIdGen() {
-      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 5)
+      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 6)
         .AddBuiltInComponents()
         .Add<Quantum.Fruit>(Quantum.Fruit.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.Ghost>(Quantum.Ghost.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.GridMover>(Quantum.GridMover.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.PacmanPlayer>(Quantum.PacmanPlayer.Serialize, null, null, ComponentFlags.None)
+        .Add<Quantum.PlayerData>(Quantum.PlayerData.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.PlayerLink>(Quantum.PlayerLink.Serialize, null, null, ComponentFlags.None)
         .Finish();
     }
@@ -1172,6 +1273,7 @@ namespace Quantum {
     public static void EnsureNotStrippedGen() {
       FramePrinter.EnsureNotStripped();
       FramePrinter.EnsurePrimitiveNotStripped<CallbackFlags>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.GameState>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostHouseState>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostState>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.GhostTargetMode>();

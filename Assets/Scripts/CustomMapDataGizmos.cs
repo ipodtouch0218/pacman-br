@@ -21,7 +21,7 @@ public class CustomMapDataGizmos : MonoBehaviour {
             }
             PacmanStageMapData.MazeData maze = customData.Mazes[i];
             Gizmos.DrawWireCube(
-                (maze.Origin + (maze.Size / 2)).ToUnityVector3() - mazeGameObject.position,
+                (maze.Origin + (maze.Size / 2)).ToUnityVector3() + mazeGameObject.position,
                 maze.Size.ToUnityVector3());
         }
 

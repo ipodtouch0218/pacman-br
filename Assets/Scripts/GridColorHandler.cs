@@ -1,10 +1,13 @@
 using Quantum;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 public unsafe class GridColorHandler : QuantumSceneViewComponent {
 
     //---Serialized Variables
+    [SerializeField] private FullScreenPassRendererFeature fullscreenPass;
+    [SerializeField] private Material fullscreenWaveMaterial;
     [SerializeField] private TilemapRenderer tilemapRenderer;
     [SerializeField] private Gradient gradient;
 
@@ -16,6 +19,7 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
 
     private float screenshakeTimer;
     private Vector2 screenshakeDirection;
+    private Material fullscreenMat;
 
     private void Start() {
         mpb = new();
@@ -23,6 +27,14 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
 
         QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
         QuantumEvent.Subscribe<EventPacmanUseBomb>(this, OnPacmanUseBomb);
+
+        fullscreenPass.passMaterial = fullscreenMat = new Material(fullscreenWaveMaterial);
+        fullscreenPass.SetActive(true);
+    }
+
+    public void OnDestroy() {
+        Destroy(fullscreenMat);
+        fullscreenPass.SetActive(false);
     }
 
     public void Update() {
@@ -51,8 +63,9 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
             percentage = 1;
         }
 
+        fullscreenMat.SetFloat("_Wave_Intensity", (1f - percentage) * maxWaveIntensity);
+
         mpb.SetColor("_Color", gradient.Evaluate(percentage));
-        mpb.SetFloat("_WaveIntensity", (1f - percentage) * maxWaveIntensity);
         tilemapRenderer.SetPropertyBlock(mpb);
     }
 

@@ -58,7 +58,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         QuantumEvent.Subscribe<EventPacmanCollectBomb>(this, OnCollectBomb);
         QuantumEvent.Subscribe<EventPacmanUseBomb>(this, OnUseBomb);
         QuantumEvent.Subscribe<EventPacmanLandBombJump>(this, OnLandBombJump);
-
+        
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
 
         mpb = new();
@@ -67,7 +67,6 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
 
     public override void OnActivate(Frame f) {
         PlayerColor = Utils.GetPlayerColor(f, EntityRef);
-
         var main = respawnParticles.main;
         main.startColor = PlayerColor;
         arrowRenderer.color = PlayerColor;
@@ -213,7 +212,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             if (left) {
                 sparkParticles.transform.SetLocalPositionAndRotation(new(-0.5f, 0, 0), Quaternion.Euler(0, 0, 0));
             } else {
-                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(0, 0, 45));
+                sparkParticles.transform.SetLocalPositionAndRotation(new(0.5f, 0, 0), Quaternion.Euler(0, 0, -45));
             }
             break;
         case 2:
