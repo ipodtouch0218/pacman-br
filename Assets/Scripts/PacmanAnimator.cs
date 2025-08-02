@@ -173,7 +173,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         PacmanPlayer* pacman = frame.Unsafe.GetPointer<PacmanPlayer>(EntityRef);
         GridMover* mover = frame.Unsafe.GetPointer<GridMover>(EntityRef);
 
-        if (!frame.SystemIsEnabledInHierarchy<GridMovementSystem>() || pacman->IsDead || mover->IsLocked || mover->IsStationary || mover->FreezeTime > 0) {
+        if (!frame.SystemIsEnabledInHierarchy<GridMovementSystem>() || pacman->IsDead || mover->IsLocked ||/* mover->IsStationary ||*/ mover->FreezeTime > 0) {
             emission.enabled = false;
             return;
         }

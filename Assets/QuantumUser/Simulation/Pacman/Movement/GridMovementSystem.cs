@@ -1,5 +1,6 @@
 ﻿using Photon.Deterministic;
 using Quantum.Util;
+using System;
 using System.Collections.Generic;
 
 namespace Quantum.Pacman.Ghosts {
@@ -44,17 +45,18 @@ namespace Quantum.Pacman.Ghosts {
                 if ((ghost->State == GhostState.Scared || (ghost->State != GhostState.Scatter && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
                     // Random movement
                     int nextDirection = (mover->Direction + 2) % 4;
-                    List<int> possibleDirections = new();
+                    Span<int> possibleDirections = stackalloc int[4];
+                    int possibleDirectionsCount = 0;
                     for (int i = 0; i < 4; i++) {
                         if (i == nextDirection) {
                             continue;
                         }
                         if (CanMoveInDirection(f, ref filter, i)) {
-                            possibleDirections.Add(i);
+                            possibleDirections[possibleDirectionsCount++] = i;
                         }
                     }
-                    if (possibleDirections.Count > 0) {
-                        nextDirection = possibleDirections[f.Global->RngSession.Next(0, possibleDirections.Count)];
+                    if (possibleDirectionsCount > 0) {
+                        nextDirection = possibleDirections[f.Global->RngSession.Next(0, possibleDirectionsCount)];
                     }
                     TryChangeDirection(f, ref filter, nextDirection);
                 } else {
@@ -155,7 +157,7 @@ namespace Quantum.Pacman.Ghosts {
             }
 
             // Don't allow turning into a wall if we are already moving in that direction
-            if (CanMoveInDirection(f, ref filter, mover->Direction) && !CanMoveInDirection(f, ref filter, newDirection)) {
+            if (/*CanMoveInDirection(f, ref filter, mover->Direction) &&*/ !CanMoveInDirection(f, ref filter, newDirection)) {
                 return;
             }
 

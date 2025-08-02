@@ -227,15 +227,22 @@ namespace Quantum.Pacman.Logic {
         }
 
         public static void StartGame(Frame f) {
-            var filter = f.Filter<PlayerData>();
-            int i = 0;
-            while (filter.NextUnsafe(out _, out var playerData)) {
-                playerData->IsSpectator = !playerData->IsReady;
+            if (f.Global->GameState == GameState.WaitingForPlayers) {
+                var filter = f.Filter<PlayerData>();
+                int i = 0;
+                while (filter.NextUnsafe(out _, out var playerData)) {
+                    playerData->IsSpectator = !playerData->IsReady;
 
-                if (!playerData->IsSpectator) {
-                    SpawnPacman(f, playerData->PlayerRef, i++);
+                    if (!playerData->IsSpectator) {
+                        SpawnPacman(f, playerData->PlayerRef, i++);
+                    }
+                    playerData->IsReady = false;
                 }
-                playerData->IsReady = false;
+            } else {
+                var filter2 = f.Filter<PlayerData>();
+                while (filter2.NextUnsafe(out _, out var playerData)) {
+                    playerData->IsReady = false;
+                }
             }
 
             int index = 0;

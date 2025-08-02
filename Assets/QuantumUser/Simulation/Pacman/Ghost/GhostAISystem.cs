@@ -58,7 +58,7 @@ namespace Quantum.Pacman.Ghosts {
 
                 if (FPVector2.DistanceSquared(filter.Transform->Position, maze.GhostHouse) < (10 * 10)) {
                     if ((ghost->ScatterTimer -= f.DeltaTime) <= 0) {
-                        ghost->ScatterTimer = f.RNG->Next(10, 15);
+                        ghost->ScatterTimer = f.RNG->Next(5, 10);
                         ghost->State = GhostState.Chase;
                     }
                 }
@@ -143,7 +143,7 @@ namespace Quantum.Pacman.Ghosts {
             if (ghost->State == GhostState.Chase) {
                 if (FPVector2.DistanceSquared(filter.Transform->Position, closestPlayerTransform->Position) < (10 * 10)) {
                     if ((ghost->ScatterTimer -= f.DeltaTime) <= 0) {
-                        ghost->ScatterTimer = f.RNG->Next(10, 15);
+                        ghost->ScatterTimer = f.RNG->Next(7, 12);
                         ghost->State = GhostState.Scatter;
                     }
                 }

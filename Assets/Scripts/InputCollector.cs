@@ -1,47 +1,50 @@
 using Quantum;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputCollector : MonoBehaviour {
 
     //---Serailized Variables
-    [SerializeField] private InputActionReference movementAction, bombAction;
+    [SerializeField] private List<InputActionReference> movementActions;
+    [SerializeField] private InputActionReference bombAction;
 
     //---Private Variables
-    private float[] directionTimes;
+    private List<sbyte> heldDirections = new(4);
+    private sbyte lastHeldDirection = -1;
 
     public void Start() {
-        //reservePowerupAction.action.performed += OnPowerupAction;
         QuantumCallback.Subscribe<CallbackPollInput>(this, OnPollInput);
-        directionTimes = new float[4];
 
-        movementAction.action.actionMap.Enable();
+        foreach (var action in movementActions) {
+            action.action.actionMap.Enable();
+            action.action.performed += Performed;
+            action.action.canceled += Performed;
+        }
     }
 
+    public void OnDestroy() {
+        foreach (var action in movementActions) {
+            action.action.performed -= Performed;
+            action.action.canceled -= Performed;
+        }
+    }
 
-    public void OnPollInput(CallbackPollInput callback) {
+    private void Performed(InputAction.CallbackContext context) {
+        sbyte direction = (sbyte) movementActions.FindIndex(iar => iar.action == context.action);
 
-        Vector2 stick = movementAction.action.ReadValue<Vector2>();
-        Vector2 normalizedJoystick = stick.normalized;
-        //TODO: changeable deadzone?
-        bool up = Vector2.Dot(normalizedJoystick, Vector2.up) > 0.6f;
-        bool down = Vector2.Dot(normalizedJoystick, Vector2.down) > 0.6f;
-        bool left = Vector2.Dot(normalizedJoystick, Vector2.left) > 0.4f;
-        bool right = Vector2.Dot(normalizedJoystick, Vector2.right) > 0.4f;
-
-        directionTimes[0] = left ? Time.time : 0;
-        directionTimes[1] = up ? Time.time : 0;
-        directionTimes[2] = right ? Time.time : 0;
-        directionTimes[3] = down ? Time.time : 0;
-
-        sbyte target = -1;
-        float timeMax = 0;
-        for (int i = 0; i < directionTimes.Length; i++) {
-            if (directionTimes[i] > timeMax) {
-                target = (sbyte) i;
-                timeMax = directionTimes[i];
+        if (direction != -1) {
+            if (context.performed) {
+                heldDirections.Add(direction);
+            } else if (context.canceled) {
+                heldDirections.Remove(direction);
             }
         }
+    }
+
+    public void OnPollInput(CallbackPollInput callback) {
+        sbyte target = heldDirections.Count > 0 ? heldDirections[0] : lastHeldDirection;
+        lastHeldDirection = target;
 
         Quantum.Input input = new() {
             TargetDirection = target,

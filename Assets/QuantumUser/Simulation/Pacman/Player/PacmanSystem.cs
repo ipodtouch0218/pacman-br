@@ -38,15 +38,33 @@ namespace Quantum.Pacman.Ghosts {
                 }
             }
 
-            if (pacman->IsDead) {
-                return;
-            }
-
             Input input = default;
             if (f.Unsafe.TryGetPointer(entity, out PlayerLink* pl)) {
                 input = *f.GetPlayerInput(pl->Player);
             } else {
                 // Bot input, potentially??
+            }
+
+            if (pacman->IsDead) {
+                if (pacman->RespawnTimer >= FP.FromString("4.9")) {
+                    if (pacman->Bombs > 0 && input.Bomb.WasPressed) {
+                        // Allow bomb use 100ms after dying
+                        UseBomb(f, ref filter);
+                        pacman->RespawnTimer = 0;
+                        pacman->IsDead = false;
+                        mover->IsLocked = false;
+                    }
+                } else {
+                    if (pacman->RespawnTimer + f.DeltaTime >= FP.FromString("4.9")) {
+                        if (pacman->HasPowerPellet) {
+                            pacman->PowerPelletTimer = 0;
+                            f.Signals.OnPowerPelletEnd(entity);
+                            f.Events.PowerPelletEnd(entity);
+                        }
+                        f.Events.PacmanKilled(entity, pacman->RespawnTimer);
+                    }
+                }
+                return;
             }
 
             // Bombs
@@ -71,20 +89,7 @@ namespace Quantum.Pacman.Ghosts {
             } else if (pacman->Bombs > 0 && mover->FreezeTime <= 0) {
                 // Check for bomb input
                 if (input.Bomb.WasPressed) {
-                    pacman->Bombs--;
-
-                    var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
-                    FPVector2 target = maze.GhostHouse + FPVector2.Down * 6;
-                    FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, transform->Position);
-                    mover->FreezeTime = travelTime;
-                    mover->Direction = -1;
-                    pacman->TemporaryInvincibility = travelTime;
-                    pacman->BombStartPosition = transform->Position;
-                    pacman->BombEndPosition = target;
-
-                    f.Events.PacmanUseBomb(entity, target);
-                    pacman->BombTravelTimer = travelTime;
-                    pacman->BombTravelTime = travelTime;
+                    UseBomb(f, ref filter);
                     return;
                 }
             }
@@ -122,6 +127,28 @@ namespace Quantum.Pacman.Ghosts {
                     }
                 }
             }
+        }
+
+        public static void UseBomb(Frame f, ref Filter filter) {
+            var entity = filter.Entity;
+            var pacman = filter.Pacman;
+            var transform = filter.Transform;
+            var mover = filter.Mover;
+
+            pacman->Bombs--;
+
+            var maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
+            FPVector2 target = maze.GhostHouse + FPVector2.Down * 6;
+            FP travelTime = BombBaseTravelTime + BombDistanceTravelTime * FPVector2.Distance(target, transform->Position);
+            mover->FreezeTime = travelTime;
+            mover->Direction = -1;
+            pacman->TemporaryInvincibility = travelTime;
+            pacman->BombStartPosition = transform->Position;
+            pacman->BombEndPosition = target;
+
+            f.Events.PacmanUseBomb(entity, target);
+            pacman->BombTravelTimer = travelTime;
+            pacman->BombTravelTime = travelTime;
         }
 
         public void OnPowerPelletStart(Frame f, EntityRef entity) {
@@ -163,19 +190,11 @@ namespace Quantum.Pacman.Ghosts {
             if (f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pac)) {
                 pac->IsDead = true;
                 pac->RespawnTimer = 5;
-
-                if (pac->HasPowerPellet) {
-                    pac->PowerPelletTimer = 0;
-                    f.Signals.OnPowerPelletEnd(entity);
-                    f.Events.PowerPelletEnd(entity);
-                }
             }
 
             if (f.Unsafe.TryGetPointer(entity, out GridMover* mover)) {
                 mover->IsLocked = true;
             }
-
-            f.Events.PacmanKilled(entity, pac->RespawnTimer);
         }
 
         public void OnCharacterEaten(Frame f, EntityRef pacmanEntity, EntityRef other) {

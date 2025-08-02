@@ -4498,8 +4498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9902e2c76e6307745b20a18a81009c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementAction: {fileID: 3979995037830419033, guid: 5a760e80b35f74849a8e41d9d0f02495,
-    type: 3}
+  movementActions:
+  - {fileID: 5541718933846740050, guid: 5a760e80b35f74849a8e41d9d0f02495, type: 3}
+  - {fileID: -5525876000994351850, guid: 5a760e80b35f74849a8e41d9d0f02495, type: 3}
+  - {fileID: -2543090207481521370, guid: 5a760e80b35f74849a8e41d9d0f02495, type: 3}
+  - {fileID: -5830192655497221274, guid: 5a760e80b35f74849a8e41d9d0f02495, type: 3}
   bombAction: {fileID: 2866771522369098605, guid: 5a760e80b35f74849a8e41d9d0f02495,
     type: 3}
 --- !u!114 &206999467
@@ -20820,7 +20823,7 @@ Grid:
   m_GameObject: {fileID: 734971371}
   m_Enabled: 1
   m_CellSize: {x: 1, y: 1, z: 0}
-  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellGap: {x: -0.00015, y: -0.00015, z: -0}
   m_CellLayout: 0
   m_CellSwizzle: 0
 --- !u!4 &734971373
