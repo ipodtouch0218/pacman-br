@@ -67,6 +67,15 @@ namespace Quantum.Pacman.Ghosts {
                 return;
             }
 
+
+            if (f.Unsafe.TryGetPointer(entity, out PlayerLink* link)) {
+                // Player movement
+                if (input.TargetDirection != -1 && mover->Direction != input.TargetDirection) {
+                    f.Unsafe.ComponentGetter<GridMovementSystem.Filter>().TryGet(f, entity, out var gridFilter);
+                    GridMovementSystem.TryChangeDirection(f, ref gridFilter, input.TargetDirection, FP._0_33);
+                }
+            }
+
             // Bombs
             if (pacman->BombTravelTimer > 0) {
                 // Flying through the air. Gracefully.
@@ -202,6 +211,7 @@ namespace Quantum.Pacman.Ghosts {
                 return;
             }
 
+            FP freeze = FP._0_33;
             int points = (++pacman->GhostCombo) switch {
                 1 => 400,
                 2 => 800,
@@ -214,15 +224,15 @@ namespace Quantum.Pacman.Ghosts {
             };
 
             // Bonus power pellet time
-            pacman->PowerPelletTimer = FPMath.Min(pacman->PowerPelletTimer + FP._0_50, pacman->PowerPelletFullTimer);
+            pacman->PowerPelletTimer = FPMath.Min(pacman->PowerPelletTimer + freeze, pacman->PowerPelletFullTimer);
 
             // Freeze
             if (f.Unsafe.TryGetPointer(pacmanEntity, out GridMover* pacmanMover)) {
                 pacman->TemporaryInvincibility = FP._0_10;
-                pacmanMover->FreezeTime = FP._0_50;
+                pacmanMover->FreezeTime = freeze;
             }
             if (f.Unsafe.TryGetPointer(other, out GridMover* otherMover)) {
-                otherMover->FreezeTime = FP._0_50;
+                otherMover->FreezeTime = freeze;
             }
 
             f.Signals.OnPacmanScored(pacmanEntity, points);

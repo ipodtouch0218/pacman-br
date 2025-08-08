@@ -15,12 +15,12 @@ MonoBehaviour:
   Identifier:
     Path: Resources/DB/Map/MazeCE1
     Guid:
-      Value: 1710471675203725834
+      Value: 407439808969741211
   UserAsset:
     Id:
-      Value: 2646864575692090043
+      Value: 483490596215336011
   Scene: MazeCE1
-  ScenePath: Assets/Scenes/MazeCE1.unity
+  ScenePath: Assets/Scenes/Levels/MazeCE1.unity
   SceneGuid: 03bd5ba32b9950244a08f22579187d8b
   WorldSize: 32
   BucketsCount: 8
@@ -32,7 +32,7 @@ MonoBehaviour:
   TriangleMeshCellSize: -1
   StaticColliders3DTrianglesData:
     Id:
-      Value: 810189026489540597
+      Value: 478946691420408623
   SerializeTrianglesMetadata: 0
   GridSizeX: 32
   GridSizeY: 32

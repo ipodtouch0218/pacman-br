@@ -332,7 +332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5afd08f0257838649bb631de11fe13be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 1948616832682206109}
   particles: {fileID: 4839844880584937212, guid: 9a49e4bd0f64cfa41b7d99c91c125c92,
     type: 3}
   spriteRenderer: {fileID: 2038928871954514536}
@@ -436,5 +435,5 @@ MonoBehaviour:
   Identifier:
     Path: Resources/DB/EntityPrototype/Fruit|EntityView
     Guid:
-      Value: 1123147609871121587
+      Value: 3794168034299829606
   Prefab: {fileID: 1835911068849750507}

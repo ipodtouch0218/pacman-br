@@ -1,7 +1,6 @@
 ﻿using Photon.Deterministic;
 using Quantum.Util;
-using System;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Quantum.Pacman.Ghosts {
     public unsafe class GridMovementSystem : SystemMainThreadFilter<GridMovementSystem.Filter> {
@@ -33,70 +32,27 @@ namespace Quantum.Pacman.Ghosts {
                 return;
             }
 
-            //TODO this sucks.
-            if (f.Unsafe.TryGetPointer(entity, out PlayerLink* link)) {
-                // Player movement
-                Input input = *f.GetPlayerInput(link->Player);
-                if (input.TargetDirection != -1) {
-                    TryChangeDirection(f, ref filter, input.TargetDirection, FP._0_20);
-                }
-            } else if (f.Unsafe.TryGetPointer(entity, out Ghost* ghost)) {
-                // AI movement
-                if ((ghost->State == GhostState.Scared || (ghost->State != GhostState.Scatter && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
-                    // Random movement
-                    int nextDirection = (mover->Direction + 2) % 4;
-                    Span<int> possibleDirections = stackalloc int[4];
-                    int possibleDirectionsCount = 0;
-                    for (int i = 0; i < 4; i++) {
-                        if (i == nextDirection) {
-                            continue;
-                        }
-                        if (CanMoveInDirection(f, ref filter, i)) {
-                            possibleDirections[possibleDirectionsCount++] = i;
-                        }
-                    }
-                    if (possibleDirectionsCount > 0) {
-                        nextDirection = possibleDirections[f.Global->RngSession.Next(0, possibleDirectionsCount)];
-                    }
-                    TryChangeDirection(f, ref filter, nextDirection);
-                } else {
-                    // Go to target movement
-                    int reverseDirection = (mover->Direction + 2) % 4;
-
-                    FP minDistanceToTarget = FP.UseableMax;
-                    int bestDirection = reverseDirection;
-                    for (int i = 0; i < 4; i++) {
-                        if (ghost->GhostHouseState <= GhostHouseState.ReturningToEntrance && i == reverseDirection) {
-                            continue;
-                        }
-
-                        FP distance = SquaredDistanceToTargetAfterMove(f, ref filter, i, ghost->TargetPosition);
-                        if (distance < minDistanceToTarget) {
-                            minDistanceToTarget = distance;
-                            bestDirection = i;
-                        }
-                    }
-
-                    TryChangeDirection(f, ref filter, bestDirection);
-                }
-            }
-
             var transform = filter.Transform;
 
             FPVector2 previousPosition = transform->Position;
             FPVector2 previousTile = FPVectorUtils.WorldToCell(previousPosition, f);
+
+            bool wasStationary = mover->IsStationary;
             mover->IsStationary = !CanMoveInDirection(f, ref filter, mover->Direction);
+            bool hitWall = !wasStationary && mover->IsStationary;
             if (!mover->IsStationary) {
                 // Move smoothly
-                var moveResult = MoveInDirection(f, previousPosition, mover->Direction, f.Global->GameSpeed * mover->SpeedMultiplier * f.DeltaTime);
-                transform->Position = moveResult.NewPosition;
-                mover->DistanceMoved += f.Global->GameSpeed * mover->SpeedMultiplier * f.DeltaTime;
+                FP distance = f.Global->GameSpeed * mover->SpeedMultiplier * f.DeltaTime;
+                var moveResult = MoveInDirection(f, previousPosition, mover->Direction, distance);
+                mover->DistanceMoved += distance;
 
                 if (moveResult.Teleported) {
+                    transform->Teleport(f, moveResult.NewPosition);
                     f.Events.TeleportEvent(entity, true);
                     mover->TeleportFrames = 2;
+                } else {
+                    transform->Position = moveResult.NewPosition;
                 }
-
             } else {
                 // Snap to whole number position
                 transform->Position = FPVectorUtils.Apply(previousPosition, FPMath.Round);
@@ -110,12 +66,13 @@ namespace Quantum.Pacman.Ghosts {
             }
 
             // Crossed center of tile
-            if (FPVectorUtils.Apply(previousPosition * 2, FPMath.Round) != FPVectorUtils.Apply(transform->Position * 2, FPMath.Round)) {
+            if (hitWall || FPVectorUtils.Apply(previousPosition + (FPVector2.One / 2), FPMath.Round) != FPVectorUtils.Apply(transform->Position + (FPVector2.One / 2), FPMath.Round)) {
                 f.Events.GridMoverReachedCenterOfTile(entity, newTile);
+                f.Signals.OnGridMoverReachedCenterOfTile(entity, newTile);
             }
         }
 
-        private static FP SquaredDistanceToTargetAfterMove(Frame f, ref Filter filter, int direction, FPVector2 target) {
+        public static FP SquaredDistanceToTargetAfterMove(Frame f, ref Filter filter, int direction, FPVector2 target) {
             if (!CanMoveInDirection(f, ref filter, direction)) {
                 return FP.UseableMax;
             }
@@ -149,7 +106,7 @@ namespace Quantum.Pacman.Ghosts {
             return maze.CollisionData[index];
         }
 
-        private static void TryChangeDirection(Frame f, ref Filter filter, int newDirection, FP? tolerance = null) {
+        public static void TryChangeDirection(Frame f, ref Filter filter, int newDirection, FP? tolerance = null) {
             var mover = filter.Mover;
 
             if (newDirection == mover->Direction) {
@@ -163,12 +120,13 @@ namespace Quantum.Pacman.Ghosts {
 
             var transform = filter.Transform;
             bool canCorner = tolerance.HasValue;
+
+            bool turnaround = (mover->Direction != -1) && ((mover->Direction % 2) == (newDirection % 2));
+
+            FPVector2 center = FPVectorUtils.Apply(transform->Position, FPMath.Round);
             tolerance ??= f.Global->GameSpeed * mover->SpeedMultiplier * f.DeltaTime;
 
-            bool notTurnaround = (mover->Direction != -1) && ((mover->Direction % 2) != (newDirection % 2));
-            FPVector2 center = FPVectorUtils.Apply(transform->Position, FPMath.Round);
-
-            if (notTurnaround) {
+            if (!turnaround) {
                 FP distanceToCenter = FPVector2.DistanceSquared(transform->Position, center);
                 if (distanceToCenter >= (tolerance.Value * tolerance.Value)) {
                     // Too far away to turn
@@ -178,18 +136,18 @@ namespace Quantum.Pacman.Ghosts {
 
             filter.Mover->Direction = newDirection;
 
-            if (notTurnaround) {
+            if (!turnaround) {
                 filter.Transform->Position = center;
-                MoveInDirection(transform, newDirection, FP._0_01);
+                MoveInDirection(transform, newDirection, (tolerance ?? FP._0_02) - FP._0_01);
             }
         }
 
-        struct MovementResult {
+        public struct MovementResult {
             public FPVector2 NewPosition;
             public bool Teleported;
         }
 
-        private static MovementResult MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
+        public static MovementResult MoveInDirection(Frame f, FPVector2 position, int direction, FP amount) {
             PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
 
             FPVector2 newPosition = position + GridMover.DirectionToVector(direction) * amount;

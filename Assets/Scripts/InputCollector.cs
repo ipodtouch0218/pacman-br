@@ -43,7 +43,7 @@ public class InputCollector : MonoBehaviour {
     }
 
     public void OnPollInput(CallbackPollInput callback) {
-        sbyte target = heldDirections.Count > 0 ? heldDirections[0] : lastHeldDirection;
+        sbyte target = heldDirections.Count > 0 ? heldDirections[^1] : lastHeldDirection;
         lastHeldDirection = target;
 
         Quantum.Input input = new() {

@@ -15,28 +15,12 @@ MonoBehaviour:
   Identifier:
     Path: Resources/DB/Map/MazeCE1_Data
     Guid:
-      Value: 2646864575692090043
+      Value: 483490596215336011
   PacmanPrototype:
     Id:
       Value: 1501146794065227855
   Mazes:
-  - Phases:
-    - Timer:
-        RawValue: 1966080
-      IsScatter: 0
-    - Timer:
-        RawValue: 3932160
-      IsScatter: 1
-    - Timer:
-        RawValue: 5898240
-      IsScatter: 0
-    - Timer:
-        RawValue: 7864320
-      IsScatter: 1
-    - Timer:
-        RawValue: 9830400
-      IsScatter: 0
-    SpawnPoints:
+  - SpawnPoints:
     - Position:
         X:
           RawValue: 589824
@@ -96,115 +80,18 @@ MonoBehaviour:
       Y:
         RawValue: 851968
     LevelCurve:
-      Samples:
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 0
-      - RawValue: 495
-      - RawValue: 2731
-      - RawValue: 5887
-      - RawValue: 9700
-      - RawValue: 13908
-      - RawValue: 18247
-      - RawValue: 22455
-      - RawValue: 26269
-      - RawValue: 29427
-      - RawValue: 31666
-      - RawValue: 32723
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 32768
-      - RawValue: 0
+      Samples: []
       PreWrapMode: 0
       PostWrapMode: 0
       StartTime:
         RawValue: 0
       EndTime:
-        RawValue: 65536
-      Resolution: 32
+        RawValue: 0
+      Resolution: 0
       OriginalPreWrapMode: 0
       OriginalPostWrapMode: 0
-      Keys:
-      - Time:
-          RawValue: 0
-        Value:
-          RawValue: 0
-        InTangent:
-          RawValue: 0
-        OutTangent:
-          RawValue: 0
-        TangentMode: 0
-        TangentModeLeft: 4
-        TangentModeRight: 4
-        WeightedMode: 0
-      - Time:
-          RawValue: 21845
-        Value:
-          RawValue: 0
-        InTangent:
-          RawValue: 0
-        OutTangent:
-          RawValue: 40960
-        TangentMode: 0
-        TangentModeLeft: 2
-        TangentModeRight: 0
-        WeightedMode: 0
-      - Time:
-          RawValue: 43690
-        Value:
-          RawValue: 32768
-        InTangent:
-          RawValue: -3764
-        OutTangent:
-          RawValue: 0
-        TangentMode: 0
-        TangentModeLeft: 0
-        TangentModeRight: 2
-        WeightedMode: 0
-      - Time:
-          RawValue: 65536
-        Value:
-          RawValue: 32768
-        InTangent:
-          RawValue: 0
-        OutTangent:
-          RawValue: 0
-        TangentMode: 0
-        TangentModeLeft: 4
-        TangentModeRight: 4
-        WeightedMode: 0
-  - Phases:
-    - Timer:
-        RawValue: 983040
-      IsScatter: 0
-    - Timer:
-        RawValue: 3932160
-      IsScatter: 1
-    - Timer:
-        RawValue: 4587520
-      IsScatter: 0
-    - Timer:
-        RawValue: 7864320
-      IsScatter: 1
-    - Timer:
-        RawValue: 8192000
-      IsScatter: 0
-    SpawnPoints:
+      Keys: []
+  - SpawnPoints:
     - Position:
         X:
           RawValue: 589824
@@ -275,23 +162,7 @@ MonoBehaviour:
       OriginalPreWrapMode: 0
       OriginalPostWrapMode: 0
       Keys: []
-  - Phases:
-    - Timer:
-        RawValue: 983040
-      IsScatter: 0
-    - Timer:
-        RawValue: 3932160
-      IsScatter: 1
-    - Timer:
-        RawValue: 4587520
-      IsScatter: 0
-    - Timer:
-        RawValue: 7864320
-      IsScatter: 1
-    - Timer:
-        RawValue: 8192000
-      IsScatter: 0
-    SpawnPoints:
+  - SpawnPoints:
     - Position:
         X:
           RawValue: 458752

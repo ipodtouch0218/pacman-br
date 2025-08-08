@@ -2,8 +2,7 @@ namespace Quantum {
     public unsafe class PlayerDataSystem : SystemSignalsOnly, ISignalOnPlayerAdded, ISignalOnPlayerRemoved, ISignalOnPlayerReady {
 
         public void OnPlayerReady(Frame f, PlayerRef player) {
-            var filter = f.Filter<PlayerData>();
-            while (filter.NextUnsafe(out _, out PlayerData* playerData)) {
+            foreach (var (_,playerData) in f.Unsafe.GetComponentBlockIterator<PlayerData>()) { 
                 if (playerData->IsSpectator) {
                     continue;
                 }
@@ -14,6 +13,10 @@ namespace Quantum {
             }
 
             f.Signals.OnAllPlayersReady();
+
+            foreach (var (_, playerData) in f.Unsafe.GetComponentBlockIterator<PlayerData>()) {
+                playerData->IsReady = false;
+            }
         }
 
         public void OnPlayerAdded(Frame f, PlayerRef player, bool firstTime) {
@@ -26,6 +29,8 @@ namespace Quantum {
             };
             f.Add(newEntity, newPlayerData);
             dict[player] = newEntity;
+
+            f.Events.PlayerJoined(player);
         }
 
         public void OnPlayerRemoved(Frame f, PlayerRef player) {
@@ -38,9 +43,8 @@ namespace Quantum {
 
             if (playerData->IsRoomHost) {
                 // Give room host to the next oldest player.
-                var filter = f.Filter<PlayerData>();
                 PlayerData* youngest = null;
-                while (filter.NextUnsafe(out var entity2, out var playerData2)) {
+                foreach (var (entity2,playerData2) in f.Unsafe.GetComponentBlockIterator<PlayerData>()) { 
                     if (entity == entity2) {
                         continue;
                     }
@@ -56,6 +60,8 @@ namespace Quantum {
                 
             f.Destroy(entity);
             dict.Remove(player);
+
+            f.Events.PlayerLeft(player);
         }
     }
 }

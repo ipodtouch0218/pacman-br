@@ -456,6 +456,8 @@ MonoBehaviour:
       RawValue: 0
     TimeSinceEaten:
       RawValue: 0
+    ScatterTimer:
+      RawValue: 0
 --- !u!1 &1265948422171115058
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +681,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.101960786}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.29803923}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5730,5 +5732,5 @@ MonoBehaviour:
   Identifier:
     Path: Resources/DB/EntityPrototype/CE1Ghost|EntityView
     Guid:
-      Value: 2131426291570486887
+      Value: 1247235384480270828
   Prefab: {fileID: 889394146248528133}

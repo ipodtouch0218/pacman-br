@@ -7,7 +7,7 @@ namespace Quantum.Pacman {
         }
 
         public void Execute(Frame f, PlayerRef sender, PlayerData* playerData) {
-            if (f.Global->GameState is GameState.WaitingForPlayers or GameState.Scoreboard) {
+            if (f.Global->GameState is GameState.PreGameLobby or GameState.WaitingForPlayers or GameState.Scoreboard) {
                 if (!playerData->IsReady) {
                     playerData->IsReady = true;
                     f.Signals.OnPlayerReady(sender);

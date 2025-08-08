@@ -60,9 +60,6 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         QuantumEvent.Subscribe<EventPacmanLandBombJump>(this, OnLandBombJump);
         
         blinkSpeedPeriod = 1 / blinkSpeedPerSecond;
-
-        mpb = new();
-        spriteRenderer.GetPropertyBlock(mpb);
     }
 
     public override void OnActivate(Frame f) {
@@ -136,6 +133,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             }
         }
 
+        if (mpb == null) {
+            spriteRenderer.GetPropertyBlock(mpb = new());
+        }
         if (otherPlayerHasPellet && (!pac->HasPowerPellet || scaredFlash)) {
             // Scared
             mpb.SetColor("_BaseColor", scaredColor);

@@ -69,11 +69,13 @@ namespace Quantum.Prototypes {
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.GameRules))]
   public unsafe partial class GameRulesPrototype : StructPrototype {
+    public AssetRef<Map> Map;
     public Int32 MinLevel;
     public Int32 LevelRange;
     public Int32 TimerSeconds;
     partial void MaterializeUser(Frame frame, ref Quantum.GameRules result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.GameRules result, in PrototypeMaterializationContext context = default) {
+        result.Map = this.Map;
         result.MinLevel = this.MinLevel;
         result.LevelRange = this.LevelRange;
         result.TimerSeconds = this.TimerSeconds;

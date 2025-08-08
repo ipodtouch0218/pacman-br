@@ -24,8 +24,6 @@ namespace Quantum {
 
         [Serializable]
         public class MazeData {
-            public GhostPhase[] Phases;
-
             public SpawnPointData[] SpawnPoints;
             public FPVector2 Origin;
             public FPVector2 Size;

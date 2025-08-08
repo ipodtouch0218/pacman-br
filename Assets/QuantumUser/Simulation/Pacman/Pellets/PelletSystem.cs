@@ -6,11 +6,6 @@ using Quantum.Util;
 namespace Quantum.Pacman.Pellets {
     public unsafe class PelletSystem : SystemMainThread, ISignalOnPowerPelletEnd, ISignalOnPacmanRespawned, ISignalOnGridMoverChangeTile {
 
-        public override void OnInit(Frame f) {
-            f.Global->PelletData = f.AllocateDictionary<FPVector2, byte>();
-            SpawnNewPellets(f, 0, false, false);
-        }
-
         public override void Update(Frame f) {
             FP remainingPowerPelletTime = 0;
 

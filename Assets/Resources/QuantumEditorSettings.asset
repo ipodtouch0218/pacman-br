@@ -25,15 +25,6 @@ MonoBehaviour:
   AutoBuildOnPlaymodeChanged: 96
   AutoBuildOnBuild: 96
   AssetGuidOverrides:
-  - Asset: {fileID: 1342755181478882496, guid: 1c34e0cd0a8a7b24e8f49b849d640aeb, type: 3}
-    Guid:
-      Value: 3286830596560734521
-  - Asset: {fileID: 7809610989774545860, guid: 41fc26749af10154899add575258ebf4, type: 3}
-    Guid:
-      Value: 2131426291570486887
-  - Asset: {fileID: 6337118755329342517, guid: 93f5e18f08ad2484eae272678436b78d, type: 3}
-    Guid:
-      Value: 1123147609871121587
   - Asset: {fileID: 11400000, guid: 6e939e96f7d70e7409249d368e7cf863, type: 2}
     Guid:
       Value: 3
@@ -46,15 +37,3 @@ MonoBehaviour:
   - Asset: {fileID: 11400000, guid: 98fccc81f0f5f5541a88d6da1896016c, type: 2}
     Guid:
       Value: 1
-  - Asset: {fileID: 11400000, guid: 6986abea4748d7d4099d49d11e593ce8, type: 2}
-    Guid:
-      Value: 5
-  - Asset: {fileID: 11400000, guid: 8d00571c3d619964cbe15307cfec64ed, type: 2}
-    Guid:
-      Value: 2646864575692090043
-  - Asset: {fileID: 11400000, guid: 9e3593e8f91fb094ca2428fdd4cebd90, type: 2}
-    Guid:
-      Value: 1710471675203725834
-  - Asset: {fileID: 11400000, guid: ce81aa5c7c6806143a919924343f05d1, type: 2}
-    Guid:
-      Value: 810189026489540597

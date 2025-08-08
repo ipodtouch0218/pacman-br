@@ -431,8 +431,10 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct GameRules {
-    public const Int32 SIZE = 12;
-    public const Int32 ALIGNMENT = 4;
+    public const Int32 SIZE = 24;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(16)]
+    public AssetRef<Map> Map;
     [FieldOffset(4)]
     public Int32 MinLevel;
     [FieldOffset(0)]
@@ -442,6 +444,7 @@ namespace Quantum {
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 443;
+        hash = hash * 31 + Map.GetHashCode();
         hash = hash * 31 + MinLevel.GetHashCode();
         hash = hash * 31 + LevelRange.GetHashCode();
         hash = hash * 31 + TimerSeconds.GetHashCode();
@@ -453,6 +456,7 @@ namespace Quantum {
         serializer.Stream.Serialize(&p->LevelRange);
         serializer.Stream.Serialize(&p->MinLevel);
         serializer.Stream.Serialize(&p->TimerSeconds);
+        AssetRef.Serialize(&p->Map, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -518,10 +522,8 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 752;
+    public const Int32 SIZE = 760;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(748)]
-    private fixed Byte _alignment_padding_[4];
     [FieldOffset(0)]
     public AssetRef<Map> Map;
     [FieldOffset(8)]
@@ -572,6 +574,7 @@ namespace Quantum {
     [FieldOffset(680)]
     public Int32 TotalPellets;
     [FieldOffset(684)]
+    [AllocateOnComponentAdded()]
     public QDictionaryPtr<FPVector2, Byte> PelletData;
     [FieldOffset(712)]
     public FP PowerPelletRemainingTime;
@@ -625,6 +628,7 @@ namespace Quantum {
       PlayerDatas = default;
     }
     partial void AllocatePointersPartial(FrameBase f, EntityRef entity) {
+      f.TryAllocateDictionary(ref PelletData);
       f.TryAllocateDictionary(ref PlayerDatas);
     }
     static partial void SerializeCodeGen(void* ptr, FrameSerializer serializer) {
@@ -914,6 +918,9 @@ namespace Quantum {
   public unsafe partial interface ISignalOnGridMoverChangeTile : ISignal {
     void OnGridMoverChangeTile(Frame f, EntityRef entity, FPVector2 tile);
   }
+  public unsafe partial interface ISignalOnGridMoverReachedCenterOfTile : ISignal {
+    void OnGridMoverReachedCenterOfTile(Frame f, EntityRef entity, FPVector2 tile);
+  }
   public unsafe partial interface ISignalOnCharacterEaten : ISignal {
     void OnCharacterEaten(Frame f, EntityRef entity, EntityRef other);
   }
@@ -948,6 +955,7 @@ namespace Quantum {
   }
   public unsafe partial class Frame {
     private ISignalOnGridMoverChangeTile[] _ISignalOnGridMoverChangeTileSystems;
+    private ISignalOnGridMoverReachedCenterOfTile[] _ISignalOnGridMoverReachedCenterOfTileSystems;
     private ISignalOnCharacterEaten[] _ISignalOnCharacterEatenSystems;
     private ISignalOnPacmanScored[] _ISignalOnPacmanScoredSystems;
     private ISignalOnPacmanKilled[] _ISignalOnPacmanKilledSystems;
@@ -970,6 +978,7 @@ namespace Quantum {
     partial void InitGen() {
       Initialize(this, this.SimulationConfig.Entities, 256);
       _ISignalOnGridMoverChangeTileSystems = BuildSignalsArray<ISignalOnGridMoverChangeTile>();
+      _ISignalOnGridMoverReachedCenterOfTileSystems = BuildSignalsArray<ISignalOnGridMoverReachedCenterOfTile>();
       _ISignalOnCharacterEatenSystems = BuildSignalsArray<ISignalOnCharacterEaten>();
       _ISignalOnPacmanScoredSystems = BuildSignalsArray<ISignalOnPacmanScored>();
       _ISignalOnPacmanKilledSystems = BuildSignalsArray<ISignalOnPacmanKilled>();
@@ -1059,6 +1068,15 @@ namespace Quantum {
           var s = array[i];
           if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
             s.OnGridMoverChangeTile(_f, entity, tile);
+          }
+        }
+      }
+      public void OnGridMoverReachedCenterOfTile(EntityRef entity, FPVector2 tile) {
+        var array = _f._ISignalOnGridMoverReachedCenterOfTileSystems;
+        for (Int32 i = 0; i < array.Length; ++i) {
+          var s = array[i];
+          if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
+            s.OnGridMoverReachedCenterOfTile(_f, entity, tile);
           }
         }
       }

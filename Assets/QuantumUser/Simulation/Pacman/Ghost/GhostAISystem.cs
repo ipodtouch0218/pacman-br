@@ -1,9 +1,12 @@
 ﻿using Photon.Deterministic;
 using Quantum.Physics2D;
 using Quantum.Util;
+using System;
 
 namespace Quantum.Pacman.Ghosts {
-    public unsafe class GhostAISystem : SystemMainThreadFilter<GhostAISystem.Filter>, ISignalOnPowerPelletStart, ISignalOnTrigger2D {
+    public unsafe class GhostAISystem : SystemMainThreadFilter<GhostAISystem.Filter>, ISignalOnPowerPelletStart, ISignalOnTrigger2D,
+        ISignalOnGridMoverReachedCenterOfTile {
+
         public struct Filter {
             public EntityRef Entity;
             public Transform2D* Transform;
@@ -203,6 +206,54 @@ namespace Quantum.Pacman.Ghosts {
                     f.Signals.OnPacmanKilled(info.Entity);
                 }
                 break;
+            }
+        }
+
+        public void OnGridMoverReachedCenterOfTile(Frame f, EntityRef entity, FPVector2 tile) {
+            if (!f.Unsafe.TryGetPointer(entity, out Ghost* ghost)
+                || !f.Unsafe.ComponentGetter<GridMovementSystem.Filter>().TryGet(f, entity, out var filter)) {
+                return;
+            }
+
+            var mover = filter.Mover;
+
+            // AI movement
+            if ((ghost->State == GhostState.Scared || (ghost->State != GhostState.Scatter && ghost->ForceRandomMovement)) && ghost->GhostHouseState == GhostHouseState.NotInGhostHouse) {
+                // Random movement
+                int randomDirection = (mover->Direction + 2) % 4;
+                Span<int> possibleDirections = stackalloc int[4];
+                int possibleDirectionsCount = 0;
+                for (int i = 0; i < 4; i++) {
+                    if (i == randomDirection) {
+                        continue;
+                    }
+                    if (GridMovementSystem.CanMoveInDirection(f, ref filter, i)) {
+                        possibleDirections[possibleDirectionsCount++] = i;
+                    }
+                }
+                if (possibleDirectionsCount > 0) {
+                    randomDirection = possibleDirections[f.Global->RngSession.Next(0, possibleDirectionsCount)];
+                }
+                GridMovementSystem.TryChangeDirection(f, ref filter, randomDirection);
+            } else {
+                // Go to target movement
+                int reverseDirection = (mover->Direction + 2) % 4;
+
+                FP minDistanceToTarget = FP.UseableMax;
+                int bestDirection = reverseDirection;
+                for (int i = 0; i < 4; i++) {
+                    if (ghost->GhostHouseState <= GhostHouseState.ReturningToEntrance && i == reverseDirection) {
+                        continue;
+                    }
+
+                    FP distance = GridMovementSystem.SquaredDistanceToTargetAfterMove(f, ref filter, i, ghost->TargetPosition);
+                    if (distance < minDistanceToTarget) {
+                        minDistanceToTarget = distance;
+                        bestDirection = i;
+                    }
+                }
+
+                GridMovementSystem.TryChangeDirection(f, ref filter, bestDirection);
             }
         }
     }

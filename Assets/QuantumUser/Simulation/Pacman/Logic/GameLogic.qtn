@@ -16,6 +16,7 @@ enum GameState {
 }
 
 struct GameRules {
+	AssetRef<Map> Map;
 	int MinLevel;
 	int LevelRange;
 	int TimerSeconds;
@@ -31,6 +32,19 @@ synced event GameStart {
 
 synced event GameEnd {
 
+}
+
+synced event GameStateChanged {
+	GameState OldState;
+	GameState NewState;
+}
+
+synced event PlayerJoined {
+	PlayerRef Player;
+}
+
+synced event PlayerLeft {
+	PlayerRef Player;
 }
 
 event TimerSecondPassed {

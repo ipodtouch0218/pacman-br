@@ -14,19 +14,20 @@ component GridMover {
 	FP FreezeTime;
 }
 
-signal OnGridMoverChangeTile(entity_ref entity, FPVector2 tile);
+signal OnGridMoverChangeTile(EntityRef entity, FPVector2 tile);
+signal OnGridMoverReachedCenterOfTile(EntityRef entity, FPVector2 tile);
 
 event GridMoverChangeTile {
-	entity_ref Entity;
+	EntityRef Entity;
 	FPVector2 Tile;
 }
 
 event GridMoverReachedCenterOfTile {
-	entity_ref Entity;
+	EntityRef Entity;
 	FPVector2 Tile;
 }
 
 event TeleportEvent {
-	entity_ref Entity;
+	EntityRef Entity;
 	bool IsTeleporting;
 }

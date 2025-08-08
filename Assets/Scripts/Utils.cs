@@ -16,10 +16,13 @@ public unsafe static class Utils {
     public static Color GetPlayerColor(Frame f, EntityRef entity) {
         Color color = Color.gray;
         if (f.Unsafe.TryGetPointer(entity, out PlayerLink* pl)) {
-            color = PlayerColors[(pl->Player) % PlayerColors.Length];
+            color = GetPlayerColor(pl->Player);
         }
-
         return color;
+    }
+
+    public static Color GetPlayerColor(PlayerRef player) {
+        return PlayerColors[player % PlayerColors.Length];
     }
 
     public static string RankingToString(int ranking) {

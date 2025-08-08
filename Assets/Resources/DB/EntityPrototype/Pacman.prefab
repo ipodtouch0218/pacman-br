@@ -60315,7 +60315,7 @@ MonoBehaviour:
   Identifier:
     Path: Resources/DB/EntityPrototype/Pacman|EntityView
     Guid:
-      Value: 3286830596560734521
+      Value: 2996964036017330114
   Prefab: {fileID: 7592819552428075133}
 --- !u!114 &2747656340049747084
 MonoBehaviour:
