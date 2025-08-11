@@ -96,7 +96,7 @@ namespace Quantum.Pacman.Pellets {
                 return;
             }
 
-            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* player)
+            if (!f.Unsafe.TryGetPointer(entity, out PacmanPlayer* pacman)
                 || !f.Unsafe.TryGetPointer(entity, out GridMover* mover)
                 || !f.Unsafe.TryGetPointer(entity, out Transform2D* transform)) {
 
@@ -107,17 +107,17 @@ namespace Quantum.Pacman.Pellets {
 
             if (!pelletDict.TryGetValue(tile, out byte value)) {
                 if (breakChain) {
-                    player->PelletChain = 0;
+                    pacman->PelletChain = 0;
                 }
                 return;
             }
 
-            player->PelletChain++;
-            player->PelletsEaten++;
+            pacman->PelletChain++;
+            pacman->PelletsEaten++;
             // mover->FreezeTime += f.DeltaTime;
             if (value == 2) {
                 f.Signals.OnPowerPelletStart(entity);
-                player->PowerPelletFullTimer = player->PowerPelletTimer = FP.FromString("7.5");
+                pacman->PowerPelletFullTimer = pacman->PowerPelletTimer = f.FindAsset(pacman->Asset).PowerPelletTime;
                 mover->SpeedMultiplier = FP._1;
 
                 f.Events.PowerPelletEat(entity);
@@ -125,15 +125,15 @@ namespace Quantum.Pacman.Pellets {
 
             pelletDict.Remove(tile);
 
-            f.Signals.OnPacmanScored(entity, player->PelletChain);
-            f.Events.PelletEat(entity, tile, player->PelletChain);
+            f.Signals.OnPacmanScored(entity, pacman->PelletChain);
+            f.Events.PelletEat(entity, tile, pacman->PelletChain);
 
             if (pelletDict.Count == (f.Global->TotalPellets * FP._0_33).AsInt) {
                 FruitSystem.SpawnFruit(f);
             } else if (pelletDict.Count == 0) {
                 // Collected the last pellet, spawn a bomb.
-                player->Bombs++;
-                f.Events.PacmanCollectBomb(entity, player->Bombs);
+                pacman->Bombs++;
+                f.Events.PacmanCollectBomb(entity, pacman->Bombs);
             }
         }
 

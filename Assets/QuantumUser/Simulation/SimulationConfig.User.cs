@@ -1,9 +1,4 @@
-﻿using Photon.Deterministic;
-using Quantum.Prototypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Quantum.Prototypes;
 
 namespace Quantum {
     partial class SimulationConfig : AssetObject {

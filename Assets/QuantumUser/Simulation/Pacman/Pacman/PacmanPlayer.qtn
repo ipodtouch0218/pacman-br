@@ -1,0 +1,92 @@
+global {
+	byte PacmanCounter;
+}
+
+input {
+	sbyte TargetDirection;
+	button Bomb;
+}
+
+component PacmanPlayer {
+	AssetRef<PacmanAsset> Asset;
+
+	[ExcludeFromPrototype] Ranking TotalRanking;
+	[ExcludeFromPrototype] Ranking RoundRanking;
+	[ExcludeFromPrototype] Ranking PreviousRoundRanking;
+
+	[ExcludeFromPrototype] int TotalScore;
+	[ExcludeFromPrototype] int RoundScore;
+
+	[ExcludeFromPrototype] int Bombs;
+	[ExcludeFromPrototype] FP BombTravelTimer;
+	[ExcludeFromPrototype] FP BombTravelTime;
+	[ExcludeFromPrototype] FPVector2 BombStartPosition;
+	[ExcludeFromPrototype] FPVector2 BombEndPosition;
+
+	[ExcludeFromPrototype] int PelletsEaten;
+	[ExcludeFromPrototype] int PelletChain;
+
+	[ExcludeFromPrototype] FP PowerPelletTimer;
+	[ExcludeFromPrototype] FP PowerPelletFullTimer;
+	[ExcludeFromPrototype] int GhostCombo;
+
+	[ExcludeFromPrototype] bool IsDead;
+	[ExcludeFromPrototype] FP RespawnTimer;
+
+	[ExcludeFromPrototype] FP Invincibility;
+	[ExcludeFromPrototype] FP TemporaryInvincibility;
+}
+
+struct Ranking {
+	byte UniqueRanking;
+	byte SharedRanking;
+}
+
+signal OnEntityEaten(EntityRef entity, EntityRef other);
+
+signal OnPacmanScored(EntityRef entity, int points);
+
+signal OnPacmanKilled(EntityRef entity);
+
+signal OnPacmanRespawned(EntityRef entity);
+
+synced event EntityEaten {
+	EntityRef Pacman;
+	EntityRef Other;
+	int Combo;
+	int GainedPoints;
+}
+
+synced event PacmanKilled {
+	EntityRef Entity;
+	FP RespawnInSeconds;
+}
+
+synced event PacmanScored {
+	EntityRef Entity;
+	PacmanPlayer Pacman;
+	int GainedPoints;
+	int TotalPoints;
+}
+
+event PacmanRespawned {
+	EntityRef Entity;
+}
+
+event PacmanVulnerable {
+	EntityRef Entity;
+}
+
+synced event PacmanCollectBomb {
+	EntityRef Entity;
+	int NewCount;
+}
+
+synced event PacmanUseBomb {
+	EntityRef Entity;
+	FPVector2 Target;
+}
+
+synced event PacmanLandBombJump {
+	EntityRef Entity;
+}

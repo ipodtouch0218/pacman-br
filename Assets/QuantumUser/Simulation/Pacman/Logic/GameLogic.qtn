@@ -5,6 +5,7 @@ global {
 	int GameStartTick;
 	
 	FP Timer;
+	int CurrentMazeIndex;
 }
 
 enum GameState {

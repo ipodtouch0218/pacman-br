@@ -75,7 +75,7 @@ public unsafe class PelletHandler : QuantumSceneViewComponent {
     public void OnEventPowerPelletEat(EventPowerPelletEat e) {
         audioSource.PlayOneShot(powerPelletClip);
 
-        if (VerifiedFrame.Unsafe.TryGetPointer(e.Entity, out Transform2D* transform)) {
+        if (powerPelletCollectPrefab && VerifiedFrame.Unsafe.TryGetPointer(e.Entity, out Transform2D* transform)) {
             GameObject newPrefab = Instantiate(powerPelletCollectPrefab);
             newPrefab.transform.position = transform->Position.ToUnityVector3();
         }

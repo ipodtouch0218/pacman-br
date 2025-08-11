@@ -1,5 +1,0 @@
-asset MapCustomData;
-
-global {
-	int CurrentMazeIndex;
-}

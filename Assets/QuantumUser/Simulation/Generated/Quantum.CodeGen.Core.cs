@@ -563,12 +563,12 @@ namespace Quantum {
     public Int32 GameStartTick;
     [FieldOffset(728)]
     public FP Timer;
+    [FieldOffset(668)]
+    public Int32 CurrentMazeIndex;
     [FieldOffset(692)]
     public QListPtr<EntityRef> GhostHouseQueue;
     [FieldOffset(704)]
     public FP GameSpeed;
-    [FieldOffset(668)]
-    public Int32 CurrentMazeIndex;
     [FieldOffset(656)]
     public Byte PacmanCounter;
     [FieldOffset(680)]
@@ -610,9 +610,9 @@ namespace Quantum {
         hash = hash * 31 + StateTimeoutTimer.GetHashCode();
         hash = hash * 31 + GameStartTick.GetHashCode();
         hash = hash * 31 + Timer.GetHashCode();
+        hash = hash * 31 + CurrentMazeIndex.GetHashCode();
         hash = hash * 31 + GhostHouseQueue.GetHashCode();
         hash = hash * 31 + GameSpeed.GetHashCode();
-        hash = hash * 31 + CurrentMazeIndex.GetHashCode();
         hash = hash * 31 + PacmanCounter.GetHashCode();
         hash = hash * 31 + TotalPellets.GetHashCode();
         hash = hash * 31 + PelletData.GetHashCode();
@@ -775,49 +775,71 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct PacmanPlayer : Quantum.IComponent {
-    public const Int32 SIZE = 128;
+    public const Int32 SIZE = 136;
     public const Int32 ALIGNMENT = 8;
+    [FieldOffset(40)]
+    public AssetRef<PacmanAsset> Asset;
     [FieldOffset(36)]
+    [ExcludeFromPrototype()]
     public Ranking TotalRanking;
     [FieldOffset(32)]
+    [ExcludeFromPrototype()]
     public Ranking RoundRanking;
     [FieldOffset(28)]
+    [ExcludeFromPrototype()]
     public Ranking PreviousRoundRanking;
     [FieldOffset(20)]
+    [ExcludeFromPrototype()]
     public Int32 TotalScore;
     [FieldOffset(16)]
+    [ExcludeFromPrototype()]
     public Int32 RoundScore;
     [FieldOffset(0)]
+    [ExcludeFromPrototype()]
     public Int32 Bombs;
-    [FieldOffset(48)]
+    [FieldOffset(56)]
+    [ExcludeFromPrototype()]
     public FP BombTravelTimer;
-    [FieldOffset(40)]
+    [FieldOffset(48)]
+    [ExcludeFromPrototype()]
     public FP BombTravelTime;
-    [FieldOffset(112)]
+    [FieldOffset(120)]
+    [ExcludeFromPrototype()]
     public FPVector2 BombStartPosition;
-    [FieldOffset(96)]
+    [FieldOffset(104)]
+    [ExcludeFromPrototype()]
     public FPVector2 BombEndPosition;
     [FieldOffset(12)]
+    [ExcludeFromPrototype()]
     public Int32 PelletsEaten;
     [FieldOffset(8)]
+    [ExcludeFromPrototype()]
     public Int32 PelletChain;
-    [FieldOffset(72)]
+    [FieldOffset(80)]
+    [ExcludeFromPrototype()]
     public FP PowerPelletTimer;
-    [FieldOffset(64)]
+    [FieldOffset(72)]
+    [ExcludeFromPrototype()]
     public FP PowerPelletFullTimer;
     [FieldOffset(4)]
+    [ExcludeFromPrototype()]
     public Int32 GhostCombo;
     [FieldOffset(24)]
+    [ExcludeFromPrototype()]
     public QBoolean IsDead;
-    [FieldOffset(80)]
-    public FP RespawnTimer;
-    [FieldOffset(56)]
-    public FP Invincibility;
     [FieldOffset(88)]
+    [ExcludeFromPrototype()]
+    public FP RespawnTimer;
+    [FieldOffset(64)]
+    [ExcludeFromPrototype()]
+    public FP Invincibility;
+    [FieldOffset(96)]
+    [ExcludeFromPrototype()]
     public FP TemporaryInvincibility;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 7607;
+        hash = hash * 31 + Asset.GetHashCode();
         hash = hash * 31 + TotalRanking.GetHashCode();
         hash = hash * 31 + RoundRanking.GetHashCode();
         hash = hash * 31 + PreviousRoundRanking.GetHashCode();
@@ -852,6 +874,7 @@ namespace Quantum {
         Quantum.Ranking.Serialize(&p->PreviousRoundRanking, serializer);
         Quantum.Ranking.Serialize(&p->RoundRanking, serializer);
         Quantum.Ranking.Serialize(&p->TotalRanking, serializer);
+        AssetRef.Serialize(&p->Asset, serializer);
         FP.Serialize(&p->BombTravelTime, serializer);
         FP.Serialize(&p->BombTravelTimer, serializer);
         FP.Serialize(&p->Invincibility, serializer);
@@ -921,8 +944,8 @@ namespace Quantum {
   public unsafe partial interface ISignalOnGridMoverReachedCenterOfTile : ISignal {
     void OnGridMoverReachedCenterOfTile(Frame f, EntityRef entity, FPVector2 tile);
   }
-  public unsafe partial interface ISignalOnCharacterEaten : ISignal {
-    void OnCharacterEaten(Frame f, EntityRef entity, EntityRef other);
+  public unsafe partial interface ISignalOnEntityEaten : ISignal {
+    void OnEntityEaten(Frame f, EntityRef entity, EntityRef other);
   }
   public unsafe partial interface ISignalOnPacmanScored : ISignal {
     void OnPacmanScored(Frame f, EntityRef entity, Int32 points);
@@ -956,7 +979,7 @@ namespace Quantum {
   public unsafe partial class Frame {
     private ISignalOnGridMoverChangeTile[] _ISignalOnGridMoverChangeTileSystems;
     private ISignalOnGridMoverReachedCenterOfTile[] _ISignalOnGridMoverReachedCenterOfTileSystems;
-    private ISignalOnCharacterEaten[] _ISignalOnCharacterEatenSystems;
+    private ISignalOnEntityEaten[] _ISignalOnEntityEatenSystems;
     private ISignalOnPacmanScored[] _ISignalOnPacmanScoredSystems;
     private ISignalOnPacmanKilled[] _ISignalOnPacmanKilledSystems;
     private ISignalOnPacmanRespawned[] _ISignalOnPacmanRespawnedSystems;
@@ -979,7 +1002,7 @@ namespace Quantum {
       Initialize(this, this.SimulationConfig.Entities, 256);
       _ISignalOnGridMoverChangeTileSystems = BuildSignalsArray<ISignalOnGridMoverChangeTile>();
       _ISignalOnGridMoverReachedCenterOfTileSystems = BuildSignalsArray<ISignalOnGridMoverReachedCenterOfTile>();
-      _ISignalOnCharacterEatenSystems = BuildSignalsArray<ISignalOnCharacterEaten>();
+      _ISignalOnEntityEatenSystems = BuildSignalsArray<ISignalOnEntityEaten>();
       _ISignalOnPacmanScoredSystems = BuildSignalsArray<ISignalOnPacmanScored>();
       _ISignalOnPacmanKilledSystems = BuildSignalsArray<ISignalOnPacmanKilled>();
       _ISignalOnPacmanRespawnedSystems = BuildSignalsArray<ISignalOnPacmanRespawned>();
@@ -1080,12 +1103,12 @@ namespace Quantum {
           }
         }
       }
-      public void OnCharacterEaten(EntityRef entity, EntityRef other) {
-        var array = _f._ISignalOnCharacterEatenSystems;
+      public void OnEntityEaten(EntityRef entity, EntityRef other) {
+        var array = _f._ISignalOnEntityEatenSystems;
         for (Int32 i = 0; i < array.Length; ++i) {
           var s = array[i];
           if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
-            s.OnCharacterEaten(_f, entity, other);
+            s.OnEntityEaten(_f, entity, other);
           }
         }
       }

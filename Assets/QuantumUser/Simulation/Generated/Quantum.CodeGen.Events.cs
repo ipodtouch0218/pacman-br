@@ -74,7 +74,7 @@ namespace Quantum {
           case EventGridMoverChangeTile.ID: result = typeof(EventGridMoverChangeTile); return;
           case EventGridMoverReachedCenterOfTile.ID: result = typeof(EventGridMoverReachedCenterOfTile); return;
           case EventTeleportEvent.ID: result = typeof(EventTeleportEvent); return;
-          case EventCharacterEaten.ID: result = typeof(EventCharacterEaten); return;
+          case EventEntityEaten.ID: result = typeof(EventEntityEaten); return;
           case EventPacmanKilled.ID: result = typeof(EventPacmanKilled); return;
           case EventPacmanScored.ID: result = typeof(EventPacmanScored); return;
           case EventPacmanRespawned.ID: result = typeof(EventPacmanRespawned); return;
@@ -182,9 +182,9 @@ namespace Quantum {
         _f.AddEvent(ev);
         return ev;
       }
-      public EventCharacterEaten CharacterEaten(EntityRef Pacman, EntityRef Other, Int32 Combo, Int32 GainedPoints) {
+      public EventEntityEaten EntityEaten(EntityRef Pacman, EntityRef Other, Int32 Combo, Int32 GainedPoints) {
         if (_f.IsPredicted) return null;
-        var ev = _f.Context.AcquireEvent<EventCharacterEaten>(EventCharacterEaten.ID);
+        var ev = _f.Context.AcquireEvent<EventEntityEaten>(EventEntityEaten.ID);
         ev.Pacman = Pacman;
         ev.Other = Other;
         ev.Combo = Combo;
@@ -616,16 +616,16 @@ namespace Quantum {
       }
     }
   }
-  public unsafe partial class EventCharacterEaten : EventBase {
+  public unsafe partial class EventEntityEaten : EventBase {
     public new const Int32 ID = 14;
     public EntityRef Pacman;
     public EntityRef Other;
     public Int32 Combo;
     public Int32 GainedPoints;
-    protected EventCharacterEaten(Int32 id, EventFlags flags) : 
+    protected EventEntityEaten(Int32 id, EventFlags flags) : 
         base(id, flags) {
     }
-    public EventCharacterEaten() : 
+    public EventEntityEaten() : 
         base(14, EventFlags.Server|EventFlags.Client|EventFlags.Synced) {
     }
     public new QuantumGame Game {

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/MazeCE1.unity
     guid: 03bd5ba32b9950244a08f22579187d8b
+  - enabled: 1
+    path: Assets/Scenes/Levels/MazeNES.unity
+    guid: 3585a2d077fa5eb4ebe0ca87498eb076
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8012c229df5d8f84683449de40029a6b,
       type: 2}

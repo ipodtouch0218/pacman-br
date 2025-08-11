@@ -58,7 +58,7 @@ public unsafe class SoundHandler : QuantumSceneViewComponent {
     public void OnGameStart(EventGameStart e) {
         currentClip = defaultSound;
         sfxSource.Play();
-        musicSource.volume = 0.5f;
+        musicSource.volume = 1;
         musicSource.Play();
     }
 

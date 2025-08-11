@@ -18,12 +18,12 @@ public unsafe class PointHandler : QuantumSceneViewComponent {
     private readonly Dictionary<FPVector2, GameObject> pelletIndicators = new();
 
     public void Start() {
-        QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
+        QuantumEvent.Subscribe<EventEntityEaten>(this, OnEntityEaten);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
     }
 
-    public void OnCharacterEaten(EventCharacterEaten e) {
+    public void OnEntityEaten(EventEntityEaten e) {
         if (!VerifiedFrame.Unsafe.TryGetPointer(e.Pacman, out Transform2D* t)) {
             return;
         }

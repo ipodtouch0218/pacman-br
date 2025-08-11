@@ -15,6 +15,7 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
     [SerializeField] private float maxWaveIntensity = 0.07f;
     [SerializeField] private float screenshakeDuration = 0.5f, screenshakePeriod = 0.2f, screenshakeIntensity = 0.1f;
 
+    //---Private Variables
     private MaterialPropertyBlock mpb;
 
     private float screenshakeTimer;
@@ -25,11 +26,16 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
         mpb = new();
         tilemapRenderer.GetPropertyBlock(mpb);
 
-        QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
+        QuantumEvent.Subscribe<EventEntityEaten>(this, OnEntityEaten);
         QuantumEvent.Subscribe<EventPacmanUseBomb>(this, OnPacmanUseBomb);
 
         fullscreenPass.passMaterial = fullscreenMat = new Material(fullscreenWaveMaterial);
         fullscreenPass.SetActive(true);
+    }
+
+    public override void OnDisable() {
+        base.OnDisable();
+        fullscreenPass.SetActive(false);
     }
 
     public void OnDestroy() {
@@ -69,7 +75,7 @@ public unsafe class GridColorHandler : QuantumSceneViewComponent {
         tilemapRenderer.SetPropertyBlock(mpb);
     }
 
-    public void OnCharacterEaten(EventCharacterEaten e) {
+    public void OnEntityEaten(EventEntityEaten e) {
         if (!VerifiedFrame.Unsafe.TryGetPointer(e.Pacman, out GridMover* mover)) {
             return;
         }

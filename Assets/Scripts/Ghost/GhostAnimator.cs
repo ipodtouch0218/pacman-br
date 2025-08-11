@@ -35,10 +35,16 @@ public unsafe class GhostAnimator : QuantumEntityViewComponent {
         QuantumEvent.Subscribe<EventGridMoverReachedCenterOfTile>(this, OnGridMoverReachedCenterOfTile);
         QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
 
-        originalLightColor = ghostLight.color;
-        eyeTrail.SetActive(false);
-        trailRenderer = trailParticle.GetComponent<ParticleSystemRenderer>();
-        trailRenderer.GetPropertyBlock(trailMpb = new());
+        if (ghostLight) {
+            originalLightColor = ghostLight.color;
+        }
+        if (eyeTrail) {
+            eyeTrail.SetActive(false);
+        }
+        if (trailParticle) {
+            trailRenderer = trailParticle.GetComponent<ParticleSystemRenderer>();
+            trailRenderer.GetPropertyBlock(trailMpb = new());
+        }
     }
 
     public override void OnActivate(Frame frame) {
@@ -75,32 +81,52 @@ public unsafe class GhostAnimator : QuantumEntityViewComponent {
             return;
         }
 
-        var emission = trailParticle.emission;
         switch (e.State) {
         case GhostState.Chase:
             currentSprites = movementSprites;
-            ghostLight.color = originalLightColor;
-            trailMpb.SetColor("_AdditiveColor", originalLightColor);
-            eyeTrail.SetActive(false);
+            if (ghostLight) {
+                ghostLight.color = originalLightColor;
+            }
+            if (trailRenderer) {
+                trailMpb.SetColor("_AdditiveColor", originalLightColor);
+            }
+            if (eyeTrail) {
+                eyeTrail.SetActive(false);
+            }
             break;
         case GhostState.Scared:
             currentSprites = scaredSprites;
-            ghostLight.color = scaredLightColor;
-            trailMpb.SetColor("_AdditiveColor", scaredLightColor);
-            eyeTrail.SetActive(false);
+            if (ghostLight) {
+                ghostLight.color = scaredLightColor;
+            }
+            if (trailRenderer) {
+                trailMpb.SetColor("_AdditiveColor", scaredLightColor);
+            }
+            if (eyeTrail) {
+                eyeTrail.SetActive(false);
+            }
             break;
         case GhostState.Eaten:
             currentSprites = eatenSprites;
-            ghostLight.color = originalLightColor;
-            emission.enabled = false;
-            eyeTrail.SetActive(true);
+            if (ghostLight) {
+                ghostLight.color = originalLightColor;
+            }
+            if (trailParticle != null) {
+                var emission = trailParticle.emission;
+                emission.enabled = false;
+            }
+            if (eyeTrail) {
+                eyeTrail.SetActive(true);
+            }
             break;
         }
-        trailRenderer.SetPropertyBlock(trailMpb);
+        if (trailRenderer) {
+            trailRenderer.SetPropertyBlock(trailMpb);
+        }
     }
 
     public void OnGridMoverReachedCenterOfTile(EventGridMoverReachedCenterOfTile e) {
-        if (e.Entity != EntityRef) {
+        if (e.Entity != EntityRef || !trailParticle) {
             return;
         }
 
@@ -119,8 +145,10 @@ public unsafe class GhostAnimator : QuantumEntityViewComponent {
         foreach (var trail in eyeTrails) {
             trail.emitting = !value;
         }
+        if (ghostLight) {
+            ghostLight.gameObject.SetActive(!value);
+        }
         spriteRenderer.gameObject.SetActive(!value);
-        ghostLight.gameObject.SetActive(!value);
     }
 
     public void OnGameStarting(EventGameStarting e) {

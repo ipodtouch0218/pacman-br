@@ -1,5 +1,7 @@
 using Quantum;
+using Quantum.Pacman;
 using Quantum.Pacman.Ghosts;
+using Quantum.Pacman.Movement;
 using System;
 using System.Collections;
 using TMPro;
@@ -51,7 +53,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         QuantumEvent.Subscribe<EventPacmanKilled>(this, OnPacmanKilled);
         QuantumEvent.Subscribe<EventPacmanRespawned>(this, OnPacmanRespawned);
         QuantumEvent.Subscribe<EventPacmanVulnerable>(this, OnPacmanVulnerable);
-        QuantumEvent.Subscribe<EventCharacterEaten>(this, OnCharacterEaten);
+        QuantumEvent.Subscribe<EventEntityEaten>(this, OnEntityEaten);
         QuantumEvent.Subscribe<EventPelletEat>(this, OnPelletEat);
         QuantumEvent.Subscribe<EventFruitEaten>(this, OnFruitEaten);
         QuantumEvent.Subscribe<EventGameStarting>(this, OnGameStarting);
@@ -140,12 +142,16 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             // Scared
             mpb.SetColor("_BaseColor", scaredColor);
             mpb.SetColor("_OutlineColor", PlayerColor);
-            light.color = scaredColor;
+            if (light) {
+                light.color = scaredColor;
+            }
         } else {
             // Other
             mpb.SetColor("_BaseColor", PlayerColor);
             mpb.SetColor("_OutlineColor", Color.white);
-            light.color = PlayerColor;
+            if (light) {
+                light.color = PlayerColor;
+            }
         }
         spriteRenderer.SetPropertyBlock(mpb);
 
@@ -161,7 +167,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             spriteRenderer.sprite = movementSprites[Mathf.Clamp(index, 0, movementSprites.Length - 1)];
         }
 
-        bombTrail.emitting = pac->BombTravelTimer > 0;
+        if (bombTrail) {
+            bombTrail.emitting = pac->BombTravelTimer > 0;
+        }
         UpdateSparks(f);
     }
 
@@ -310,7 +318,7 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         emission.enabled = false;
     }
 
-    public void OnCharacterEaten(EventCharacterEaten e) {
+    public void OnEntityEaten(EventEntityEaten e) {
         if (e.Pacman != EntityRef) {
             return;
         }
@@ -355,7 +363,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
         }
 
         audioSource.PlayOneShot(bombUse);
-        bombParticles.Play();
+        if (bombParticles) {
+            bombParticles.Play();
+        }
     }
 
     public void OnLandBombJump(EventPacmanLandBombJump e) {
@@ -363,7 +373,9 @@ public unsafe class PacmanAnimator : QuantumEntityViewComponent {
             return;
         }
 
-        bombParticles.Play(false);
+        if (bombParticles) {
+            bombParticles.Play(false);
+        }
         ShowBombCount(e.Game.Frames.Predicted, false);
     }
 }

@@ -1,6 +1,9 @@
-﻿using Quantum.Pacman.Fruits;
+﻿using Quantum.Pacman;
+using Quantum.Pacman.Fruits;
 using Quantum.Pacman.Ghosts;
+using Quantum.Pacman.Lobby;
 using Quantum.Pacman.Logic;
+using Quantum.Pacman.Movement;
 using Quantum.Pacman.Pellets;
 using System.Collections.Generic;
 

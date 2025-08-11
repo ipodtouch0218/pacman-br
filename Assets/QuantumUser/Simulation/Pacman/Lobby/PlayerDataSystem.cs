@@ -1,4 +1,4 @@
-namespace Quantum {
+namespace Quantum.Pacman.Lobby {
     public unsafe class PlayerDataSystem : SystemSignalsOnly, ISignalOnPlayerAdded, ISignalOnPlayerRemoved, ISignalOnPlayerReady {
 
         public void OnPlayerReady(Frame f, PlayerRef player) {

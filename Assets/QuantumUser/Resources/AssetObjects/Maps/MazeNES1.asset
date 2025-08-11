@@ -1,0 +1,428 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1722638350, guid: b156eeaae3f741b40af66649a4748430, type: 3}
+  m_Name: MazeNES1
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/AssetObjects/Maps/MazeNES1
+    Guid:
+      Value: 490769602796282270
+  UserAsset:
+    Id:
+      Value: 537189870444486544
+  Scene: MazeNES
+  ScenePath: Assets/Scenes/Levels/MazeNES.unity
+  SceneGuid: 3585a2d077fa5eb4ebe0ca87498eb076
+  WorldSize: 32
+  BucketsCount: 8
+  BucketsSubdivisions: 8
+  BucketingAxis: 0
+  SortingAxis: 1
+  SceneMeshCellSize:
+    RawValue: 262144
+  TriangleMeshCellSize: -1
+  StaticColliders3DTrianglesData:
+    Id:
+      Value: 369148594703890376
+  SerializeTrianglesMetadata: 0
+  GridSizeX: 32
+  GridSizeY: 32
+  GridNodeSize: 4
+  NavMeshLinks: []
+  Regions: []
+  StaticColliders2D: []
+  StaticColliders3D: []
+  MapEntities:
+  - Components:
+    - rid: 5257304645516132352
+    - rid: 5257304645516132353
+    - rid: 5257304645516132354
+    - rid: 5257304645516132355
+    - rid: 5257304645516132356
+  - Components:
+    - rid: 3494534326459039744
+    - rid: 3494534326459039745
+    - rid: 3494534326459039746
+    - rid: 3494534326459039747
+    - rid: 3494534326459039748
+  - Components:
+    - rid: 3225371341653803008
+    - rid: 3225371341653803009
+    - rid: 3225371341653803010
+    - rid: 3225371341653803011
+    - rid: 3225371341653803012
+  - Components:
+    - rid: 3038455786566057984
+    - rid: 3038455786566057985
+    - rid: 3038455786566057986
+    - rid: 3038455786566057987
+    - rid: 3038455786566057988
+  SerializedTriangleDataUncompressedSize: 8
+  references:
+    version: 2
+    RefIds:
+    - rid: 3038455786566057984
+      type: {class: Transform2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        Position:
+          X:
+            RawValue: 1114112
+          Y:
+            RawValue: 655360
+        Rotation:
+          RawValue: 0
+    - rid: 3038455786566057985
+      type: {class: PhysicsCollider2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        ShapeConfig:
+          ShapeType: 4
+          PolygonCollider:
+            Id:
+              Value: 0
+          CircleRadius:
+            RawValue: 32768
+          CapsuleSize:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          EdgeExtent:
+            RawValue: 0
+          BoxExtents:
+            X:
+              RawValue: 16384
+            Y:
+              RawValue: 16384
+          PositionOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          RotationOffset:
+            RawValue: 0
+          UserTag: 0
+          IsPersistent: 1
+          CompoundShapes: []
+        Layer: 0
+        IsTrigger: 1
+        PhysicsMaterial:
+          Id:
+            Value: 0
+    - rid: 3038455786566057986
+      type: {class: PhysicsCallbacks2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        CallbackFlags:
+          Value: 4095
+    - rid: 3038455786566057987
+      type: {class: GhostPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        TargetPosition:
+          X:
+            RawValue: 1114112
+          Y:
+            RawValue: 589824
+        ForceRandomMovement:
+          Value: 0
+        Mode:
+          Value: 3
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
+        GhostHouseWaitTime:
+          RawValue: 1310720
+        TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
+          RawValue: 0
+    - rid: 3038455786566057988
+      type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        SpeedMultiplier:
+          RawValue: 65536
+        Direction: 0
+        TeleportFrames: 0
+        IsLocked:
+          Value: 0
+        IsStationary:
+          Value: 0
+        DistanceMoved:
+          RawValue: 0
+        FreezeTime:
+          RawValue: 0
+    - rid: 3225371341653803008
+      type: {class: Transform2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        Position:
+          X:
+            RawValue: 851968
+          Y:
+            RawValue: 655360
+        Rotation:
+          RawValue: 0
+    - rid: 3225371341653803009
+      type: {class: PhysicsCollider2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        ShapeConfig:
+          ShapeType: 4
+          PolygonCollider:
+            Id:
+              Value: 0
+          CircleRadius:
+            RawValue: 32768
+          CapsuleSize:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          EdgeExtent:
+            RawValue: 0
+          BoxExtents:
+            X:
+              RawValue: 16384
+            Y:
+              RawValue: 16384
+          PositionOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          RotationOffset:
+            RawValue: 0
+          UserTag: 0
+          IsPersistent: 1
+          CompoundShapes: []
+        Layer: 0
+        IsTrigger: 1
+        PhysicsMaterial:
+          Id:
+            Value: 0
+    - rid: 3225371341653803010
+      type: {class: PhysicsCallbacks2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        CallbackFlags:
+          Value: 4095
+    - rid: 3225371341653803011
+      type: {class: GhostPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        TargetPosition:
+          X:
+            RawValue: 851968
+          Y:
+            RawValue: 589824
+        ForceRandomMovement:
+          Value: 0
+        Mode:
+          Value: 2
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
+        GhostHouseWaitTime:
+          RawValue: 983040
+        TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
+          RawValue: 0
+    - rid: 3225371341653803012
+      type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        SpeedMultiplier:
+          RawValue: 65536
+        Direction: 0
+        TeleportFrames: 0
+        IsLocked:
+          Value: 0
+        IsStationary:
+          Value: 0
+        DistanceMoved:
+          RawValue: 0
+        FreezeTime:
+          RawValue: 0
+    - rid: 3494534326459039744
+      type: {class: Transform2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        Position:
+          X:
+            RawValue: 983040
+          Y:
+            RawValue: 589824
+        Rotation:
+          RawValue: 0
+    - rid: 3494534326459039745
+      type: {class: PhysicsCollider2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        ShapeConfig:
+          ShapeType: 4
+          PolygonCollider:
+            Id:
+              Value: 0
+          CircleRadius:
+            RawValue: 32768
+          CapsuleSize:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          EdgeExtent:
+            RawValue: 0
+          BoxExtents:
+            X:
+              RawValue: 16384
+            Y:
+              RawValue: 16384
+          PositionOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          RotationOffset:
+            RawValue: 0
+          UserTag: 0
+          IsPersistent: 1
+          CompoundShapes: []
+        Layer: 0
+        IsTrigger: 1
+        PhysicsMaterial:
+          Id:
+            Value: 0
+    - rid: 3494534326459039746
+      type: {class: PhysicsCallbacks2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        CallbackFlags:
+          Value: 4095
+    - rid: 3494534326459039747
+      type: {class: GhostPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        TargetPosition:
+          X:
+            RawValue: 983040
+          Y:
+            RawValue: 720896
+        ForceRandomMovement:
+          Value: 0
+        Mode:
+          Value: 1
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
+        GhostHouseWaitTime:
+          RawValue: 655360
+        TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
+          RawValue: 0
+    - rid: 3494534326459039748
+      type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        SpeedMultiplier:
+          RawValue: 65536
+        Direction: 0
+        TeleportFrames: 0
+        IsLocked:
+          Value: 0
+        IsStationary:
+          Value: 0
+        DistanceMoved:
+          RawValue: 0
+        FreezeTime:
+          RawValue: 0
+    - rid: 5257304645516132352
+      type: {class: Transform2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        Position:
+          X:
+            RawValue: 983040
+          Y:
+            RawValue: 720896
+        Rotation:
+          RawValue: 0
+    - rid: 5257304645516132353
+      type: {class: PhysicsCollider2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        ShapeConfig:
+          ShapeType: 4
+          PolygonCollider:
+            Id:
+              Value: 0
+          CircleRadius:
+            RawValue: 32768
+          CapsuleSize:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          EdgeExtent:
+            RawValue: 0
+          BoxExtents:
+            X:
+              RawValue: 16384
+            Y:
+              RawValue: 16384
+          PositionOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+          RotationOffset:
+            RawValue: 0
+          UserTag: 0
+          IsPersistent: 1
+          CompoundShapes: []
+        Layer: 0
+        IsTrigger: 1
+        PhysicsMaterial:
+          Id:
+            Value: 0
+    - rid: 5257304645516132354
+      type: {class: PhysicsCallbacks2DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        CallbackFlags:
+          Value: 4095
+    - rid: 5257304645516132355
+      type: {class: GhostPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        TargetPosition:
+          X:
+            RawValue: 983040
+          Y:
+            RawValue: 589824
+        ForceRandomMovement:
+          Value: 0
+        Mode:
+          Value: 0
+        State:
+          Value: 0
+        GhostHouseState:
+          Value: 0
+        GhostHouseWaitTime:
+          RawValue: 327680
+        TimeSinceEaten:
+          RawValue: 0
+        ScatterTimer:
+          RawValue: 0
+    - rid: 5257304645516132356
+      type: {class: GridMoverPrototype, ns: Quantum.Prototypes, asm: Assembly-CSharp}
+      data:
+        SpeedMultiplier:
+          RawValue: 65536
+        Direction: 0
+        TeleportFrames: 0
+        IsLocked:
+          Value: 0
+        IsStationary:
+          Value: 0
+        DistanceMoved:
+          RawValue: 0
+        FreezeTime:
+          RawValue: 0

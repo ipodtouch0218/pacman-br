@@ -1,8 +1,8 @@
 ﻿using Photon.Deterministic;
 using Quantum.Util;
-using UnityEngine;
+using UnityEditor.Experimental.GraphView;
 
-namespace Quantum.Pacman.Ghosts {
+namespace Quantum.Pacman.Movement {
     public unsafe class GridMovementSystem : SystemMainThreadFilter<GridMovementSystem.Filter> {
 
         public struct Filter {

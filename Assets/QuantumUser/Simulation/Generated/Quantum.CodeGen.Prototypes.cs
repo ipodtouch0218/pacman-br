@@ -153,25 +153,7 @@ namespace Quantum.Prototypes {
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.PacmanPlayer))]
   public unsafe partial class PacmanPlayerPrototype : ComponentPrototype<Quantum.PacmanPlayer> {
-    public Quantum.Prototypes.RankingPrototype TotalRanking;
-    public Quantum.Prototypes.RankingPrototype RoundRanking;
-    public Quantum.Prototypes.RankingPrototype PreviousRoundRanking;
-    public Int32 TotalScore;
-    public Int32 RoundScore;
-    public Int32 Bombs;
-    public FP BombTravelTimer;
-    public FP BombTravelTime;
-    public FPVector2 BombStartPosition;
-    public FPVector2 BombEndPosition;
-    public Int32 PelletsEaten;
-    public Int32 PelletChain;
-    public FP PowerPelletTimer;
-    public FP PowerPelletFullTimer;
-    public Int32 GhostCombo;
-    public QBoolean IsDead;
-    public FP RespawnTimer;
-    public FP Invincibility;
-    public FP TemporaryInvincibility;
+    public AssetRef<PacmanAsset> Asset;
     partial void MaterializeUser(Frame frame, ref Quantum.PacmanPlayer result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.PacmanPlayer component = default;
@@ -179,25 +161,7 @@ namespace Quantum.Prototypes {
         return f.Set(entity, component) == SetResult.ComponentAdded;
     }
     public void Materialize(Frame frame, ref Quantum.PacmanPlayer result, in PrototypeMaterializationContext context = default) {
-        this.TotalRanking.Materialize(frame, ref result.TotalRanking, in context);
-        this.RoundRanking.Materialize(frame, ref result.RoundRanking, in context);
-        this.PreviousRoundRanking.Materialize(frame, ref result.PreviousRoundRanking, in context);
-        result.TotalScore = this.TotalScore;
-        result.RoundScore = this.RoundScore;
-        result.Bombs = this.Bombs;
-        result.BombTravelTimer = this.BombTravelTimer;
-        result.BombTravelTime = this.BombTravelTime;
-        result.BombStartPosition = this.BombStartPosition;
-        result.BombEndPosition = this.BombEndPosition;
-        result.PelletsEaten = this.PelletsEaten;
-        result.PelletChain = this.PelletChain;
-        result.PowerPelletTimer = this.PowerPelletTimer;
-        result.PowerPelletFullTimer = this.PowerPelletFullTimer;
-        result.GhostCombo = this.GhostCombo;
-        result.IsDead = this.IsDead;
-        result.RespawnTimer = this.RespawnTimer;
-        result.Invincibility = this.Invincibility;
-        result.TemporaryInvincibility = this.TemporaryInvincibility;
+        result.Asset = this.Asset;
         MaterializeUser(frame, ref result, in context);
     }
   }

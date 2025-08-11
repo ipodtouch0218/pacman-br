@@ -1,4 +1,5 @@
 ﻿using Photon.Deterministic;
+using Quantum.Pacman.Movement;
 using Quantum.Physics2D;
 using Quantum.Util;
 using System;
@@ -163,20 +164,15 @@ namespace Quantum.Pacman.Ghosts {
                 if (ghost->State is GhostState.Chase or GhostState.Scatter) {
                     mover->Direction = (mover->Direction + 2) % 4;
                     ghost->ChangeState(f, entity, GhostState.Scared);
+                    OnGridMoverReachedCenterOfTile(f, entity, default);
                 }
             }
         }
 
         public void OnTrigger2D(Frame f, TriggerInfo2D info) {
-            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac) || pac->IsDead) {
-                return;
-            }
-
-            if (!f.Unsafe.TryGetPointer(info.Entity, out GridMover* pacMover) || pacMover->FreezeTime > 0) {
-                return;
-            }
-
-            if (!f.Unsafe.TryGetPointer(info.Other, out Ghost* ghost)) {
+            if (!f.Unsafe.TryGetPointer(info.Entity, out PacmanPlayer* pac) || pac->IsDead
+                || !f.Unsafe.TryGetPointer(info.Entity, out GridMover* pacMover) || pacMover->FreezeTime > 0
+                || !f.Unsafe.TryGetPointer(info.Other, out Ghost* ghost)) {
                 return;
             }
 
@@ -197,7 +193,7 @@ namespace Quantum.Pacman.Ghosts {
                 PacmanStageMapData.MazeData maze = PacmanStageMapData.Current(f).CurrentMazeData(f);
                 ghost->TargetPosition = maze.GhostHouse + FPVector2.Up * 3;
 
-                f.Signals.OnCharacterEaten(info.Entity, info.Other);
+                f.Signals.OnEntityEaten(info.Entity, info.Other);
                 break;
 
             case GhostState.Chase:
